@@ -1146,6 +1146,13 @@ namespace Server.Envir
             Player.HelmetToggle(p.HideHelmet);
         }
 
+        public void Process(C.ShieldToggle p)
+        {
+            if (Stage != GameStage.Game) return;
+
+            Player.ShieldToggle(p.HideShield);
+        }
+
         public void Process(C.GenderChange p)
         {
             if (Stage != GameStage.Game) return;

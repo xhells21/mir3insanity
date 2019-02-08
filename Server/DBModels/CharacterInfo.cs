@@ -523,6 +523,21 @@ namespace Server.DBModels
         }
         private bool _HideHelmet;
 
+        public bool HideShield
+        {
+            get { return _HideShield; }
+            set
+            {
+                if (_HideShield == value) return;
+
+                var oldValue = _HideShield;
+                _HideShield = value;
+
+                OnChanged(oldValue, value, "HideShield");
+            }
+        }
+        private bool _HideShield;
+
         public bool CanDeathDrop
         {
             get { return _CanDeathDrop; }

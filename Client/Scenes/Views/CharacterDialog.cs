@@ -23,7 +23,7 @@ namespace Client.Scenes.Views
 
         public DXItemCell[] Grid;
 
-        public DXCheckBox ShowHelmetBox;
+        public DXCheckBox ShowHelmetBox, ShowShieldBox;
 
         public DXLabel WearWeightLabel, HandWeightLabel;
         public Dictionary<Stat, DXLabel> DisplayStats = new Dictionary<Stat, DXLabel>();
@@ -328,10 +328,22 @@ namespace Client.Scenes.Views
                 Hint = "Display Helmet",
                 ReadOnly = true,
             };
-            ShowHelmetBox.Location = new Point(215 + 39 - ShowHelmetBox.Size.Width, 58 - ShowHelmetBox.Size.Height);
+            ShowHelmetBox.Location = new Point(238 - ShowHelmetBox.Size.Width, 58 - ShowHelmetBox.Size.Height);
             ShowHelmetBox.MouseClick += (o, e) =>
             {
                 CEnvir.Enqueue(new C.HelmetToggle{ HideHelmet = ShowHelmetBox.Checked});
+            };
+
+            ShowShieldBox = new DXCheckBox
+            {
+                Parent = CharacterTab,
+                Hint = "Display Shield",
+                ReadOnly = true,
+            };
+            ShowShieldBox.Location = new Point(ShowHelmetBox.Location.X + ShowHelmetBox.Size.Width, 58 - ShowShieldBox.Size.Height);
+            ShowShieldBox.MouseClick += (o, e) =>
+            {
+                CEnvir.Enqueue(new C.ShieldToggle { HideShield = ShowShieldBox.Checked });
             };
 
             int y = 0;

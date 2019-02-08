@@ -478,6 +478,7 @@ namespace Library
 
         public int HelmetShape { get; set; }
         public int HorseShape { get; set; }
+        public int ShieldShape { get; set; }
 
         public List<ClientUserQuest> Quests { get; set; }
 

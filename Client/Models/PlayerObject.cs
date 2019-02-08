@@ -163,6 +163,17 @@ namespace Client.Models
         };
         #endregion
 
+        #region Shield Librarys
+        public Dictionary<int, LibraryFile> ShieldList = new Dictionary<int, LibraryFile>
+        {
+            [0] = LibraryFile.M_Shield1,
+            [1] = LibraryFile.M_Shield2,
+
+            [0 + FemaleOffSet] = LibraryFile.WM_Shield1,
+            [1 + FemaleOffSet] = LibraryFile.WM_Shield2,
+        };
+        #endregion
+
 
         public string GuildRank
         {
@@ -207,6 +218,10 @@ namespace Client.Models
         public int HorseFrame => DrawFrame + ((int) Horse - 1)*5000;
         public HorseType Horse;
 
+        public MirLibrary ShieldLibrary;
+        public int ShieldShape;
+        public int ShieldFrame => DrawFrame + ((ShieldShape % 10) - 1) * ArmourShapeOffSet + ArmourShift;
+
         public int ArmourImage;
 
         public bool DrawWeapon;
@@ -248,6 +263,7 @@ namespace Client.Models
             LibraryWeaponShape = info.Weapon;
             HorseShape = info.HorseShape;
             HelmetShape = info.Helmet;
+            ShieldShape = info.Shield;
 
             ArmourImage = info.ArmourImage;
 
@@ -334,6 +350,9 @@ namespace Client.Models
 
                             if (!WeaponList.TryGetValue(LibraryWeaponShape / 10, out file)) file = LibraryFile.None;
                             CEnvir.LibraryList.TryGetValue(file, out WeaponLibrary1);
+
+                            if (!ShieldList.TryGetValue(ShieldShape / 10, out file)) file = LibraryFile.None;
+                            CEnvir.LibraryList.TryGetValue(file, out ShieldLibrary);
                             break;
                         case MirGender.Female:
                             if (!ArmourList.TryGetValue(ArmourShape / 11 + FemaleOffSet, out file))
@@ -350,8 +369,10 @@ namespace Client.Models
                             CEnvir.LibraryList.TryGetValue(file, out HelmetLibrary);
 
                             if (!WeaponList.TryGetValue(LibraryWeaponShape / 10 + FemaleOffSet, out file)) file = LibraryFile.None;
-
                             CEnvir.LibraryList.TryGetValue(file, out WeaponLibrary1);
+
+                            if (!ShieldList.TryGetValue(ShieldShape / 10 + FemaleOffSet, out file)) file = LibraryFile.None;
+                            CEnvir.LibraryList.TryGetValue(file, out ShieldLibrary);
                             break;
                     }
                     break;
@@ -818,6 +839,20 @@ namespace Client.Models
                 }
             }
 
+            if (ShieldShape > 0)
+            {
+                image = ShieldLibrary?.GetImage(ShieldFrame);
+                if (image != null)
+                {
+                    ShieldLibrary.Draw(ShieldFrame, DrawX, DrawY, Color.White, true, 1F, ImageType.Image);
+
+                    l = Math.Min(l, DrawX + image.OffSetX);
+                    t = Math.Min(t, DrawY + image.OffSetY);
+                    r = Math.Max(r, image.Width + DrawX + image.OffSetX);
+                    b = Math.Max(b, image.Height + DrawY + image.OffSetY);
+                }
+            }
+
             switch (Direction)
             {
                 case MirDirection.UpRight:
@@ -1059,6 +1094,9 @@ namespace Client.Models
                 return true;
 
             if (LibraryWeaponShape >= 0 && WeaponLibrary2 != null && WeaponLibrary2.VisiblePixel(WeaponFrame, new Point(p.X - DrawX, p.Y - DrawY), false, true))
+                return true;
+
+            if (ShieldShape >= 0 && ShieldLibrary != null && ShieldLibrary.VisiblePixel(ShieldFrame, new Point(p.X - DrawX, p.Y - DrawY), false, true))
                 return true;
 
 

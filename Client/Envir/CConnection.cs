@@ -865,7 +865,8 @@ namespace Client.Envir
                 player.ArmourColour = p.ArmourColour;
                 player.HelmetShape = p.Helmet;
                 player.HorseShape = p.HorseArmour;
-                player. ArmourImage = p.ArmourImage;
+                player.ShieldShape = p.Shield;
+                player.ArmourImage = p.ArmourImage;
 
                 player.Light = p.Light;
                 if (player == MapObject.User)
@@ -3942,6 +3943,11 @@ namespace Client.Envir
         public void Process(S.HelmetToggle p)
         {
             GameScene.Game.CharacterBox.ShowHelmetBox.Checked = !p.HideHelmet;
+        }
+
+        public void Process(S.ShieldToggle p)
+        {
+            GameScene.Game.CharacterBox.ShowShieldBox.Checked = !p.HideShield;
         }
 
         public void Process(S.StorageSize p)

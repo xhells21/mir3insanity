@@ -1183,6 +1183,11 @@ namespace Library.Network.ServerPackets
         public bool HideHelmet { get; set; }
     }
 
+    public sealed class ShieldToggle : Packet
+    {
+        public bool HideShield { get; set; }
+    }
+
     public sealed class StorageSize : Packet
     {
         public int Size { get; set; }

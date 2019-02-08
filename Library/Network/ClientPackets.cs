@@ -567,6 +567,11 @@ namespace Library.Network.ClientPackets
         public bool HideHelmet { get; set; }
     }
 
+    public sealed class ShieldToggle : Packet
+    {
+        public bool HideShield { get; set; }
+    }
+
     public sealed class GenderChange : Packet
     {
         public MirGender Gender { get; set; }

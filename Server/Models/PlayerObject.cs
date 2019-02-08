@@ -785,6 +785,7 @@ namespace Server.Models
                 BuffAdd(BuffType.Developer, TimeSpan.MaxValue, null, true, false, TimeSpan.Zero);
 
             Enqueue(new S.HelmetToggle { HideHelmet = Character.HideHelmet });
+            Enqueue(new S.ShieldToggle { HideShield = Character.HideShield });
 
             //Send War Date to guild.
             foreach (CastleInfo castle in SEnvir.CastleInfoList.Binding)
@@ -7868,6 +7869,15 @@ namespace Server.Models
             Character.HideHelmet = value;
             SendShapeUpdate();
             Enqueue(new S.HelmetToggle { HideHelmet = Character.HideHelmet });
+        }
+
+        public void ShieldToggle(bool value)
+        {
+            if (Character.HideShield == value) return;
+
+            Character.HideShield = value;
+            SendShapeUpdate();
+            Enqueue(new S.ShieldToggle { HideShield = Character.HideShield });
         }
         #endregion
 
@@ -19091,6 +19101,8 @@ namespace Server.Models
 
                 HorseShape = Equipment[(int)EquipmentSlot.HorseArmour]?.Info.Shape ?? 0,
 
+                ShieldShape = Character.HideShield ? 0 : Equipment[(int)EquipmentSlot.Shield]?.Info.Shape ?? 0,
+
                 Quests = Character.Quests.Select(x => x.ToClientInfo()).ToList(),
 
                 CompanionUnlocks = Character.Account.CompanionUnlocks.Select(x => x.CompanionInfo.Index).ToList(),
@@ -19176,7 +19188,7 @@ namespace Server.Models
 
                 Weapon = Equipment[(int)EquipmentSlot.Weapon]?.Info.Shape ?? -1,
 
-                Shield = Equipment[(int)EquipmentSlot.Shield]?.Info.Shape ?? -1,
+                Shield = Character.HideShield ? 0 : Equipment[(int)EquipmentSlot.Shield]?.Info.Shape ?? -1,
 
                 Armour = Equipment[(int)EquipmentSlot.Armour]?.Info.Shape ?? 0,
                 ArmourColour = Equipment[(int)EquipmentSlot.Armour]?.Colour ?? Color.Empty,
@@ -19184,8 +19196,8 @@ namespace Server.Models
 
                 Helmet = Character.HideHelmet ? 0 : Equipment[(int)EquipmentSlot.Helmet]?.Info.Shape ?? 0,
 
+
                 HorseArmour = Equipment[(int)EquipmentSlot.HorseArmour]?.Info.Shape ?? 0,
-                //Todo Helmet
 
                 Light = Stats[Stat.Light]
             };
