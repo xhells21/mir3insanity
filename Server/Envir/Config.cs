@@ -103,7 +103,7 @@ namespace Server.Envir
         public static TimeSpan AutoReviveDelay { get; set; } = TimeSpan.FromMinutes(10);
         public static int AvailableHuntGoldCap { get; set; } = 15;
         public static TimeSpan MarriageTeleportDelay { get; set; } = TimeSpan.FromSeconds(120);
-
+        public static TimeSpan RejoinGuildDelay { get; set; } = TimeSpan.FromMinutes(1439 /*23h, 59m, 59s*/);
 
         [ConfigSection("Monsters")]
         public static TimeSpan DeadDuration { get; set; } = TimeSpan.FromMinutes(1);

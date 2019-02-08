@@ -4576,7 +4576,7 @@ namespace Server.Models
             PlayerObject player = info.Account.Connection?.Player;
             string memberName = info.Account.LastCharacter.CharacterName;
 
-            info.Account.GuildTime = SEnvir.Now.AddDays(1);
+            info.Account.GuildTime = SEnvir.Now + Config.RejoinGuildDelay;
 
             info.Guild = null;
             info.Account = null;
@@ -4989,7 +4989,7 @@ namespace Server.Models
             info.Delete();
 
             if (!guild.StarterGuild)
-                Character.Account.GuildTime = SEnvir.Now.AddDays(1);
+                Character.Account.GuildTime = SEnvir.Now + Config.RejoinGuildDelay;
 
             Connection.ReceiveChat(Connection.Language.GuildLeave, MessageType.System);
             Enqueue(new S.GuildInfo { ObserverPacket = false });

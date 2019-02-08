@@ -1,5 +1,7 @@
 ﻿namespace Server.Views
 {
+    //Latest Control: 106
+    //Latest TabIndex: 160
     partial class ConfigView
     {
         /// <summary>
@@ -176,6 +178,8 @@
             this.ShoutDelayEdit = new DevExpress.XtraEditors.TimeSpanEdit();
             this.labelControl106 = new DevExpress.XtraEditors.LabelControl();
             this.MarriageTeleportDelayEdit = new DevExpress.XtraEditors.TimeSpanEdit();
+            this.labelControl107 = new DevExpress.XtraEditors.LabelControl();
+            this.RejoinGuildDelayEdit = new DevExpress.XtraEditors.TimeSpanEdit();
             this.MaxViewRangeEdit = new DevExpress.XtraEditors.TextEdit();
             this.labelControl23 = new DevExpress.XtraEditors.LabelControl();
             this.xtraTabPage7 = new DevExpress.XtraTab.XtraTabPage();
@@ -334,6 +338,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.MaxViewRangeEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AvailableHuntGoldCapEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MarriageTeleportDelayEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RejoinGuildDelayEdit.Properties)).BeginInit();
             this.xtraTabPage7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LairRegionIndexEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MysteryShipRegionIndexEdit.Properties)).BeginInit();
@@ -429,7 +434,7 @@
             this.xtraTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.xtraTabControl1.Location = new System.Drawing.Point(0, 143);
             this.xtraTabControl1.Name = "xtraTabControl1";
-            this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
+            this.xtraTabControl1.SelectedTabPage = this.xtraTabPage6;
             this.xtraTabControl1.Size = new System.Drawing.Size(775, 424);
             this.xtraTabControl1.TabIndex = 2;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
@@ -1575,6 +1580,8 @@
             this.xtraTabPage6.Controls.Add(this.labelControl105);
             this.xtraTabPage6.Controls.Add(this.labelControl106);
             this.xtraTabPage6.Controls.Add(this.MarriageTeleportDelayEdit);
+            this.xtraTabPage6.Controls.Add(this.labelControl107);
+            this.xtraTabPage6.Controls.Add(this.RejoinGuildDelayEdit);
             this.xtraTabPage6.Name = "xtraTabPage6";
             this.xtraTabPage6.Size = new System.Drawing.Size(769, 396);
             this.xtraTabPage6.Text = "Players";
@@ -1620,6 +1627,27 @@
             this.labelControl83.Size = new System.Drawing.Size(79, 13);
             this.labelControl83.TabIndex = 123;
             this.labelControl83.Text = "PvP Curse Rate:";
+            // 
+            // RejoinGuildDelayEdit
+            // 
+            this.RejoinGuildDelayEdit.EditValue = System.TimeSpan.Parse("00:00:00");
+            this.RejoinGuildDelayEdit.Location = new System.Drawing.Point(429, 226);
+            this.RejoinGuildDelayEdit.MenuManager = this.ribbon;
+            this.RejoinGuildDelayEdit.Name = "RejoinGuildDelayEdit";
+            this.RejoinGuildDelayEdit.Properties.AllowEditDays = false;
+            this.RejoinGuildDelayEdit.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.RejoinGuildDelayEdit.Properties.Mask.EditMask = "HH:mm:ss";
+            this.RejoinGuildDelayEdit.Size = new System.Drawing.Size(100, 20);
+            this.RejoinGuildDelayEdit.TabIndex = 159;
+            // 
+            // labelControl107
+            // 
+            this.labelControl107.Location = new System.Drawing.Point(334, 229);
+            this.labelControl107.Name = "labelControl107";
+            this.labelControl107.Size = new System.Drawing.Size(79, 13);
+            this.labelControl107.TabIndex = 160;
+            this.labelControl107.Text = "Rejoin Guild Delay:";
             // 
             // labelControl84
             // 
@@ -2888,6 +2916,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.MaxViewRangeEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AvailableHuntGoldCapEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MarriageTeleportDelayEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.RejoinGuildDelayEdit.Properties)).EndInit();
             this.xtraTabPage7.ResumeLayout(false);
             this.xtraTabPage7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LairRegionIndexEdit.Properties)).EndInit();
@@ -3050,6 +3079,8 @@
         private DevExpress.XtraEditors.TimeSpanEdit ShoutDelayEdit;
         private DevExpress.XtraEditors.LabelControl labelControl106;
         private DevExpress.XtraEditors.TimeSpanEdit MarriageTeleportDelayEdit;
+        private DevExpress.XtraEditors.LabelControl labelControl107;
+        private DevExpress.XtraEditors.TimeSpanEdit RejoinGuildDelayEdit;
         private DevExpress.XtraEditors.TextEdit MaxViewRangeEdit;
         private DevExpress.XtraEditors.LabelControl labelControl47;
         private DevExpress.XtraEditors.TimeSpanEdit DeadDurationEdit;
