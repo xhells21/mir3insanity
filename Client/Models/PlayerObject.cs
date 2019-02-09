@@ -695,6 +695,26 @@ namespace Client.Models
                     break;
             }
 
+            switch (Direction)
+            {
+                case MirDirection.UpRight:
+                case MirDirection.Right:
+                case MirDirection.DownRight:
+                    if (ShieldShape > 0)
+                    {
+                        image = ShieldLibrary?.GetImage(ShieldFrame);
+                        if (image != null)
+                        {
+                            ShieldLibrary.Draw(ShieldFrame, DrawX, DrawY, Color.White, true, 1F, ImageType.Image);
+
+                            l = Math.Min(l, DrawX + image.OffSetX);
+                            t = Math.Min(t, DrawY + image.OffSetY);
+                            r = Math.Max(r, image.Width + DrawX + image.OffSetX);
+                            b = Math.Max(b, image.Height + DrawY + image.OffSetY);
+                        }
+                    }
+                    break;
+            }
 
             image = BodyLibrary?.GetImage(ArmourFrame);
             if (image != null)
@@ -738,20 +758,6 @@ namespace Client.Models
                 }
             }
 
-            if (ShieldShape > 0)
-            {
-                image = ShieldLibrary?.GetImage(ShieldFrame);
-                if (image != null)
-                {
-                    ShieldLibrary.Draw(ShieldFrame, DrawX, DrawY, Color.White, true, 1F, ImageType.Image);
-
-                    l = Math.Min(l, DrawX + image.OffSetX);
-                    t = Math.Min(t, DrawY + image.OffSetY);
-                    r = Math.Max(r, image.Width + DrawX + image.OffSetX);
-                    b = Math.Max(b, image.Height + DrawY + image.OffSetY);
-                }
-            }
-
             switch (Direction)
             {
                 case MirDirection.UpRight:
@@ -780,6 +786,29 @@ namespace Client.Models
                     t = Math.Min(t, DrawY + image.OffSetY);
                     r = Math.Max(r, image.Width + DrawX + image.OffSetX);
                     b = Math.Max(b, image.Height + DrawY + image.OffSetY);
+                    break;
+            }
+
+            switch (Direction)
+            {
+                case MirDirection.Up:
+                case MirDirection.Down:
+                case MirDirection.DownLeft:
+                case MirDirection.Left:
+                case MirDirection.UpLeft:
+                    if (ShieldShape > 0)
+                    {
+                        image = ShieldLibrary?.GetImage(ShieldFrame);
+                        if (image != null)
+                        {
+                            ShieldLibrary.Draw(ShieldFrame, DrawX, DrawY, Color.White, true, 1F, ImageType.Image);
+
+                            l = Math.Min(l, DrawX + image.OffSetX);
+                            t = Math.Min(t, DrawY + image.OffSetY);
+                            r = Math.Max(r, image.Width + DrawX + image.OffSetX);
+                            b = Math.Max(b, image.Height + DrawY + image.OffSetY);
+                        }
+                    }
                     break;
             }
 
