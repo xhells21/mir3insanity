@@ -146,6 +146,7 @@ namespace Server.Views
             GoldRateEdit.EditValue = Config.GoldRate;
             SkillRateEdit.EditValue = Config.SkillRate;
             CompanionRateEdit.EditValue = Config.CompanionRate;
+            BookUpgradeRateEdit.EditValue = Config.BookUpgradeRate;
             WeaponDropRateEdit.EditValue = Config.WeaponDropRate;
             ArmourDropRateEdit.EditValue = Config.ArmourDropRate;
             HelmetDropRateEdit.EditValue = Config.HelmetDropRate;
@@ -276,6 +277,7 @@ namespace Server.Views
             Config.GoldRate = (int)GoldRateEdit.EditValue;
             Config.SkillRate = (int)SkillRateEdit.EditValue;
             Config.CompanionRate = (int)CompanionRateEdit.EditValue;
+            Config.BookUpgradeRate = (int)BookUpgradeRateEdit.EditValue;
             Config.WeaponDropRate = (int)WeaponDropRateEdit.EditValue;
             Config.ArmourDropRate = (int)ArmourDropRateEdit.EditValue;
             Config.HelmetDropRate = (int)HelmetDropRateEdit.EditValue;

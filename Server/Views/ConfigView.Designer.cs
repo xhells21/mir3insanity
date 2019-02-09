@@ -1,7 +1,7 @@
 ﻿namespace Server.Views
 {
-    //Latest Control: 106
-    //Latest TabIndex: 160
+    //Latest Control: 108
+    //Latest TabIndex: 162
     partial class ConfigView
     {
         /// <summary>
@@ -219,6 +219,8 @@
             this.xtraTabPage9 = new DevExpress.XtraTab.XtraTabPage();
             this.CompanionRateEdit = new DevExpress.XtraEditors.TextEdit();
             this.labelControl68 = new DevExpress.XtraEditors.LabelControl();
+            this.BookUpgradeRateEdit = new DevExpress.XtraEditors.TextEdit();
+            this.labelControl108 = new DevExpress.XtraEditors.LabelControl();
             this.SkillRateEdit = new DevExpress.XtraEditors.TextEdit();
             this.labelControl58 = new DevExpress.XtraEditors.LabelControl();
             this.GoldRateEdit = new DevExpress.XtraEditors.TextEdit();
@@ -379,6 +381,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ScrollDropRateEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PotionDropRateEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ShieldDropRateEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BookUpgradeRateEdit.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbon
@@ -434,7 +437,7 @@
             this.xtraTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.xtraTabControl1.Location = new System.Drawing.Point(0, 143);
             this.xtraTabControl1.Name = "xtraTabControl1";
-            this.xtraTabControl1.SelectedTabPage = this.xtraTabPage6;
+            this.xtraTabControl1.SelectedTabPage = this.xtraTabPage9;
             this.xtraTabControl1.Size = new System.Drawing.Size(775, 424);
             this.xtraTabControl1.TabIndex = 2;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
@@ -2369,6 +2372,8 @@
             this.xtraTabPage9.Controls.Add(this.labelControl103);
             this.xtraTabPage9.Controls.Add(this.ShieldDropRateEdit);
             this.xtraTabPage9.Controls.Add(this.labelControl104);
+            this.xtraTabPage9.Controls.Add(this.BookUpgradeRateEdit);
+            this.xtraTabPage9.Controls.Add(this.labelControl108);
             this.xtraTabPage9.Name = "xtraTabPage9";
             this.xtraTabPage9.Size = new System.Drawing.Size(769, 396);
             this.xtraTabPage9.Text = "Rates";
@@ -2393,6 +2398,27 @@
             this.labelControl68.Size = new System.Drawing.Size(83, 13);
             this.labelControl68.TabIndex = 88;
             this.labelControl68.Text = "Companion Rate:";
+            // 
+            // BookUpgradeRateEdit
+            // 
+            this.BookUpgradeRateEdit.Location = new System.Drawing.Point(108, 151);
+            this.BookUpgradeRateEdit.MenuManager = this.ribbon;
+            this.BookUpgradeRateEdit.Name = "BookUpgradeRateEdit";
+            this.BookUpgradeRateEdit.Properties.Appearance.Options.UseTextOptions = true;
+            this.BookUpgradeRateEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.BookUpgradeRateEdit.Properties.Mask.EditMask = "n0";
+            this.BookUpgradeRateEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            this.BookUpgradeRateEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.BookUpgradeRateEdit.Size = new System.Drawing.Size(100, 20);
+            this.BookUpgradeRateEdit.TabIndex = 161;
+            // 
+            // labelControl108
+            // 
+            this.labelControl108.Location = new System.Drawing.Point(5, 154);
+            this.labelControl108.Name = "labelControl108";
+            this.labelControl108.Size = new System.Drawing.Size(83, 13);
+            this.labelControl108.TabIndex = 162;
+            this.labelControl108.Text = "Book Upgrade Rate:";
             // 
             // SkillRateEdit
             // 
@@ -2960,6 +2986,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ScrollDropRateEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PotionDropRateEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ShieldDropRateEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BookUpgradeRateEdit.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3137,6 +3164,8 @@
         private DevExpress.XtraTab.XtraTabPage xtraTabPage9;
         private DevExpress.XtraEditors.TextEdit CompanionRateEdit;
         private DevExpress.XtraEditors.LabelControl labelControl68;
+        private DevExpress.XtraEditors.TextEdit BookUpgradeRateEdit;
+        private DevExpress.XtraEditors.LabelControl labelControl108;
         private DevExpress.XtraEditors.TextEdit SkillRateEdit;
         private DevExpress.XtraEditors.LabelControl labelControl58;
         private DevExpress.XtraEditors.TextEdit GoldRateEdit;

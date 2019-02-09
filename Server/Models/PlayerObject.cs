@@ -6378,7 +6378,7 @@ namespace Server.Models
 
                     if (Magics.TryGetValue(info.Magic, out magic))
                     {
-                        int rate = (magic.Level - 2) * 500;
+                        int rate = 1 + (magic.Level - 2) * (500 - (500 * (Stats[Stat.BookUpgradeRate] / 100)));
 
                         magic.Experience++;
 
@@ -8245,6 +8245,7 @@ namespace Server.Models
             stats[Stat.BaseGoldRate] += Config.GoldRate;
             stats[Stat.SkillRate] = Config.SkillRate;
             stats[Stat.CompanionRate] = Config.CompanionRate;
+            stats[Stat.BookUpgradeRate] = Math.Min(100, Config.BookUpgradeRate);
             stats[Stat.BaseWeaponDropRate] += Config.WeaponDropRate;
             stats[Stat.BaseArmourDropRate] += Config.ArmourDropRate;
             stats[Stat.BaseHelmetDropRate] += Config.HelmetDropRate;

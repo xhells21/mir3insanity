@@ -131,6 +131,7 @@ namespace Server.Envir
         public static int GoldRate { get; set; } = 0;
         public static int SkillRate { get; set; } = 0;
         public static int CompanionRate { get; set; } = 0;
+        public static int BookUpgradeRate { get; set; } = 0;
         public static int WeaponDropRate { get; set; } = 0;
         public static int ArmourDropRate { get; set; } = 0;
         public static int HelmetDropRate { get; set; } = 0;

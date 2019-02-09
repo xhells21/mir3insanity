@@ -808,6 +808,9 @@ namespace Library
         [StatDescription(Title = "Base Shield Drop Rate", Format = "{0:+#0%;-#0%;#0%}", Mode = StatType.Percent)]
         BaseShieldDropRate,
 
+        [StatDescription(Title = "Level 4 Book Upgrade Rate", Format = "{0:+#0%;-#0%;#0%}", Mode = StatType.Percent)]
+        BookUpgradeRate,
+
         [StatDescription(Title = "Duration", Mode = StatType.Time)]
         Duration = 10000,
     }
