@@ -377,52 +377,55 @@ namespace Client.Models
                     }
                     break;
                 case MirClass.Assassin:
-                    ArmourShapeOffSet = 3000;
+                    ArmourShapeOffSet = 5000;
                     WeaponShapeOffSet = 5000;
                     HairTypeOffSet = 5000;
 
                     switch (Gender)
                     {
                         case MirGender.Male:
-                            if (!ArmourList.TryGetValue(ArmourShape / 11 + AssassinOffSet, out file))
+                            if (!ArmourList.TryGetValue(ArmourShape / 11, out file))
                             {
-                                file = LibraryFile.M_HumA;
+                                file = LibraryFile.M_Hum;
                                 ArmourShape = 0;
                             }
 
                             CEnvir.LibraryList.TryGetValue(file, out BodyLibrary);
 
-                            CEnvir.LibraryList.TryGetValue(LibraryFile.M_HairA, out HairLibrary);
+                            CEnvir.LibraryList.TryGetValue(LibraryFile.M_Hair, out HairLibrary);
 
-                            if (!HelmetList.TryGetValue(HelmetShape / 10 + AssassinOffSet, out file)) file = LibraryFile.None;
+                            if (!HelmetList.TryGetValue(HelmetShape / 10, out file)) file = LibraryFile.None;
                             CEnvir.LibraryList.TryGetValue(file, out HelmetLibrary);
 
                             if (!WeaponList.TryGetValue(LibraryWeaponShape / 10, out file)) file = LibraryFile.None;
-
                             CEnvir.LibraryList.TryGetValue(file, out WeaponLibrary1);
+
+                            if (!ShieldList.TryGetValue(ShieldShape / 10, out file)) file = LibraryFile.None;
+                            CEnvir.LibraryList.TryGetValue(file, out ShieldLibrary);
 
                             if (LibraryWeaponShape < 1200) break;
 
                             if (!WeaponList.TryGetValue(LibraryWeaponShape / 10 + RightHandOffSet, out file)) file = LibraryFile.None;
-
                             CEnvir.LibraryList.TryGetValue(file, out WeaponLibrary2);
                             break;
                         case MirGender.Female:
-                            if (!ArmourList.TryGetValue(ArmourShape / 11 + AssassinOffSet + FemaleOffSet, out file))
+                            if (!ArmourList.TryGetValue(ArmourShape / 11 + FemaleOffSet, out file))
                             {
-                                file = LibraryFile.WM_HumA;
+                                file = LibraryFile.WM_Hum;
                                 ArmourShape = 0;
                             }
 
                             CEnvir.LibraryList.TryGetValue(file, out BodyLibrary);
-                            CEnvir.LibraryList.TryGetValue(LibraryFile.WM_HairA, out HairLibrary);
+                            CEnvir.LibraryList.TryGetValue(LibraryFile.WM_Hair, out HairLibrary);
 
-                            if (!HelmetList.TryGetValue(HelmetShape / 10 + AssassinOffSet + FemaleOffSet, out file)) file = LibraryFile.None;
+                            if (!HelmetList.TryGetValue(HelmetShape / 10 + FemaleOffSet, out file)) file = LibraryFile.None;
                             CEnvir.LibraryList.TryGetValue(file, out HelmetLibrary);
 
                             if (!WeaponList.TryGetValue(LibraryWeaponShape / 10 + FemaleOffSet, out file)) file = LibraryFile.None;
-
                             CEnvir.LibraryList.TryGetValue(file, out WeaponLibrary1);
+
+                            if (!ShieldList.TryGetValue(ShieldShape / 10 + FemaleOffSet, out file)) file = LibraryFile.None;
+                            CEnvir.LibraryList.TryGetValue(file, out ShieldLibrary);
 
                             if (LibraryWeaponShape < 1200) break;
 
@@ -536,110 +539,6 @@ namespace Client.Models
                     StanceTime = CEnvir.Now.AddSeconds(3);
                     break;
             }
-
-            switch (Class)
-            {
-                case MirClass.Assassin:
-                    switch (CurrentAnimation)
-                    {
-                        case MirAnimation.Standing:
-                            ArmourShift = 0;
-                            break;
-                        case MirAnimation.Walking:
-                            ArmourShift = 1600;
-                            break;
-                        case MirAnimation.Running:
-                            ArmourShift = 1600;
-                            break;
-                        case MirAnimation.CreepStanding:
-                            ArmourShift = 240;
-                            break;
-                        case MirAnimation.CreepWalkSlow:
-                        case MirAnimation.CreepWalkFast:
-                            ArmourShift = 240;
-                            break;
-                        case MirAnimation.Pushed:
-                            ArmourShift = 160;
-                            //pushed 2 = 160
-                            break;
-                        case MirAnimation.Combat1:
-                            ArmourShift = -400;
-                            break;
-                        case MirAnimation.Combat2:
-                            ;//  throw new NotImplementedException();
-                            break;
-                        case MirAnimation.Combat3:
-                            ArmourShift = 0;
-                            break;
-                        case MirAnimation.Combat4:
-                            ArmourShift = 80;
-                            break;
-                        case MirAnimation.Combat5:
-                            ArmourShift = 400;
-                            break;
-                        case MirAnimation.Combat6:
-                            ArmourShift = 400;
-                            break;
-                        case MirAnimation.Combat7:
-                            ArmourShift = 400;
-                            break;
-                        case MirAnimation.Combat8:
-                            ArmourShift = 720;
-                            break;
-                        case MirAnimation.Combat9:
-                            ArmourShift = -960;
-                            break;
-                        case MirAnimation.Combat10:
-                            ArmourShift = -480;
-                            break;
-                        case MirAnimation.Combat11:
-                            ArmourShift = -400;
-                            break;
-                        case MirAnimation.Combat12:
-                            ArmourShift = -400;
-                            break;
-                        case MirAnimation.Combat13:
-                            ArmourShift = -400;
-                            break;
-                        case MirAnimation.Combat14:
-                        case MirAnimation.DragonRepulseStart:
-                        case MirAnimation.DragonRepulseMiddle:
-                        case MirAnimation.DragonRepulseEnd:
-                            ArmourShift = 0;
-                            break;
-                        case MirAnimation.Harvest:
-                            ArmourShift = 160;
-                            break;
-                        case MirAnimation.Stance:
-                            ArmourShift = 160;
-                            break;
-                        case MirAnimation.Struck:
-                            ArmourShift = -640;
-                            break;
-                        case MirAnimation.Die:
-                            ArmourShift = -400;
-                            break;
-                        case MirAnimation.Dead:
-                            ArmourShift = -400;
-                            break;
-                        case MirAnimation.HorseStanding:
-                            ArmourShift = 80;
-                            break;
-                        case MirAnimation.HorseWalking:
-                            ArmourShift = 80;
-                            break;
-                        case MirAnimation.HorseRunning:
-                            ArmourShift = 80;
-                            break;
-                        case MirAnimation.HorseStruck:
-                            ArmourShift = 80;
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                    break;
-            }
-
         }
 
         public override void SetAction(ObjectAction action)
