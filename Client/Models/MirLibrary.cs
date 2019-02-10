@@ -57,7 +57,6 @@ namespace Client.Envir
                 }
             }
 
-
             Loaded = true;
         }
 

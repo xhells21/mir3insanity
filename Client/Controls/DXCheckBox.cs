@@ -78,7 +78,8 @@ namespace Client.Controls
             {
                 Parent = this,
                 IsControl = false,
-                Location = new Point(0, -1)
+                Location = new Point(0, -1),
+                ForeColour = ForeColour
             };
 
             Label.DisplayAreaChanged += (o, e) =>
@@ -126,6 +127,15 @@ namespace Client.Controls
             if (ReadOnly) return;
 
             Checked = !Checked;
+        }
+
+        public override void OnForeColourChanged(Color oValue, Color nValue)
+        {
+            base.OnForeColourChanged(oValue, nValue);
+
+            if (Label == null) return;
+
+            Label.ForeColour = ForeColour;
         }
         #endregion
 

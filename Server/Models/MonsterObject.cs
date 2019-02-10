@@ -2701,10 +2701,7 @@ namespace Server.Models
                 if (!drop.PartOnly)
                     userDrop.Progress += progress;
 
-                if (drop.PartOnly ||
-                    ((SEnvir.Random.Next() > chance ||
-                      (drop.Item.Effect != ItemEffect.Gold && owner.Character.Account.ItemBot)) &&
-                     ((long) userDrop.Progress <= userDrop.DropCount || drop.Item.Effect == ItemEffect.Gold)))
+                if (drop.PartOnly || ((SEnvir.Random.Next() > chance || (drop.Item.Effect != ItemEffect.Gold && owner.Character.Account.ItemBot)) && ((long) userDrop.Progress <= userDrop.DropCount || drop.Item.Effect == ItemEffect.Gold)))
                 {
                     if (drop.Item.PartCount <= 1) continue;
 
@@ -2720,7 +2717,6 @@ namespace Server.Models
 
                     item.AddStat(Stat.ItemIndex, drop.Item.Index, StatSource.Added);
                     item.StatsChanged();
-
 
                     item.IsTemporary = true;
 

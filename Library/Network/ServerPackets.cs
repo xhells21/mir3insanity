@@ -1066,6 +1066,32 @@ namespace Library.Network.ServerPackets
         public Stats Level13 { get; set; }
         public Stats Level15 { get; set; }
     }
+    public sealed class CompanionPickupToggle : Packet
+    {
+        public ItemType Type { get; set; }
+    }
+    public sealed class CompanionPickupGradeToggle : Packet
+    {
+        public Rarity Grade { get; set; }
+    }
+    public sealed class CompanionAllFilters : Packet
+    {
+        public bool Gold { get; set; }
+        public bool Weapon { get; set; }
+        public bool Armour { get; set; }
+        public bool Helmet { get; set; }
+        public bool Shield { get; set; }
+        public bool Necklace { get; set; }
+        public bool Bracelet { get; set; }
+        public bool Ring { get; set; }
+        public bool Shoes { get; set; }
+        public bool Book { get; set; }
+        public bool Potion { get; set; }
+        public bool Meat { get; set; }
+        public bool Common { get; set; }
+        public bool Elite { get; set; }
+        public bool Superior { get; set; }
+    }
 
 
     public sealed class MarriageInvite : Packet

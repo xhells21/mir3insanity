@@ -173,6 +173,15 @@ namespace Server.Models.Monsters
             Teleport(CompanionOwner.CurrentMap, cell.Location);
         }
 
+        public bool MasterForbidsPickup(ItemCheck check)
+        {
+            if (check.Info.Effect == ItemEffect.ItemPart && check.Item.Stats[Stat.ItemIndex] > 0)
+                return CompanionOwner.CompanionForbiddenItems.Contains(SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).ItemType)
+                    || CompanionOwner.CompanionForbiddenGrades.Contains(SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).Rarity);
+
+            return CompanionOwner.CompanionForbiddenItems.Contains(check.Info.ItemType) || CompanionOwner.CompanionForbiddenGrades.Contains(check.Info.Rarity); 
+        }
+
         public override void ProcessSearch()
         {
             if (!CanMove || SEnvir.Now < SearchTime) return;
@@ -457,6 +466,7 @@ namespace Server.Models.Monsters
             foreach (ItemCheck check in checks)
             {
                 if ((check.Flags & UserItemFlags.QuestItem) == UserItemFlags.QuestItem) continue;
+                if (MasterForbidsPickup(check)) return false;
 
                 long count = check.Count;
 

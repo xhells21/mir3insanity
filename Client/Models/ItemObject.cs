@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Client.Controls;
 using Client.Envir;
 using Client.Scenes;
+using Client.Scenes.Views;
 using Library;
 using Library.SystemModels;
 using  S = Library.Network.ServerPackets;

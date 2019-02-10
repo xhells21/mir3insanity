@@ -817,6 +817,14 @@ namespace Client.Envir
                 return;
             }
 
+            foreach (MapObject ob in GameScene.Game.MapControl.ItemObjects)
+            {
+                if (ob.ObjectID != p.ObjectID) continue;
+
+                ob.Remove();
+                return;
+            }
+
         }
         public void Process(S.ObjectPlayer p)
         {
@@ -1640,8 +1648,6 @@ namespace Client.Envir
 
         public void Process(S.ItemsGained p)
         {
-            
-
             foreach (ClientUserItem item in p.Items)
             {
                 ItemInfo displayInfo = item.Info;
@@ -3948,6 +3954,62 @@ namespace Client.Envir
         public void Process(S.ShieldToggle p)
         {
             GameScene.Game.CharacterBox.ShowShieldBox.Checked = !p.HideShield;
+        }
+
+        public void Process(S.CompanionPickupToggle p)
+        {
+            if (GameScene.Game.CompanionForbiddenItems.Contains(p.Type))
+                GameScene.Game.CompanionForbiddenItems.Remove(p.Type);
+            else
+                GameScene.Game.CompanionForbiddenItems.Add(p.Type);
+
+            GameScene.Game.CompanionOptionsBox.Refresh();
+        }
+
+        public void Process(S.CompanionPickupGradeToggle p)
+        {
+            if (GameScene.Game.CompanionForbiddenGrades.Contains(p.Grade))
+                GameScene.Game.CompanionForbiddenGrades.Remove(p.Grade);
+            else
+                GameScene.Game.CompanionForbiddenGrades.Add(p.Grade);
+
+            GameScene.Game.CompanionOptionsBox.Refresh();
+        }
+
+        public void Process(S.CompanionAllFilters p)
+        {
+            if (!p.Gold)
+                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Gold);
+            if (!p.Weapon)
+                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Weapon);
+            if (!p.Armour)
+                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Armour);
+            if (!p.Helmet)
+                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Helmet);
+            if (!p.Shield)
+                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Shield);
+            if (!p.Necklace)
+                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Necklace);
+            if (!p.Bracelet)
+                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Bracelet);
+            if (!p.Ring)
+                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Ring);
+            if (!p.Shoes)
+                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Shoes);
+            if (!p.Book)
+                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Book);
+            if (!p.Potion)
+                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Consumable);
+            if (!p.Meat)
+                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Meat);
+            if (!p.Common)
+                GameScene.Game.CompanionForbiddenGrades.Add(Rarity.Common);
+            if (!p.Elite)
+                GameScene.Game.CompanionForbiddenGrades.Add(Rarity.Elite);
+            if (!p.Superior)
+                GameScene.Game.CompanionForbiddenGrades.Add(Rarity.Superior);
+
+            GameScene.Game.CompanionOptionsBox.Refresh();
         }
 
         public void Process(S.StorageSize p)

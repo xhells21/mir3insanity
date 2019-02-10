@@ -129,6 +129,8 @@ namespace Server.Models
             Storage = new UserItem[1000];
 
         public Companion Companion;
+        public List<ItemType> CompanionForbiddenItems = new List<ItemType>();
+        public List<Rarity> CompanionForbiddenGrades = new List<Rarity>();
 
         public MapObject LastHitter;
 
@@ -313,6 +315,9 @@ namespace Server.Models
                     PacketWaiting = false;
                     Mount();
                     break;
+                case ActionType.DelayPacket:
+                    CompletePacket(action.Data);
+                    return;
 
 
             }
@@ -786,6 +791,56 @@ namespace Server.Models
 
             Enqueue(new S.HelmetToggle { HideHelmet = Character.HideHelmet });
             Enqueue(new S.ShieldToggle { HideShield = Character.HideShield });
+
+            if (Character.CompanionForbidGold)
+                CompanionForbiddenItems.Add(ItemType.Gold);
+            if (Character.CompanionForbidWeapon)
+                CompanionForbiddenItems.Add(ItemType.Weapon);
+            if (Character.CompanionForbidArmour)
+                CompanionForbiddenItems.Add(ItemType.Armour);
+            if (Character.CompanionForbidHelmet)
+                CompanionForbiddenItems.Add(ItemType.Helmet);
+            if (Character.CompanionForbidShield)
+                CompanionForbiddenItems.Add(ItemType.Shield);
+            if (Character.CompanionForbidNecklace)
+                CompanionForbiddenItems.Add(ItemType.Necklace);
+            if (Character.CompanionForbidBracelet)
+                CompanionForbiddenItems.Add(ItemType.Bracelet);
+            if (Character.CompanionForbidRing)
+                CompanionForbiddenItems.Add(ItemType.Ring);
+            if (Character.CompanionForbidShoes)
+                CompanionForbiddenItems.Add(ItemType.Shoes);
+            if (Character.CompanionForbidBook)
+                CompanionForbiddenItems.Add(ItemType.Book);
+            if (Character.CompanionForbidPotion)
+                CompanionForbiddenItems.Add(ItemType.Consumable);
+            if (Character.CompanionForbidMeat)
+                CompanionForbiddenItems.Add(ItemType.Meat);
+            if (Character.CompanionForbidCommon)
+                CompanionForbiddenGrades.Add(Rarity.Common);
+            if (Character.CompanionForbidElite)
+                CompanionForbiddenGrades.Add(Rarity.Elite);
+            if (Character.CompanionForbidSuperior)
+                CompanionForbiddenGrades.Add(Rarity.Superior);
+
+            Enqueue(new S.CompanionAllFilters
+            {
+                Gold = !Character.CompanionForbidGold,
+                Weapon = !Character.CompanionForbidWeapon,
+                Armour = !Character.CompanionForbidArmour,
+                Helmet = !Character.CompanionForbidHelmet,
+                Shield = !Character.CompanionForbidShield,
+                Necklace = !Character.CompanionForbidNecklace,
+                Bracelet = !Character.CompanionForbidBracelet,
+                Ring = !Character.CompanionForbidRing,
+                Shoes = !Character.CompanionForbidShoes,
+                Book = !Character.CompanionForbidBook,
+                Potion = !Character.CompanionForbidPotion,
+                Meat = !Character.CompanionForbidMeat,
+                Common = !Character.CompanionForbidCommon,
+                Elite = !Character.CompanionForbidElite,
+                Superior = !Character.CompanionForbidSuperior,
+            });
 
             //Send War Date to guild.
             foreach (CastleInfo castle in SEnvir.CastleInfoList.Binding)
@@ -7634,6 +7689,7 @@ namespace Server.Models
                 case ItemType.Poison:
                 case ItemType.Amulet:
                 case ItemType.Scroll:
+                case ItemType.Gold:
                     return false;
                 case ItemType.Weapon:
                     if (SEnvir.Random.Next(Stats[Stat.Strength]) > 0) return false;
@@ -7878,6 +7934,79 @@ namespace Server.Models
             Character.HideShield = value;
             SendShapeUpdate();
             Enqueue(new S.ShieldToggle { HideShield = Character.HideShield });
+        }
+
+        public void CompanionPickupToggle(ItemType type)
+        {
+            if (CompanionForbiddenItems.Contains(type))
+                CompanionForbiddenItems.Remove(type);
+            else
+                CompanionForbiddenItems.Add(type);
+
+            switch (type)
+            {
+                case ItemType.Gold:
+                    Character.CompanionForbidGold = CompanionForbiddenItems.Contains(type);
+                    break;
+                case ItemType.Weapon:
+                    Character.CompanionForbidWeapon = CompanionForbiddenItems.Contains(type);
+                    break;
+                case ItemType.Armour:
+                    Character.CompanionForbidArmour = CompanionForbiddenItems.Contains(type);
+                    break;
+                case ItemType.Helmet:
+                    Character.CompanionForbidHelmet = CompanionForbiddenItems.Contains(type);
+                    break;
+                case ItemType.Shield:
+                    Character.CompanionForbidShield = CompanionForbiddenItems.Contains(type);
+                    break;
+                case ItemType.Necklace:
+                    Character.CompanionForbidNecklace = CompanionForbiddenItems.Contains(type);
+                    break;
+                case ItemType.Bracelet:
+                    Character.CompanionForbidBracelet = CompanionForbiddenItems.Contains(type);
+                    break;
+                case ItemType.Ring:
+                    Character.CompanionForbidRing = CompanionForbiddenItems.Contains(type);
+                    break;
+                case ItemType.Shoes:
+                    Character.CompanionForbidShoes = CompanionForbiddenItems.Contains(type);
+                    break;
+                case ItemType.Book:
+                    Character.CompanionForbidBook = CompanionForbiddenItems.Contains(type);
+                    break;
+                case ItemType.Consumable:
+                    Character.CompanionForbidPotion = CompanionForbiddenItems.Contains(type);
+                    break;
+                case ItemType.Meat:
+                    Character.CompanionForbidMeat = CompanionForbiddenItems.Contains(type);
+                    break;
+            }
+
+            Enqueue(new S.CompanionPickupToggle { Type = type });
+        }
+
+        public void CompanionPickupGradeToggle(Rarity grade)
+        {
+            if (CompanionForbiddenGrades.Contains(grade))
+                CompanionForbiddenGrades.Remove(grade);
+            else
+                CompanionForbiddenGrades.Add(grade);
+
+            switch (grade)
+            {
+                case Rarity.Common:
+                    Character.CompanionForbidCommon = CompanionForbiddenGrades.Contains(grade);
+                    break;
+                case Rarity.Elite:
+                    Character.CompanionForbidElite = CompanionForbiddenGrades.Contains(grade);
+                    break;
+                case Rarity.Superior:
+                    Character.CompanionForbidSuperior = CompanionForbiddenGrades.Contains(grade);
+                    break;
+            }
+
+            Enqueue(new S.CompanionPickupGradeToggle { Grade = grade });
         }
         #endregion
 
@@ -16469,6 +16598,12 @@ namespace Server.Models
                     return false;
             }
         }
+
+        public void CompletePacket(params object[] data)
+        {
+            Packet packet = (Packet)data[0];
+            Enqueue(packet);
+        }                
 
         public void CompleteMagic(params object[] data)
         {

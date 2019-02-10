@@ -121,6 +121,7 @@
     <Compile Include="Scenes\Views\ChatOptionsDialog.cs" />
     <Compile Include="Scenes\Views\ChatTextBox.cs" />
     <Compile Include="Scenes\Views\ChatTab.cs" />
+    <Compile Include="Scenes\Views\CompanionOptionsDialog.cs" />
     <Compile Include="Scenes\Views\CompanionDialog.cs" />
     <Compile Include="Scenes\Views\BlockDialog.cs" />
     <Compile Include="Scenes\Views\EditCharacterDialog.cs" />
