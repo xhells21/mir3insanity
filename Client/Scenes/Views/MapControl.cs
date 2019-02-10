@@ -141,7 +141,6 @@ namespace Client.Scenes.Views
 
         public List<DXControl> MapInfoObjects = new List<DXControl>();
         public List<MapObject> Objects = new List<MapObject>();
-        public List<MapObject> ItemObjects = new List<MapObject>();
         public List<MirEffect> Effects = new List<MirEffect>();
 
         public const int CellWidth = 48, CellHeight = 32;
@@ -188,12 +187,6 @@ namespace Client.Scenes.Views
             if (MapObject.MouseObject != null) // && MapObject.MouseObject != MapObject.TargetObject)
                 MapObject.MouseObject.DrawBlend();
 
-            foreach (MapObject ob in ItemObjects)
-            {
-                if (!Config.ShowItemNames || ob.CurrentLocation == MapLocation) continue;
-                ob.DrawName();
-            }
-
             foreach (MapObject ob in Objects)
             {
                 if (ob.Dead) continue;
@@ -202,7 +195,9 @@ namespace Client.Scenes.Views
                 {
                     case ObjectType.Player:
                         if (!Config.ShowPlayerNames) continue;
-
+                        break;
+                    case ObjectType.Item:
+                        if (!Config.ShowItemNames || ob.CurrentLocation == MapLocation) continue;
                         break;
                     case ObjectType.NPC:
                         break;
@@ -347,12 +342,6 @@ namespace Client.Scenes.Views
                     }
                 }
 
-                foreach (MapObject ob in ItemObjects)
-                {
-                    if (ob.RenderY == y)
-                        ob.Draw();
-                }
-
                 foreach (MapObject ob in Objects)
                 {
                     if (ob.RenderY == y)
@@ -455,10 +444,6 @@ namespace Client.Scenes.Views
             {
                 CEnvir.SaveError(ex.ToString());
             }
-
-            foreach (MapObject ob in ItemObjects)
-                if (ob.CurrentLocation.X < Width && ob.CurrentLocation.Y < Height)
-                    Cells[ob.CurrentLocation.X, ob.CurrentLocation.Y].AddObject(ob);
 
             foreach (MapObject ob in Objects)
                 if (ob.CurrentLocation.X < Width && ob.CurrentLocation.Y < Height)
@@ -1036,26 +1021,9 @@ namespace Client.Scenes.Views
                 Cells[ob.CurrentLocation.X, ob.CurrentLocation.Y].AddObject(ob);
         }
 
-        public void AddObject(ItemObject ob)
-        {
-            ItemObjects.Add(ob);
-
-
-            if (ob.CurrentLocation.X < Width && ob.CurrentLocation.Y < Height)
-                Cells[ob.CurrentLocation.X, ob.CurrentLocation.Y].AddObject(ob);
-        }
-
         public void RemoveObject(MapObject ob)
         {
             Objects.Remove(ob);
-
-            if (ob.CurrentLocation.X < Width && ob.CurrentLocation.Y < Height)
-                Cells[ob.CurrentLocation.X, ob.CurrentLocation.Y].RemoveObject(ob);
-        }
-
-        public void RemoveObject(ItemObject ob)
-        {
-            ItemObjects.Remove(ob);
 
             if (ob.CurrentLocation.X < Width && ob.CurrentLocation.Y < Height)
                 Cells[ob.CurrentLocation.X, ob.CurrentLocation.Y].RemoveObject(ob);
@@ -1182,9 +1150,6 @@ namespace Client.Scenes.Views
 
                 Objects.Clear();
                 Objects = null;
-
-                ItemObjects.Clear();
-                ItemObjects = null;
 
                 Effects.Clear();
                 Effects = null;

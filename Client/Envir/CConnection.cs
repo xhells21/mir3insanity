@@ -816,15 +816,6 @@ namespace Client.Envir
                 ob.Remove();
                 return;
             }
-
-            foreach (MapObject ob in GameScene.Game.MapControl.ItemObjects)
-            {
-                if (ob.ObjectID != p.ObjectID) continue;
-
-                ob.Remove();
-                return;
-            }
-
         }
         public void Process(S.ObjectPlayer p)
         {

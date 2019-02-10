@@ -899,9 +899,6 @@ namespace Client.Scenes
             foreach (MapObject ob in MapControl.Objects)
                 ob.Process();
 
-            foreach (MapObject ob in MapControl.ItemObjects)
-                ob.Process();
-
             for (int i = MapControl.Effects.Count - 1; i >= 0; i--)
                 MapControl.Effects[i].Process();
 
