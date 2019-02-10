@@ -177,9 +177,9 @@ namespace Server.Models.Monsters
         {
             if (check.Info.Effect == ItemEffect.ItemPart && check.Item.Stats[Stat.ItemIndex] > 0)
                 return CompanionOwner.CompanionForbiddenItems.Contains(SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).ItemType)
-                    || CompanionOwner.CompanionForbiddenGrades.Contains(SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).Rarity);
+                    || (check.Info.Effect != ItemEffect.Gold && CompanionOwner.CompanionForbiddenGrades.Contains(SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).Rarity));
 
-            return CompanionOwner.CompanionForbiddenItems.Contains(check.Info.ItemType) || CompanionOwner.CompanionForbiddenGrades.Contains(check.Info.Rarity); 
+            return CompanionOwner.CompanionForbiddenItems.Contains(check.Info.ItemType) || (check.Info.Effect != ItemEffect.Gold && CompanionOwner.CompanionForbiddenGrades.Contains(check.Info.Rarity)); 
         }
 
         public override void ProcessSearch()
