@@ -276,6 +276,21 @@ namespace Library.SystemModels
         }
         private int _Delay;
 
+        public int MaxLevel
+        {
+            get { return _MaxLevel; }
+            set
+            {
+                if (_MaxLevel == value) return;
+
+                var oldValue = _MaxLevel;
+                _MaxLevel = value;
+
+                OnChanged(oldValue, value, "MaxLevel");
+            }
+        }
+        private int _MaxLevel;
+
         public string Description
         {
             get { return _Description; }

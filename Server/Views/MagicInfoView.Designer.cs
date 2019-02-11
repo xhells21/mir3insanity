@@ -56,6 +56,7 @@
             this.gridColumn18 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn19 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn14 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn21 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn20 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.MagicInfoGridControl = new DevExpress.XtraGrid.GridControl();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
@@ -149,6 +150,7 @@
             this.gridColumn18,
             this.gridColumn19,
             this.gridColumn14,
+            this.gridColumn21,
             this.gridColumn20});
             this.MagicInfoGridView.GridControl = this.MagicInfoGridControl;
             this.MagicInfoGridView.Name = "MagicInfoGridView";
@@ -307,7 +309,14 @@
             this.gridColumn20.FieldName = "Description";
             this.gridColumn20.Name = "gridColumn20";
             this.gridColumn20.Visible = true;
-            this.gridColumn20.VisibleIndex = 19;
+            this.gridColumn20.VisibleIndex = 20;
+            // 
+            // gridColumn21
+            // 
+            this.gridColumn21.FieldName = "MaxLevel";
+            this.gridColumn21.Name = "gridColumn21";
+            this.gridColumn21.Visible = true;
+            this.gridColumn21.VisibleIndex = 19;
             // 
             // MagicInfoGridControl
             // 
@@ -378,5 +387,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn18;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn19;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn20;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn21;
     }
 }

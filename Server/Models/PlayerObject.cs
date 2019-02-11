@@ -6432,7 +6432,7 @@ namespace Server.Models
                     MagicInfo info = SEnvir.MagicInfoList.Binding.First(x => x.Index == item.Info.Shape);
 
                     if (Magics.TryGetValue(info.Magic, out magic))
-                    {
+                    {                 
                         int rate = 1 + (magic.Level - 2) * (500 - (500 * (Stats[Stat.BookUpgradeRate] / 100)));
 
                         magic.Experience++;
@@ -6650,7 +6650,7 @@ namespace Server.Models
                 case ItemType.Book:
                     MagicInfo magic = SEnvir.MagicInfoList.Binding.FirstOrDefault(x => x.Index == item.Info.Shape);
                     if (magic == null) return false;
-                    if (Magics.ContainsKey(magic.Magic) && (Magics[magic.Magic].Level < 3 || (item.Flags & UserItemFlags.NonRefinable) == UserItemFlags.NonRefinable)) return false;
+                    if (Magics.ContainsKey(magic.Magic) && (Magics[magic.Magic].Level < 3 || (item.Flags & UserItemFlags.NonRefinable) == UserItemFlags.NonRefinable) || (Magics.ContainsKey(magic.Magic) && Magics[magic.Magic].Level >= Magics[magic.Magic].Info.MaxLevel)) return false;
                     return true;
                 case ItemType.Consumable:
                     switch (item.Info.Shape)
