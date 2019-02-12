@@ -112,6 +112,7 @@ namespace Server.Models
         public bool BlockWhisper;
         public bool CompanionLevelLock3, CompanionLevelLock5, CompanionLevelLock7, CompanionLevelLock10, CompanionLevelLock11, CompanionLevelLock13, CompanionLevelLock15;
         public bool ExtractorLock;
+        public List<PlayerObject> BlockedPlayers = new List<PlayerObject>();
 
         public override bool CanAttack => base.CanAttack && Horse == HorseType.None;
         public override bool CanCast => base.CanCast && Horse == HorseType.None;
@@ -649,6 +650,8 @@ namespace Server.Models
             for (int i = Pets.Count - 1; i >= 0; i--)
                 Pets[i].Despawn();
             Pets.Clear();
+
+            BlockedPlayers.Clear();
 
             for (int i = Connection.Observers.Count - 1; i >= 0; i--)
                 Connection.Observers[i].EndObservation();
@@ -1904,6 +1907,28 @@ namespace Server.Models
                     case "CLEARBELT":
                         for (int i = Character.BeltLinks.Count - 1; i >= 0; i--)
                             Character.BeltLinks[i].Delete();
+                        break;
+                    case "BLOCK":
+                        if (parts.Length < 2) return;
+                        PlayerObject blockplayer = SEnvir.GetPlayerByCharacter(parts[1]);
+
+                        if (blockplayer == null)
+                        {
+                            Connection.ReceiveChat(string.Format(Connection.Language.CannotFindPlayer, parts[1]), MessageType.System);
+
+                            foreach (SConnection con in Connection.Observers)
+                                con.ReceiveChat(string.Format(con.Language.CannotFindPlayer, parts[1]), MessageType.System);
+                            return;
+                        }
+                        if (BlockedPlayers.Contains(blockplayer))
+                            BlockedPlayers.Remove(blockplayer);
+                        else
+                            BlockedPlayers.Add(blockplayer);
+
+                        Connection.ReceiveChat(string.Format("{0} Blocked.", parts[1]), MessageType.System);
+
+                        foreach (SConnection con in Connection.Observers)
+                            con.ReceiveChat(string.Format("{0} Blocked.", parts[1]), MessageType.System);
                         break;
                     case "FORCEWAR":
                         if (!Character.Account.TempAdmin) return;
@@ -5270,6 +5295,9 @@ namespace Server.Models
                     con.ReceiveChat(con.Language.GroupSelf, MessageType.System);
                 return;
             }
+
+            if (player.BlockedPlayers.Contains(this))
+                return;
 
             player.GroupInvitation = this;
             player.Enqueue(new S.GroupInvite { Name = Name, ObserverPacket = false });
