@@ -647,14 +647,6 @@ namespace Server.Envir
             UserItemStatsList = Session.GetCollection<UserItemStat>();
             RefineInfoList = Session.GetCollection<RefineInfo>();
             UserMagicList = Session.GetCollection<UserMagic>();
-            for (int i = 0; i < UserMagicList.Count; i++)
-            {
-                //Temp code to fix overlevelled spells - LCD
-                UserMagic umag = UserMagicList[i];
-                if (umag == null) continue;
-
-                if (umag.Level > umag.Info.MaxLevel) umag.Level = umag.Info.MaxLevel;
-            }
             BuffInfoList = Session.GetCollection<BuffInfo>();
             SetInfoList = Session.GetCollection<SetInfo>();
             AuctionInfoList = Session.GetCollection<AuctionInfo>();

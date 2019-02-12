@@ -11400,8 +11400,8 @@ namespace Server.Models
 
                         if (stat.Stat != Stat.MaxMC && stat.Stat != Stat.MaxSC) continue;
 
-                        statValue = stat.Amount;
-                        break;
+                        statValue = Math.Max(statValue, stat.Amount);
+                        //break;
                     }
 
                     sucess = SEnvir.Random.Next(100) < Math.Min(maxChance, 80 - statValue * 4 + fragmentCount * fragmentRate);
@@ -11906,8 +11906,8 @@ namespace Server.Models
 
                         if (stat.Stat != Stat.MaxMC && stat.Stat != Stat.MaxSC) continue;
 
-                        statValue = stat.Amount;
-                        break;
+                        statValue = Math.Max(stat.Amount, statValue);
+                        //break;
                     }
                     Connection.ReceiveChat(string.Format(Connection.Language.NPCMasterRefineChance, Math.Min(maxChance, Math.Max(80 - statValue * 4 + fragmentCount * fragmentRate, 0))), MessageType.System);
 
