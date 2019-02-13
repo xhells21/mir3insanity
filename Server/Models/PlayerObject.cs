@@ -17076,12 +17076,11 @@ namespace Server.Models
                 }
             }
 
-            if (Stats[Stat.Rebirth] > 0 && (LastHitter == null || LastHitter.Race != ObjectType.Player))
+            if (Stats[Stat.Rebirth] > 0 && (LastHitter == null || LastHitter.Race != ObjectType.Player) && Experience > 0)
             {
-                //Level = Math.Max(Level - Stats[Stat.Rebirth] * 3, 1);
-                decimal expbonus = Experience;
+                decimal expbonus = Math.Min(Experience, MaxExperience * 0.1M);
                 Enqueue(new S.GainedExperience { Amount = -expbonus });
-                Experience = 0;
+                Experience -= expbonus;
 
                 if (expbonus > 0)
                 {
