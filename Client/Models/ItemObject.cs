@@ -50,6 +50,7 @@ namespace Client.Models
 
             switch (itemInfo.Rarity)
             {
+                case Rarity.None:
                 case Rarity.Common:
                     if (Item.AddedStats.Values.Count > 0 && Item.Info.Effect != ItemEffect.ItemPart)
                     {

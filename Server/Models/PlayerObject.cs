@@ -826,23 +826,26 @@ namespace Server.Models
             if (Character.CompanionForbidSuperior)
                 CompanionForbiddenGrades.Add(Rarity.Superior);
 
-            Enqueue(new S.CompanionAllFilters
+            Enqueue(new S.AllFilters
             {
-                Gold = !Character.CompanionForbidGold,
-                Weapon = !Character.CompanionForbidWeapon,
-                Armour = !Character.CompanionForbidArmour,
-                Helmet = !Character.CompanionForbidHelmet,
-                Shield = !Character.CompanionForbidShield,
-                Necklace = !Character.CompanionForbidNecklace,
-                Bracelet = !Character.CompanionForbidBracelet,
-                Ring = !Character.CompanionForbidRing,
-                Shoes = !Character.CompanionForbidShoes,
-                Book = !Character.CompanionForbidBook,
-                Potion = !Character.CompanionForbidPotion,
-                Meat = !Character.CompanionForbidMeat,
-                Common = !Character.CompanionForbidCommon,
-                Elite = !Character.CompanionForbidElite,
-                Superior = !Character.CompanionForbidSuperior,
+                Common = Character.DropFilterCommon,
+                Superior = Character.DropFilterSuperior,
+                Elite = Character.DropFilterElite,
+                CompanionGold = !Character.CompanionForbidGold,
+                CompanionWeapon = !Character.CompanionForbidWeapon,
+                CompanionArmour = !Character.CompanionForbidArmour,
+                CompanionHelmet = !Character.CompanionForbidHelmet,
+                CompanionShield = !Character.CompanionForbidShield,
+                CompanionNecklace = !Character.CompanionForbidNecklace,
+                CompanionBracelet = !Character.CompanionForbidBracelet,
+                CompanionRing = !Character.CompanionForbidRing,
+                CompanionShoes = !Character.CompanionForbidShoes,
+                CompanionBook = !Character.CompanionForbidBook,
+                CompanionPotion = !Character.CompanionForbidPotion,
+                CompanionMeat = !Character.CompanionForbidMeat,
+                CompanionCommon = !Character.CompanionForbidCommon,
+                CompanionElite = !Character.CompanionForbidElite,
+                CompanionSuperior = !Character.CompanionForbidSuperior,
             });
 
             //Send War Date to guild.
@@ -2874,11 +2877,11 @@ namespace Server.Models
 
             foreach (MapObject ob in NearByObjects)
             {
-                if (ob.CanBeSeenBy(this))
-                    AddObject(ob);
-
                 if (ob.CanDataBeSeenBy(this))
                     AddDataObject(ob);
+
+                if (ob.CanBeSeenBy(this))
+                    AddObject(ob);                
             }
 
             if (Stats[Stat.BossTracker] > 0)
@@ -7964,6 +7967,25 @@ namespace Server.Models
             Enqueue(new S.ShieldToggle { HideShield = Character.HideShield });
         }
 
+        public void DropfilterToggle(Rarity grade)
+        {
+            switch (grade)
+            {
+                case Rarity.Common:
+                    Character.DropFilterCommon = !Character.DropFilterCommon;
+                    Enqueue(new S.DropFilterToggle { Grade = grade, Checked = Character.DropFilterCommon });
+                    break;
+                case Rarity.Elite:
+                    Character.DropFilterElite = !Character.DropFilterElite;
+                    Enqueue(new S.DropFilterToggle { Grade = grade, Checked = Character.DropFilterElite });
+                    break;
+                case Rarity.Superior:
+                    Character.DropFilterSuperior = !Character.DropFilterSuperior;
+                    Enqueue(new S.DropFilterToggle { Grade = grade, Checked = Character.DropFilterSuperior });
+                    break;
+            }            
+        }
+
         public void CompanionPickupToggle(ItemType type)
         {
             if (CompanionForbiddenItems.Contains(type))
@@ -9560,7 +9582,7 @@ namespace Server.Models
                 cost += item.FragmentCost();
                 itemCount++;
 
-                if (item.Info.Rarity == Rarity.Common)
+                if (item.Info.Rarity <= Rarity.Common)
                     fragmentCount += item.FragmentCount();
                 else
                     fragment2Count += item.FragmentCount();
@@ -9746,12 +9768,12 @@ namespace Server.Models
                 result.Links.Add(link);
 
 
-                if (targetItem.Info.Rarity != Rarity.Common || targetItem.Level == 1)
+                if (targetItem.Info.Rarity > Rarity.Common || targetItem.Level == 1)
                     targetItem.Experience += link.Count * 5;
                 else
                     targetItem.Experience += link.Count;
 
-                if (item.Level > 1 && targetItem.Info.Rarity == Rarity.Common)
+                if (item.Level > 1 && targetItem.Info.Rarity <= Rarity.Common)
                     targetItem.Experience -= 4;
 
 
@@ -10796,7 +10818,7 @@ namespace Server.Models
 
                 items += item.Info.RequiredAmount;
 
-                if (item.Info.Rarity != Rarity.Common)
+                if (item.Info.Rarity > Rarity.Common)
                     quality++;
             }
 
@@ -12008,6 +12030,7 @@ namespace Server.Models
             {
                 switch (Inventory[p.Template.Slot].Info.Rarity)
                 {
+                    case Rarity.None:
                     case Rarity.Common:
                         cost = Globals.CommonCraftWeaponPercentCost;
                         break;

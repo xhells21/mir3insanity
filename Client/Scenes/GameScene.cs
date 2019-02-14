@@ -1678,7 +1678,7 @@ namespace Client.Scenes
             if (displayInfo.RequiredAmount > 0)
             {
                 string text;
-                Color colour = displayInfo.Rarity == Rarity.Common ? Color.White : Color.FromArgb(0, 204, 0);
+                Color colour = displayInfo.Rarity <= Rarity.Common ? Color.White : Color.FromArgb(0, 204, 0);
                 switch (displayInfo.RequiredType)
                 {
                     case RequiredType.Level:
@@ -2103,7 +2103,7 @@ namespace Client.Scenes
                     ForeColour = Color.MediumAquamarine,
                     Location = new Point(4, ItemLabel.DisplayArea.Bottom),
                     Parent = ItemLabel,
-                    Text = $"Fragments: {(MouseItem.Info.Rarity == Rarity.Common ? "Fragment" : "Framgent (II)")} x{MouseItem.FragmentCount():#,##0}",
+                    Text = $"Fragments: {(MouseItem.Info.Rarity <= Rarity.Common ? "Fragment" : "Framgent (II)")} x{MouseItem.FragmentCount():#,##0}",
                 };
 
                 ItemLabel.Size = new Size(label.DisplayArea.Right + 4 > ItemLabel.Size.Width ? label.DisplayArea.Right + 4 : ItemLabel.Size.Width,

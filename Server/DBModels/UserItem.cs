@@ -563,6 +563,7 @@ namespace Server.DBModels
 
             switch (Info.Rarity)
             {
+                case Rarity.None:
                 case Rarity.Common:
                     if (Info.RequiredAmount <= 15) return false;
                     break;
@@ -592,6 +593,7 @@ namespace Server.DBModels
         {
             switch (Info.Rarity)
             {
+                case Rarity.None:
                 case Rarity.Common:
                     switch (Info.ItemType)
                     {
@@ -657,6 +659,7 @@ namespace Server.DBModels
         {
             switch (Info.Rarity)
             {
+                case Rarity.None:
                 case Rarity.Common:
                     switch (Info.ItemType)
                     {

@@ -254,6 +254,7 @@ namespace Library
 
     public enum Rarity : byte
     {
+        None,
         Common,
         Superior,
         Elite,

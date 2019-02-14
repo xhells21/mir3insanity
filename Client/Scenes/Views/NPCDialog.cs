@@ -6583,6 +6583,7 @@ namespace Client.Scenes.Views
                 {
                     switch (TemplateCell.Grid[0].Item.Info.Rarity)
                     {
+                        case Rarity.None:
                         case Rarity.Common:
                             cost = Globals.CommonCraftWeaponPercentCost;
                             break;

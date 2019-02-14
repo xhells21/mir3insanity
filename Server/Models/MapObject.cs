@@ -1058,8 +1058,8 @@ namespace Server.Models
                                 }
 
                                 if (ob.Race != ObjectType.Item) continue;
-
-                                if (player != null && !ob.CanBeSeenBy(player)) continue;
+                                ItemObject item = (ItemObject)ob;
+                                if (player != null && !item.CanDropBeSeenBy(player)) continue;
 
                                 count++;
                             }

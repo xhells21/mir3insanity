@@ -661,6 +661,7 @@ namespace Library
 
             switch (Info.Rarity)
             {
+                case Rarity.None:
                 case Rarity.Common:
                     if (Info.RequiredAmount <= 15) return false;
                     break;
@@ -690,6 +691,7 @@ namespace Library
         {
             switch (Info.Rarity)
             {
+                case Rarity.None:
                 case Rarity.Common:
                     switch (Info.ItemType)
                     {
@@ -755,6 +757,7 @@ namespace Library
         {
             switch (Info.Rarity)
             {
+                case Rarity.None:
                 case Rarity.Common:
                     switch (Info.ItemType)
                     {

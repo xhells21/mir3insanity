@@ -3947,6 +3947,22 @@ namespace Client.Envir
             GameScene.Game.CharacterBox.ShowShieldBox.Checked = !p.HideShield;
         }
 
+        public void Process(S.DropFilterToggle p)
+        {
+            switch (p.Grade)
+            {
+                case Rarity.Common:
+                    GameScene.Game.ConfigBox.DropFilterWindow.CommonCheckBox.Checked = !p.Checked;
+                    break;
+                case Rarity.Superior:
+                    GameScene.Game.ConfigBox.DropFilterWindow.SuperiorCheckBox.Checked = !p.Checked;
+                    break;
+                case Rarity.Elite:
+                    GameScene.Game.ConfigBox.DropFilterWindow.EliteCheckBox.Checked = !p.Checked;
+                    break;
+            }
+        }
+
         public void Process(S.CompanionPickupToggle p)
         {
             if (GameScene.Game.CompanionForbiddenItems.Contains(p.Type))
@@ -3967,37 +3983,41 @@ namespace Client.Envir
             GameScene.Game.CompanionOptionsBox.Refresh();
         }
 
-        public void Process(S.CompanionAllFilters p)
+        public void Process(S.AllFilters p)
         {
-            if (!p.Gold)
+            GameScene.Game.ConfigBox.DropFilterWindow.CommonCheckBox.Checked = !p.Common;
+            GameScene.Game.ConfigBox.DropFilterWindow.SuperiorCheckBox.Checked = !p.Superior;
+            GameScene.Game.ConfigBox.DropFilterWindow.EliteCheckBox.Checked = !p.Elite;
+
+            if (!p.CompanionGold)
                 GameScene.Game.CompanionForbiddenItems.Add(ItemType.Gold);
-            if (!p.Weapon)
+            if (!p.CompanionWeapon)
                 GameScene.Game.CompanionForbiddenItems.Add(ItemType.Weapon);
-            if (!p.Armour)
+            if (!p.CompanionArmour)
                 GameScene.Game.CompanionForbiddenItems.Add(ItemType.Armour);
-            if (!p.Helmet)
+            if (!p.CompanionHelmet)
                 GameScene.Game.CompanionForbiddenItems.Add(ItemType.Helmet);
-            if (!p.Shield)
+            if (!p.CompanionShield)
                 GameScene.Game.CompanionForbiddenItems.Add(ItemType.Shield);
-            if (!p.Necklace)
+            if (!p.CompanionNecklace)
                 GameScene.Game.CompanionForbiddenItems.Add(ItemType.Necklace);
-            if (!p.Bracelet)
+            if (!p.CompanionBracelet)
                 GameScene.Game.CompanionForbiddenItems.Add(ItemType.Bracelet);
-            if (!p.Ring)
+            if (!p.CompanionRing)
                 GameScene.Game.CompanionForbiddenItems.Add(ItemType.Ring);
-            if (!p.Shoes)
+            if (!p.CompanionShoes)
                 GameScene.Game.CompanionForbiddenItems.Add(ItemType.Shoes);
-            if (!p.Book)
+            if (!p.CompanionBook)
                 GameScene.Game.CompanionForbiddenItems.Add(ItemType.Book);
-            if (!p.Potion)
+            if (!p.CompanionPotion)
                 GameScene.Game.CompanionForbiddenItems.Add(ItemType.Consumable);
-            if (!p.Meat)
+            if (!p.CompanionMeat)
                 GameScene.Game.CompanionForbiddenItems.Add(ItemType.Meat);
-            if (!p.Common)
+            if (!p.CompanionCommon)
                 GameScene.Game.CompanionForbiddenGrades.Add(Rarity.Common);
-            if (!p.Elite)
+            if (!p.CompanionElite)
                 GameScene.Game.CompanionForbiddenGrades.Add(Rarity.Elite);
-            if (!p.Superior)
+            if (!p.CompanionSuperior)
                 GameScene.Game.CompanionForbiddenGrades.Add(Rarity.Superior);
 
             GameScene.Game.CompanionOptionsBox.Refresh();

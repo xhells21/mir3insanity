@@ -819,6 +819,12 @@ namespace Library.Network.ServerPackets
         public int HuntGold { get; set; }
     }
 
+    public sealed class DropFilterToggle : Packet
+    {
+        public Rarity Grade { get; set; }
+        public bool Checked { get; set; }
+    }
+
 
     public sealed class TradeRequest : Packet
     {
@@ -1074,23 +1080,29 @@ namespace Library.Network.ServerPackets
     {
         public Rarity Grade { get; set; }
     }
-    public sealed class CompanionAllFilters : Packet
+    public sealed class AllFilters : Packet
     {
-        public bool Gold { get; set; }
-        public bool Weapon { get; set; }
-        public bool Armour { get; set; }
-        public bool Helmet { get; set; }
-        public bool Shield { get; set; }
-        public bool Necklace { get; set; }
-        public bool Bracelet { get; set; }
-        public bool Ring { get; set; }
-        public bool Shoes { get; set; }
-        public bool Book { get; set; }
-        public bool Potion { get; set; }
-        public bool Meat { get; set; }
+        //Drop Filters
         public bool Common { get; set; }
         public bool Elite { get; set; }
         public bool Superior { get; set; }
+
+        //Companion Drop Filters
+        public bool CompanionGold { get; set; }
+        public bool CompanionWeapon { get; set; }
+        public bool CompanionArmour { get; set; }
+        public bool CompanionHelmet { get; set; }
+        public bool CompanionShield { get; set; }
+        public bool CompanionNecklace { get; set; }
+        public bool CompanionBracelet { get; set; }
+        public bool CompanionRing { get; set; }
+        public bool CompanionShoes { get; set; }
+        public bool CompanionBook { get; set; }
+        public bool CompanionPotion { get; set; }
+        public bool CompanionMeat { get; set; }
+        public bool CompanionCommon { get; set; }
+        public bool CompanionElite { get; set; }
+        public bool CompanionSuperior { get; set; }
     }
 
 

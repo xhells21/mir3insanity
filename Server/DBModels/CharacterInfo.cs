@@ -566,10 +566,7 @@ namespace Server.DBModels
                 OnChanged(oldValue, value, "Rebirth");
             }
         }
-        private int _Rebirth;
-
-        
-
+        private int _Rebirth;       
 
         public DateTime NextDeathDropChange
         {
@@ -585,9 +582,52 @@ namespace Server.DBModels
             }
         }
         private DateTime _NextDeathDropChange;
-        
-        
-        
+
+        public bool DropFilterCommon
+        {
+            get { return _DropFilterCommon; }
+            set
+            {
+                if (_DropFilterCommon == value) return;
+
+                var oldValue = _DropFilterCommon;
+                _DropFilterCommon = value;
+
+                OnChanged(oldValue, value, "DropFilterCommon");
+            }
+        }
+        private bool _DropFilterCommon;
+
+        public bool DropFilterSuperior
+        {
+            get { return _DropFilterSuperior; }
+            set
+            {
+                if (_DropFilterSuperior == value) return;
+
+                var oldValue = _DropFilterSuperior;
+                _DropFilterSuperior = value;
+
+                OnChanged(oldValue, value, "DropFilterSuperior");
+            }
+        }
+        private bool _DropFilterSuperior;
+
+        public bool DropFilterElite
+        {
+            get { return _DropFilterElite; }
+            set
+            {
+                if (_DropFilterElite == value) return;
+
+                var oldValue = _DropFilterElite;
+                _DropFilterElite = value;
+
+                OnChanged(oldValue, value, "DropFilterElite");
+            }
+        }
+        private bool _DropFilterElite;
+
         [Association("Companion")]
         public UserCompanion Companion
         {

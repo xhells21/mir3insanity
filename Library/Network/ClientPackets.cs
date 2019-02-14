@@ -581,6 +581,11 @@ namespace Library.Network.ClientPackets
         public bool HideShield { get; set; }
     }
 
+    public sealed class DropFilterToggle : Packet
+    {
+        public Rarity Grade { get; set; }
+    }
+
     public sealed class GenderChange : Packet
     {
         public MirGender Gender { get; set; }

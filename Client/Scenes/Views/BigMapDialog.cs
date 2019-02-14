@@ -318,7 +318,7 @@ namespace Client.Scenes.Views
             if (!MapInfoObjects.TryGetValue(ob, out control))
             {
                 if (ob.MapIndex != SelectedInfo.Index) return;
-                if (ob.ItemInfo != null && ob.ItemInfo.Rarity == Rarity.Common) return;
+                if (ob.ItemInfo != null && ob.ItemInfo.Rarity <= Rarity.Common) return;
                 if (ob.MonsterInfo != null && ob.Dead) return;
 
 
@@ -331,7 +331,7 @@ namespace Client.Scenes.Views
 
 
             }
-            else if (ob.MapIndex != SelectedInfo.Index || (ob.MonsterInfo != null && ob.Dead) || (ob.ItemInfo != null && ob.ItemInfo.Rarity == Rarity.Common))
+            else if (ob.MapIndex != SelectedInfo.Index || (ob.MonsterInfo != null && ob.Dead) || (ob.ItemInfo != null && ob.ItemInfo.Rarity <= Rarity.Common))
             {
                 control.Dispose();
                 MapInfoObjects.Remove(ob);

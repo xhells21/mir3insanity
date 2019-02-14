@@ -173,7 +173,54 @@ namespace Server.Models
         {
         }
 
+        public bool CheckFilters(PlayerObject ob)
+        {
+            if (Item.Info != null)
+            {
+                Rarity grade = Item.Info.Rarity;
+                if (Item.Info.Effect == ItemEffect.ItemPart && Item.Stats[Stat.ItemIndex] > 0)
+                    grade = SEnvir.ItemInfoList.Binding.First(x => x.Index == Item.Stats[Stat.ItemIndex]).Rarity;
+
+                switch (grade)
+                {
+                    case Rarity.Common:
+                        if (ob.Character.DropFilterCommon)
+                            return false;
+                        break;
+                    case Rarity.Superior:
+                        if (ob.Character.DropFilterSuperior)
+                            return false;
+                        break;
+                    case Rarity.Elite:
+                        if (ob.Character.DropFilterElite)
+                            return false;
+                        break;
+                }
+            }
+            return true;
+        }
+
+        public override bool CanDataBeSeenBy(PlayerObject ob)
+        {
+            if (!CheckFilters(ob))
+                return false;
+
+            return base.CanDataBeSeenBy(ob);
+        }
+
         public override bool CanBeSeenBy(PlayerObject ob)
+        {
+            if (Account != null && ob.Character.Account != Account) return false;
+
+            if (Item.UserTask != null && Item.UserTask.Quest.Character != ob.Character) return false;
+
+            if (!CheckFilters(ob))
+                return false;
+
+            return base.CanBeSeenBy(ob);
+        }
+
+        public bool CanDropBeSeenBy(PlayerObject ob)
         {
             if (Account != null && ob.Character.Account != Account) return false;
 

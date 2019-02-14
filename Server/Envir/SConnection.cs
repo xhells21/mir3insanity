@@ -1045,6 +1045,13 @@ namespace Server.Envir
             Player.QuestTrack(p);
         }
 
+        public void Process(C.DropFilterToggle p)
+        {
+            if (Stage != GameStage.Game) return;
+
+            Player.DropfilterToggle(p.Grade);
+        }
+
         public void Process(C.CompanionUnlock p)
         {
             if (Stage != GameStage.Game) return;

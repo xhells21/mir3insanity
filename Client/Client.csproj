@@ -68,6 +68,7 @@
     <Compile Include="Controls\DXComboBox.cs" />
     <Compile Include="Controls\DXConfigWindow.cs" />
     <Compile Include="Controls\DXControl.cs" />
+    <Compile Include="Controls\DXDropFilterWindow.cs" />
     <Compile Include="Controls\DXKeyBindWindow.cs" />
     <Compile Include="Controls\DXListBox.cs" />
     <Compile Include="Controls\DXNumberTextBox.cs" />

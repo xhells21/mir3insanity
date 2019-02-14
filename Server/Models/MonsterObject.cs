@@ -2725,7 +2725,7 @@ namespace Server.Models
                         if (drops == null)
                             drops = new List<UserItem>();
 
-                        if (drop.Item.Rarity != Rarity.Common)
+                        if (drop.Item.Rarity > Rarity.Common)
                         {
                             owner.Connection.ReceiveChat(
                                 string.Format(owner.Connection.Language.HarvestRare, MonsterInfo.MonsterName),
@@ -2791,7 +2791,7 @@ namespace Server.Models
                         if (drops == null)
                             drops = new List<UserItem>();
 
-                        if (item.Info.Rarity != Rarity.Common)
+                        if (item.Info.Rarity > Rarity.Common)
                         {
                             owner.Connection.ReceiveChat(string.Format(owner.Connection.Language.HarvestRare, MonsterInfo.MonsterName), MessageType.System);
 

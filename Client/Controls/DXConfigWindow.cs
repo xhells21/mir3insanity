@@ -15,6 +15,7 @@ namespace Client.Controls
         #region Properties
         public static DXConfigWindow ActiveConfig;
         public DXKeyBindWindow KeyBindWindow;
+        public DXDropFilterWindow DropFilterWindow;
 
         private DXTabControl TabControl;
 
@@ -32,6 +33,7 @@ namespace Client.Controls
         public DXTab GameTab;
         private DXCheckBox ItemNameCheckBox, MonsterNameCheckBox, PlayerNameCheckBox, UserHealthCheckBox, MonsterHealthCheckBox, DamageNumbersCheckBox, EscapeCloseAllCheckBox, ShiftOpenChatCheckBox, RightClickDeTargetCheckBox, MonsterBoxVisibleCheckBox, LogChatCheckBox, DrawEffectsCheckBox;
         public DXButton KeyBindButton;
+        public DXButton DropFilterButton;
 
         //Network
         public DXTab NetworkTab;
@@ -98,12 +100,15 @@ namespace Client.Controls
             SystemColourBox.BackColour = Config.SystemTextColour;
             GainsColourBox.BackColour = Config.GainsTextColour;
             AnnouncementColourBox.BackColour = Config.AnnouncementTextColour;
+
+            DropFilterButton.Enabled = ActiveScene is GameScene;
         }
         public override void OnParentChanged(DXControl oValue, DXControl nValue)
         {
             base.OnParentChanged(oValue, nValue);
 
             KeyBindWindow.Parent = nValue;
+            DropFilterWindow.Parent = nValue;
         }
 
         public override WindowType Type => WindowType.ConfigBox;
@@ -166,8 +171,13 @@ namespace Client.Controls
                 Visible =  false
             };
 
+            DropFilterWindow = new DXDropFilterWindow
+            {
+                Visible = false,                
+            };
+
             #region Graphics
-            
+
             FullScreenCheckBox = new DXCheckBox
             {
                 Label = { Text = "Full Screen:" },
@@ -441,7 +451,18 @@ namespace Client.Controls
                 Label = { Text = "Key Binds" }
             };
             KeyBindButton.MouseClick += (o, e) => KeyBindWindow.Visible = !KeyBindWindow.Visible;
-            
+
+            DropFilterButton = new DXButton
+            {
+                Parent = GameTab,
+                Location = new Point(100, 160),
+                Size = new Size(80, SmallButtonHeight),
+                ButtonType = ButtonType.SmallButton,
+                Label = { Text = "Drop Filter" },
+                Enabled = ActiveScene is GameScene
+            };
+            DropFilterButton.MouseClick += (o, e) => DropFilterWindow.Visible = !DropFilterWindow.Visible;
+
             #endregion
 
             #region Network
@@ -979,6 +1000,14 @@ namespace Client.Controls
                     KeyBindWindow = null;
                 }
 
+                if (DropFilterWindow != null)
+                {
+                    if (!DropFilterWindow.IsDisposed)
+                        DropFilterWindow.Dispose();
+
+                    DropFilterWindow = null;
+                }
+
                 #region Graphics
                 if (GraphicsTab != null)
                 {
@@ -1374,7 +1403,10 @@ namespace Client.Controls
                 }
             }
         }
-
         #endregion
     }
+
+
+
+
 }
