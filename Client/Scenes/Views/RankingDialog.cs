@@ -188,7 +188,7 @@ namespace Client.Scenes.Views
 
         public RankingDialog()
         {
-            SetClientSize(new Size(359, 480));
+            SetClientSize(new Size(429, 480));
 
             TitleLabel.Text = "Rankings";
             
@@ -506,6 +506,7 @@ namespace Client.Scenes.Views
                 NameLabel.Text = "";
                 ClassLabel.Text = "";
                 LevelLabel.Text = "";
+                RebirthLabel.Text = "";
                 ObseverButton.Enabled = false;
                 Visible = !Loading;
             }
@@ -519,6 +520,7 @@ namespace Client.Scenes.Views
                 NameLabel.ForeColour = Color.Silver;
                 ClassLabel.ForeColour = Color.Silver;
                 LevelLabel.ForeColour = Color.Silver;
+                RebirthLabel.ForeColour = Color.OrangeRed;
                 OnlineImage.Index = Rank.Online ? 3625 : 3624;
 
                 ObseverButton.Enabled = Rank.Online && Rank.Observable;
@@ -528,7 +530,8 @@ namespace Client.Scenes.Views
                 if (Rank.Level < Globals.ExperienceList.Count)
                     percent = Math.Min(1, Math.Max(0, Globals.ExperienceList[Rank.Level] > 0 ? Rank.Experience/Globals.ExperienceList[Rank.Level] : 0));
 
-                LevelLabel.Text = $"{Rank.Level} - {percent:0.##%}";
+                LevelLabel.Text = Rank.Rebirth > 0 ? $"{Rank.Level / (5000 * Rank.Rebirth)} - {percent:0.##%}" : $"{Rank.Level} - {percent:0.##%}";
+                RebirthLabel.Text = Rank.Rebirth == 1 ? string.Format("({0} Rebirth)", Rank.Rebirth) : string.Format("({0} Rebirth's)", Rank.Rebirth);
             }
 
             RankChanged?.Invoke(this, EventArgs.Empty);
@@ -561,6 +564,7 @@ namespace Client.Scenes.Views
                 NameLabel.Text = "";
                 ClassLabel.Text = "";
                 LevelLabel.Text = "";
+                RebirthLabel.Text = "";
 
                 Visible = false;
                 return;
@@ -576,7 +580,7 @@ namespace Client.Scenes.Views
 
         #endregion
 
-        public DXLabel RankLabel, NameLabel, ClassLabel, LevelLabel;
+        public DXLabel RankLabel, NameLabel, ClassLabel, LevelLabel, RebirthLabel;
         public DXButton ObseverButton;
         public DXImageControl OnlineImage;
 
@@ -584,7 +588,7 @@ namespace Client.Scenes.Views
 
         public RankingLine()
         {
-            Size = new Size(340, 20);
+            Size = new Size(410, 20);
             DrawTexture = true;
             BackColour = Color.FromArgb(25, 20, 0);
 
@@ -600,11 +604,9 @@ namespace Client.Scenes.Views
             RankLabel = new DXLabel
             {
                 Parent = this,
-              //  Border = true,
                 AutoSize = false,
                 Location = new Point(OnlineImage.Location.X + OnlineImage.Size.Width - 4, 0),
                 Size = new Size(40, 18),
-               // BorderColour = Color.FromArgb(198, 166, 98),
                 ForeColour = Color.White,
                 DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
                 IsControl = false,
@@ -643,10 +645,21 @@ namespace Client.Scenes.Views
                 IsControl = false,
             };
 
+            RebirthLabel = new DXLabel
+            {
+                Parent = this,
+                AutoSize = false,
+                Location = new Point(LevelLabel.Location.X + LevelLabel.Size.Width + 1, 0),
+                Size = new Size(65, 18),
+                ForeColour = Color.White,
+                DrawFormat = TextFormatFlags.VerticalCenter,
+                IsControl = false,
+            };
+
             ObseverButton = new DXButton
             {
                 Parent = this,
-                Location = new Point(LevelLabel.Location.X + LevelLabel.Size.Width + 5, 1),
+                Location = new Point(RebirthLabel.Location.X + RebirthLabel.Size.Width + 5, 1),
                 ButtonType = ButtonType.SmallButton,
                 Label = { Text = "Observe" },
                 Enabled = false,
@@ -740,6 +753,14 @@ namespace Client.Scenes.Views
                         LevelLabel.Dispose();
 
                     LevelLabel = null;
+                }
+
+                if (RebirthLabel != null)
+                {
+                    if (!RebirthLabel.IsDisposed)
+                        RebirthLabel.Dispose();
+
+                    RebirthLabel = null;
                 }
 
                 if (ObseverButton != null)
