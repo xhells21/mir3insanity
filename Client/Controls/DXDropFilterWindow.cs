@@ -34,7 +34,6 @@ namespace Client.Controls
         public DXDropFilterWindow()
         {
             TitleLabel.Text = "Drop Filter";
-            Modal = true;
             CloseButton.Visible = true;
 
             SetClientSize(new Size(130, 65));
