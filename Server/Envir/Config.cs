@@ -79,7 +79,7 @@ namespace Server.Envir
         public static string DeleteFailLink { get; set; } = @"https://www.zirconserver.com/account-deletetion-unsuccessful/";
 
         public static string BuyPrefix { get; set; } = @"http://*:80/BuyGameGold/";
-        public static string BuyAddress { get; set; } = @"http://145.239.204.13/BuyGameGold";
+        public static string BuyAddress { get; set; } = @"http://51.255.70.73/BuyGameGold";
         public static string IPNPrefix { get; set; } = @"http://*:80/IPN/";
         public static string ReceiverEMail { get; set; } = @"REDACTED";
         public static bool ProcessGameGold { get; set; } = true;
