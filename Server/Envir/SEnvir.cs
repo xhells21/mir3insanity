@@ -741,7 +741,8 @@ namespace Server.Envir
             }
 
         }
-        //Only works on Increasing EXP, still need to do Rebirth or loss of exp ranking update.
+
+        //Only works on Increasing EXP, still need to do loss of exp ranking update.
         public static void RankingSort(CharacterInfo character, bool updateLead = true)
         {
             bool changed = false;
@@ -749,8 +750,11 @@ namespace Server.Envir
             LinkedListNode<CharacterInfo> node;
             while ((node = character.RankingNode.Previous) != null)
             {
-                if (node.Value.Level > character.Level) break;
-                if (node.Value.Level == character.Level && node.Value.Experience >= character.Experience) break;
+                int nodelevel = node.Value.Level + 5000 * node.Value.Rebirth;
+                int characterlevel = character.Level + 5000 * character.Rebirth;
+                    
+                if (nodelevel > characterlevel) break;
+                if (nodelevel == characterlevel && node.Value.Experience >= character.Experience) break;
 
                 changed = true;
 

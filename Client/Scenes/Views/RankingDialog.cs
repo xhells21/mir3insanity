@@ -527,11 +527,14 @@ namespace Client.Scenes.Views
 
                 decimal percent = 0;
 
+                Rank.Level -= Rank.Rebirth * 5000;
+
                 if (Rank.Level < Globals.ExperienceList.Count)
                     percent = Math.Min(1, Math.Max(0, Globals.ExperienceList[Rank.Level] > 0 ? Rank.Experience/Globals.ExperienceList[Rank.Level] : 0));
 
-                LevelLabel.Text = Rank.Rebirth > 0 ? $"{Rank.Level / (5000 * Rank.Rebirth)} - {percent:0.##%}" : $"{Rank.Level} - {percent:0.##%}";
-                RebirthLabel.Text = Rank.Rebirth == 1 ? string.Format("({0} Rebirth)", Rank.Rebirth) : string.Format("({0} Rebirth's)", Rank.Rebirth);
+                LevelLabel.Text = $"{Rank.Level} - {percent:0.##%}";
+                if (Rank.Rebirth > 0)
+                    RebirthLabel.Text = Rank.Rebirth == 1 ? string.Format("({0} Rebirth)", Rank.Rebirth) : string.Format("({0} Rebirths)", Rank.Rebirth);
             }
 
             RankChanged?.Invoke(this, EventArgs.Empty);
