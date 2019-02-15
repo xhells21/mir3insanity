@@ -222,6 +222,9 @@ namespace Client.Models
         public int ShieldShape;
         public int ShieldFrame => DrawFrame + ((ShieldShape % 10) - 1) * ArmourShapeOffSet + ArmourShift;
 
+        public MirLibrary EmblemLibrary;
+        public int EmblemShape;
+
         public int ArmourImage;
 
         public bool DrawWeapon;
@@ -264,6 +267,7 @@ namespace Client.Models
             HorseShape = info.HorseShape;
             HelmetShape = info.Helmet;
             ShieldShape = info.Shield;
+            EmblemShape = info.Emblem;
 
             ArmourImage = info.ArmourImage;
 
@@ -318,7 +322,17 @@ namespace Client.Models
                     CEnvir.LibraryList.TryGetValue(LibraryFile.HorseDarkEffect, out HorseShapeLibrary2);
                     break;
             }
-            
+
+            switch (EmblemShape)
+            {
+                case 1:
+                case 2:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.GameInter, out EmblemLibrary);
+                    break;
+                case 3:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.GameInter2, out EmblemLibrary);
+                    break;
+            }
 
             switch (Class)
             {
@@ -352,7 +366,7 @@ namespace Client.Models
                             CEnvir.LibraryList.TryGetValue(file, out WeaponLibrary1);
 
                             if (!ShieldList.TryGetValue(ShieldShape / 10, out file)) file = LibraryFile.None;
-                            CEnvir.LibraryList.TryGetValue(file, out ShieldLibrary);
+                            CEnvir.LibraryList.TryGetValue(file, out ShieldLibrary);                            
                             break;
                         case MirGender.Female:
                             if (!ArmourList.TryGetValue(ArmourShape / 11 + FemaleOffSet, out file))
@@ -584,9 +598,7 @@ namespace Client.Models
                     break;
 
             }
-        }
-        
-
+        }      
         
         public override void Draw()
         {
@@ -641,6 +653,7 @@ namespace Client.Models
                     }
                     break;
             }
+            DrawEmblemEffect();
         }
         public override void DrawBlend()
         {
@@ -997,16 +1010,46 @@ namespace Client.Models
                             library.DrawBlend(600 + (GameScene.Game.MapControl.Animation / 2) % 13 + (int)Direction * 20, DrawX, DrawY, Color.White, true, 1f, ImageType.Image);
                             // 600 - 614 // 620 ....
                             break;
-
                     }
 
-
                     break;
-
             }
-
         }
-        
+
+        private void DrawEmblemEffect()
+        {
+            if (!Config.DrawEffects) return;
+            if (EmblemLibrary == null) return;
+
+            switch (CurrentAction)
+            {
+                case MirAction.Die:
+                case MirAction.Dead:
+                    break;
+                default:
+                    switch (EmblemShape)
+                    {
+                        //Masters Emblem
+                        case 1:
+                            EmblemLibrary.DrawBlend(500 + (GameScene.Game.MapControl.Animation) % 40, DrawX, DrawY, Color.White, true, 0.7f, ImageType.Image);
+                            break;
+
+                        //Kings Emblem
+                        case 2:
+                            EmblemLibrary.DrawBlend(3800 + (GameScene.Game.MapControl.Animation) % 32, DrawX, DrawY, Color.White, true, 0.7f, ImageType.Image);
+                            EmblemLibrary.DrawBlend(3850 + (GameScene.Game.MapControl.Animation) % 28, DrawX, DrawY, Color.White, true, 0.7f, ImageType.Image);
+                            break;
+
+                        //Zirconian Emblem
+                        case 3:
+                            EmblemLibrary.DrawBlend(640 + (GameScene.Game.MapControl.Animation) % 33, DrawX, DrawY, Color.White, true, 0.7f, ImageType.Image);
+                            EmblemLibrary.DrawBlend(600 + (GameScene.Game.MapControl.Animation) % 28, DrawX, DrawY, Color.White, true, 0.7f, ImageType.Image);
+                            break;
+                    }
+                    break;
+            }
+        }
+
         public override bool MouseOver(Point p)
         {
             if (BodyLibrary != null && BodyLibrary.VisiblePixel(ArmourFrame, new Point(p.X - DrawX, p.Y - DrawY), false, true))

@@ -596,6 +596,9 @@ namespace Client.Controls
             {
 
                 int drawIndex;
+                int effectIndex = 0, effectcount = 0;
+                Point effectOffset = Point.Empty;
+                MirLibrary effectLibrary = null;
 
                 if (Item.Info.Effect == ItemEffect.Gold)
                 {
@@ -624,6 +627,30 @@ namespace Client.Controls
                         info = Globals.ItemInfoList.Binding.First(x => x.Index == Item.AddedStats[Stat.ItemIndex]);
 
                     drawIndex = info.Image;
+
+                    switch (drawIndex)
+                    {
+                        case 79: //Masters Emblem
+                            effectIndex = 600;
+                            effectcount = 6;
+                            effectOffset = new Point(25, 15);
+                            CEnvir.LibraryList.TryGetValue(LibraryFile.GameInter, out effectLibrary);
+                            break;
+
+                        case 328: //Kings Emblem
+                            effectIndex = 3890;
+                            effectcount = 8;
+                            CEnvir.LibraryList.TryGetValue(LibraryFile.GameInter, out effectLibrary);
+                            effectOffset = new Point(25, 15);
+                            break;
+
+                        case 329: //Zirconian Emblem
+                            effectIndex = 680;
+                            effectcount = 8;
+                            CEnvir.LibraryList.TryGetValue(LibraryFile.GameInter2, out effectLibrary);
+                            effectOffset = new Point(-6, 5);
+                            break;
+                    }
                 }
 
 
@@ -634,7 +661,17 @@ namespace Client.Controls
                     area.Offset((Size.Width - image.Width)/2, (Size.Height - image.Height)/2);
 
                     PresentTexture(image.Image, this, area, Item.Count > 0 ? Color.White : Color.Gray, this);
-                }
+
+                    if (effectLibrary != null)
+                    {
+                        MirImage effectimage = effectLibrary.CreateImage(effectIndex + (GameScene.Game.MapControl.Animation) % effectcount, ImageType.Image);
+                        if (effectimage != null)
+                        {
+                            area.Offset(effectimage.OffSetX + effectOffset.X, effectimage.OffSetY + effectOffset.Y);
+                            PresentTexture(effectimage.Image, this, area, Item.Count > 0 ? Color.White : Color.Gray, this, 0, 0, true);
+                        }
+                    }
+                }                
             }
 
             if (InterfaceLibrary != null)

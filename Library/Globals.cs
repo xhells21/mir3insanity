@@ -444,6 +444,7 @@ namespace Library
         public int Weapon { get; set; }
         public int Armour { get; set; }
         public int Shield { get; set; }
+        public int Emblem { get; set; }
         public Color ArmourColour { get; set; }
         public int ArmourImage { get; set; }
 
@@ -478,7 +479,9 @@ namespace Library
 
         public int HelmetShape { get; set; }
         public int HorseShape { get; set; }
+
         public int ShieldShape { get; set; }
+        public int EmblemShape { get; set; }
 
         public List<ClientUserQuest> Quests { get; set; }
 

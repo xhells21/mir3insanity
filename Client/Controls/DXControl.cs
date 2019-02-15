@@ -1641,7 +1641,7 @@ namespace Client.Controls
             ExpireTime = CEnvir.Now + Config.CacheDuration;
         }
 
-        public static void PresentTexture(Texture texture, DXControl parent, Rectangle displayArea, Color colour, DXControl control, int offX = 0, int offY = 0)
+        public static void PresentTexture(Texture texture, DXControl parent, Rectangle displayArea, Color colour, DXControl control, int offX = 0, int offY = 0, bool blend = false, float blendrate = 1f)
         {
             Rectangle bounds = ActiveScene.DisplayArea;
             Rectangle textureArea = Rectangle.Intersect(bounds, displayArea);
@@ -1671,9 +1671,19 @@ namespace Client.Controls
             if (textureArea.IsEmpty) return;
             
             textureArea.Location = new Point(textureArea.X - displayArea.X, textureArea.Y - displayArea.Y);
-            
-            DXManager.Sprite.Draw(texture, textureArea, Vector3.Zero, new Vector3(displayArea.X + textureArea.Location.X + offX, displayArea.Y + textureArea.Location.Y + offY, 0), colour);
 
+            if (blend)
+            {
+                bool oldBlend = DXManager.Blending;
+                float oldRate = DXManager.BlendRate;
+                DXManager.SetBlend(blend, blendrate);
+
+                DXManager.Sprite.Draw(texture, textureArea, Vector3.Zero, new Vector3(displayArea.X + textureArea.Location.X + offX, displayArea.Y + textureArea.Location.Y + offY, 0), colour);
+
+                DXManager.SetBlend(oldBlend, oldRate);
+            }
+            else
+                DXManager.Sprite.Draw(texture, textureArea, Vector3.Zero, new Vector3(displayArea.X + textureArea.Location.X + offX, displayArea.Y + textureArea.Location.Y + offY, 0), colour);
         }
         #endregion
 

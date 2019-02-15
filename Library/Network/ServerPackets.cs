@@ -262,6 +262,7 @@ namespace Library.Network.ServerPackets
         public int Weapon { get; set; }
         public int Shield { get; set; }
         public int Armour { get; set; }
+        public int Emblem { get; set; }
         public Color ArmourColour { get; set; }
         public int ArmourImage { get; set; }
 
@@ -348,6 +349,7 @@ namespace Library.Network.ServerPackets
         public uint ObjectID { get; set; }
         public int Weapon { get; set; }
         public int Shield { get; set; }
+        public int Emblem { get; set; }
         public int Armour { get; set; }
         public Color ArmourColour { get; set; }
         public int ArmourImage { get; set; }
