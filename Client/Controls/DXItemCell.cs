@@ -671,7 +671,17 @@ namespace Client.Controls
                             PresentTexture(effectimage.Image, this, area, Item.Count > 0 ? Color.White : Color.Gray, this, 0, 0, true);
                         }
                     }
-                }                
+                }   
+                
+                /*if (GridType == GridType.WeddingRing)
+                {
+                    Size = new Size(40, 40);
+                    Location.Offset(-2, -2);
+                    MirLibrary library;
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.GameInter, out library);
+                    image = library.CreateImage(197, ImageType.Image);
+                    PresentTexture(image.Image, this, DisplayArea, Item.Count > 0 ? Color.White : Color.Gray, this, 0, 0, true);
+                }*/
             }
 
             if (InterfaceLibrary != null)
