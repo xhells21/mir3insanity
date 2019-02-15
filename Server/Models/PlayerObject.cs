@@ -579,8 +579,27 @@ namespace Server.Models
         {
             NameColour = Color.White;
 
-            if (Stats[Stat.Rebirth] > 0)
-                NameColour = Color.DeepPink;
+            switch (Stats[Stat.Rebirth])
+            {
+                case 1:
+                    NameColour = Color.LightPink;
+                    break;
+                case 2:
+                    NameColour = Color.Pink;
+                    break;
+                case 3:
+                    NameColour = Color.Plum;
+                    break;
+                case 4:
+                    NameColour = Color.HotPink;
+                    break;
+                case 5:
+                    NameColour = Color.DeepPink;
+                    break;
+                default:
+                    NameColour = Color.DeepPink;
+                    break;
+            }
             
 
             if (Stats[Stat.PKPoint] >= Config.RedPoint)
