@@ -15753,11 +15753,13 @@ namespace Server.Models
 
             if (LifeSteal > 1)
             {
-                int heal = (int) Math.Floor(LifeSteal);
-                LifeSteal -= heal;                
+                int heal = (int)Math.Floor(LifeSteal);
+                LifeSteal -= heal;
                 ChangeHP(Math.Min((hasLotus ? 1500 : 750), heal));
                 DisplayLifeSteal = true;
             }
+            else if (LifeSteal < 0)
+                LifeSteal = 0;
 
             //  if (primary)
 
