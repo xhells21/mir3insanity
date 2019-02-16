@@ -58,7 +58,7 @@ namespace Server.Models
         public virtual Point CurrentLocation { get; set; }
         public virtual MirDirection Direction { get; set; }
 
-        public bool DisplayCrit, DisplayMiss, DisplayResist, DisplayBlock;
+        public bool DisplayCrit, DisplayMiss, DisplayResist, DisplayBlock, DisplayLifeSteal;
 
         public int DisplayHP;
         public int DisplayMP;
@@ -156,17 +156,18 @@ namespace Server.Models
             DisplayHPMPTime = SEnvir.Now.AddMilliseconds(200);
 
             bool changed = false;
-            if (DisplayHP != CurrentHP || DisplayBlock || DisplayCrit || DisplayMiss)
+            if (DisplayHP != CurrentHP || DisplayBlock || DisplayCrit || DisplayMiss || DisplayLifeSteal)
             {
                 int change = CurrentHP - DisplayHP;
 
-                Broadcast(new S.HealthChanged { ObjectID = ObjectID, Change = change, Critical = DisplayCrit, Miss = DisplayMiss, Block = DisplayBlock });
+                Broadcast(new S.HealthChanged { ObjectID = ObjectID, Change = change, Critical = DisplayCrit, Miss = DisplayMiss, Block = DisplayBlock, LifeSteal = DisplayLifeSteal });
 
                 DisplayHP = CurrentHP;
 
                 DisplayMiss = false;
                 DisplayBlock = false;
                 DisplayCrit = false;
+                DisplayLifeSteal = false;
 
                 changed = true;
             }

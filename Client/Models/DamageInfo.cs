@@ -199,6 +199,30 @@ namespace Client.Models
 
         #endregion
 
+        #region LifeSteal
+
+        public bool LifeSteal
+        {
+            get { return _LifeSteal; }
+            set
+            {
+                if (_LifeSteal == value) return;
+
+                bool oldValue = _LifeSteal;
+                _LifeSteal = value;
+
+                OnLifeStealChanged(oldValue, value);
+            }
+        }
+        private bool _LifeSteal;
+        public event EventHandler<EventArgs> LifeStealChanged;
+        public virtual void OnLifeStealChanged(bool oValue, bool nValue)
+        {
+            LifeStealChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        #endregion
+
         public static MirLibrary Library;
 
         
@@ -207,8 +231,8 @@ namespace Client.Models
         public TimeSpan ShowDelay { get; set; } = TimeSpan.FromSeconds(1);
         public TimeSpan HideDelay { get; set; } = TimeSpan.FromMilliseconds(250);
 
-        public int BlueWidth = 9, RedWidth = 9, GreenWidth = 11, OrangeWidth = 13, WhiteWidth = 20;
-        public int BlueIndex = 71, RedIndex = 72, GreenIndex = 73, OrangeIndex = 74, WhiteIndex = 75;
+        public int BlueWidth = 9, YellowWidth = 9, RedWidth = 9, GreenWidth = 11, OrangeWidth = 13, WhiteWidth = 20;
+        public int BlueIndex = 71, YellowIndex = 190, RedIndex = 72, GreenIndex = 73, OrangeIndex = 74, WhiteIndex = 75;
 
         static DamageInfo()
         {
@@ -304,8 +328,6 @@ namespace Client.Models
             else
             {
                 string text = Value.ToString("+#0;-#0");
-
-
                
                 int index;
                 int width;
@@ -335,9 +357,18 @@ namespace Client.Models
                 }
                 else
                 {
-                    //Blue
-                    index = BlueIndex;
-                    width = BlueWidth;
+                    if (LifeSteal)
+                    {
+                        //Yellow
+                        index = YellowIndex;
+                        width = YellowWidth;
+                    }
+                    else
+                    {
+                        //Blue
+                        index = BlueIndex;
+                        width = BlueWidth;
+                    }
                 }
                 drawX -= width * text.Length / 2;
 

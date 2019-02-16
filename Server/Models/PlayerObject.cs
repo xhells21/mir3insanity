@@ -12864,8 +12864,7 @@ namespace Server.Models
                 magics.Add(magic);
 
             if (Magics.TryGetValue(MagicType.AdvancedBloodyFlower, out magic) && Level >= magic.Info.NeedLevel1)
-                magics.Add(magic);
-            
+                magics.Add(magic);            
 
             if (SEnvir.Random.Next(2) == 0 && Magics.TryGetValue(MagicType.CalamityOfFullMoon, out magic) && Level >= magic.Info.NeedLevel1) //LOTUS Phase
                 magics.Add(magic);
@@ -15420,8 +15419,6 @@ namespace Server.Models
                     case MagicType.DestructiveSurge:
                         hasDestructiveSurge = !primary;
                         break;
-
-
                 }
             }
 
@@ -15706,7 +15703,6 @@ namespace Server.Models
 
             if (damage <= 0) return;
 
-
             CheckBrown(ob);
 
             DamageItem(GridType.Equipment, (int) EquipmentSlot.Weapon, SEnvir.Random.Next(2) + 1);
@@ -15736,7 +15732,6 @@ namespace Server.Models
 
             decimal lifestealAmount = damage * Stats[Stat.LifeSteal] / 100M;
 
-
             if (hasSwiftBlade)
             {
                 lifestealAmount = Math.Min(lifestealAmount, 2000 - SwiftBladeLifeSteal);
@@ -15760,8 +15755,9 @@ namespace Server.Models
             if (LifeSteal > 1)
             {
                 int heal = (int) Math.Floor(LifeSteal);
-                LifeSteal -= heal;
+                LifeSteal -= heal;                
                 ChangeHP(Math.Min((hasLotus ? 1500 : 750), heal));
+                DisplayLifeSteal = true;
             }
 
             //  if (primary)

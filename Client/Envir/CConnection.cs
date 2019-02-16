@@ -1478,7 +1478,7 @@ namespace Client.Envir
 
                 ob.CurrentHP += p.Change;
                 ob.DrawHealthTime = CEnvir.Now.AddSeconds(5);
-                ob.DamageList.Add(new DamageInfo { Value = p.Change, Block = p.Block, Critical = p.Critical, Miss = p.Miss });
+                ob.DamageList.Add(new DamageInfo { Value = p.Change, Block = p.Block, Critical = p.Critical, Miss = p.Miss, LifeSteal = p.LifeSteal });
 
                 return;
             }

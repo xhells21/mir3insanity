@@ -437,6 +437,7 @@ namespace Library.Network.ServerPackets
         public bool Miss { get; set; }
         public bool Block { get; set; }
         public bool Critical { get; set; }
+        public bool LifeSteal { get; set; }
     }
     public sealed class ObjectStats : Packet
     {
