@@ -15748,7 +15748,7 @@ namespace Server.Models
                 DestructiveSurgeLifeSteal = Math.Min(750, DestructiveSurgeLifeSteal + lifestealAmount);
             }
 
-            if (primary || Class == MirClass.Warrior || hasFlameSplash)
+            if ((primary || Class == MirClass.Warrior || hasFlameSplash) && lifestealAmount > 1)
                 LifeSteal += lifestealAmount;
 
             if (LifeSteal > 1)
@@ -15758,8 +15758,6 @@ namespace Server.Models
                 ChangeHP(Math.Min((hasLotus ? 1500 : 750), heal));
                 DisplayLifeSteal = true;
             }
-            else if (LifeSteal < 0)
-                LifeSteal = 0;
 
             //  if (primary)
 
