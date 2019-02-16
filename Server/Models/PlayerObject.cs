@@ -15735,18 +15735,17 @@ namespace Server.Models
             if (hasSwiftBlade)
             {
                 lifestealAmount = Math.Min(lifestealAmount, 2000 - SwiftBladeLifeSteal);
-                SwiftBladeLifeSteal += lifestealAmount;
+                SwiftBladeLifeSteal = Math.Min(2000, SwiftBladeLifeSteal + lifestealAmount);
             }
-
             if (hasFlameSplash)
             {
                 lifestealAmount = Math.Min(lifestealAmount, 750 - FlameSplashLifeSteal);
-                FlameSplashLifeSteal += lifestealAmount;
+                FlameSplashLifeSteal = Math.Min(750, FlameSplashLifeSteal + lifestealAmount);
             }
             if (hasDestructiveSurge)
             {
                 lifestealAmount = Math.Min(lifestealAmount, 750 - DestructiveSurgeLifeSteal);
-                DestructiveSurgeLifeSteal += lifestealAmount;
+                DestructiveSurgeLifeSteal = Math.Min(750, DestructiveSurgeLifeSteal + lifestealAmount);
             }
 
             if (primary || Class == MirClass.Warrior || hasFlameSplash)
