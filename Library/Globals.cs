@@ -87,7 +87,9 @@ namespace Library
 
             CommonCraftWeaponPercentCost = 30000000,
             SuperiorCraftWeaponPercentCost = 60000000,
-            EliteCraftWeaponPercentCost = 80000000;
+            EliteCraftWeaponPercentCost = 80000000,
+
+            ChaoticHeavenGlaiveImageOffset = 10000000;
 
         public static decimal MarketPlaceTax = 0.07M;  //2.5x Item cost
 
@@ -447,6 +449,7 @@ namespace Library
         public int Emblem { get; set; }
         public Color ArmourColour { get; set; }
         public int ArmourImage { get; set; }
+        public int WeaponImage { get; set; }
 
         public decimal Experience { get; set; }
 

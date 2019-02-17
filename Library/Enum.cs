@@ -1124,6 +1124,8 @@ namespace Library
         StatExtractor = 90,
         SpiritBlade = 91,
         RefineExtractor = 92,
+        ChaoticHeavenBlade = 93,
+        ChaoticHeavenGlaive = 94
     }
 
     [Flags]

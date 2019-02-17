@@ -371,6 +371,8 @@ namespace Client.Scenes.Views
             MapObject.User.Opacity = 0.65F;
 
             MapObject.User.DrawBody(false);
+            if (MapObject.User.DrawWeaponEffectInfront())
+                MapObject.User.DrawWeaponEffect();
 
             MapObject.User.Opacity = oldOpacity;
 

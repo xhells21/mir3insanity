@@ -225,7 +225,7 @@ namespace Client.Models
         public MirLibrary EmblemLibrary;
         public int EmblemShape;
 
-        public int ArmourImage;
+        public int ArmourImage, WeaponImage;
 
         public bool DrawWeapon;
 
@@ -270,6 +270,7 @@ namespace Client.Models
             EmblemShape = info.Emblem;
 
             ArmourImage = info.ArmourImage;
+            WeaponImage = info.WeaponImage;
 
 
             Light = info.Light;
@@ -598,61 +599,103 @@ namespace Client.Models
                     break;
 
             }
-        }      
+        }    
         
+        public bool DrawWingsBehind()
+        {
+            switch (Direction)
+            {
+                case MirDirection.Up:
+                case MirDirection.UpRight:
+                case MirDirection.Right:
+                case MirDirection.Left:
+                case MirDirection.UpLeft:
+                    return false;
+                case MirDirection.DownRight:
+                case MirDirection.Down:
+                case MirDirection.DownLeft:
+                    switch (ArmourImage)
+                    {
+                        //All
+                        case 962:
+                        case 972:
+                            return false;
+                        default:
+                            return true;
+                    }
+            }
+            return false;
+        }
+
+        public bool DrawWeaponEffectBehind()
+        {
+            switch (Direction)
+            {                
+                case MirDirection.Up:                            
+                case MirDirection.DownLeft:
+                case MirDirection.Left:
+                case MirDirection.UpLeft:
+                    return true;
+            }
+            return false;
+        }
+
+        public bool DrawWingsInfront()
+        {
+            switch (Direction)
+            {
+                case MirDirection.Up:
+                case MirDirection.UpRight:
+                case MirDirection.Right:
+                case MirDirection.Left:
+                case MirDirection.UpLeft:
+                    return true;
+                case MirDirection.DownRight:
+                case MirDirection.Down:
+                case MirDirection.DownLeft:
+                    switch (ArmourImage)
+                    {
+                        //All
+                        case 962:
+                        case 972:
+                            return true;
+                    }
+                    break;
+            }
+            return false;
+        }
+
+        public bool DrawWeaponEffectInfront()
+        {
+            switch (Direction)
+            {
+                case MirDirection.UpRight:
+                case MirDirection.Right:
+                case MirDirection.DownRight:
+                case MirDirection.Down:
+                    return true;
+            }
+            return false;
+        }
+
         public override void Draw()
         {
             if (BodyLibrary == null) return;
 
-            switch (Direction)
-            {
-                case MirDirection.Up:
-                case MirDirection.UpRight:
-                case MirDirection.Right:
-                case MirDirection.Left:
-                case MirDirection.UpLeft:
-                    break;
-                case MirDirection.DownRight:
-                case MirDirection.Down:
-                case MirDirection.DownLeft:
-                    switch (ArmourImage)
-                    {
-                        //All
-                        case 962:
-                        case 972:
-                            break;
-                        default:
-                            DrawWings();
-                            break;
+            if (DrawWingsBehind())
+                DrawWings();
 
-                    }
-                    break;
-            }
+            if (DrawWeaponEffectBehind())
+                DrawWeaponEffect();
+            
             DrawBody(true);
 
+            if (DrawWingsInfront())
+                DrawWings();
 
-            switch (Direction)
-            {
-                case MirDirection.Up:
-                case MirDirection.UpRight:
-                case MirDirection.Right:
-                case MirDirection.Left:
-                case MirDirection.UpLeft:
-                    DrawWings();
-                    break;
-                case MirDirection.DownRight:
-                case MirDirection.Down:
-                case MirDirection.DownLeft:
-                    switch (ArmourImage)
-                    {
-                        //All
-                        case 962:
-                        case 972:
-                            DrawWings();
-                            break;
-                    }
-                    break;
-            }
+            if (DrawWeaponEffectInfront())
+                DrawWeaponEffect();
+            
             DrawEmblemEffect();
         }
         public override void DrawBlend()
@@ -1009,6 +1052,37 @@ namespace Client.Models
                         case 2017:
                             library.DrawBlend(600 + (GameScene.Game.MapControl.Animation / 2) % 13 + (int)Direction * 20, DrawX, DrawY, Color.White, true, 1f, ImageType.Image);
                             // 600 - 614 // 620 ....
+                            break;
+                    }
+
+                    break;
+            }
+        }
+
+        public void DrawWeaponEffect()
+        {
+            if (!Config.DrawEffects) return;
+
+            switch (CurrentAction)
+            {
+                case MirAction.Die:
+                case MirAction.Dead:
+                    break;
+                default:
+                    MirLibrary library;
+
+                    if (!CEnvir.LibraryList.TryGetValue(LibraryFile.EquipEffect_Full, out library)) return;                    
+
+                    switch (WeaponImage)
+                    {
+                        //Warrior/Wiz/Tao
+                        case 1076: //Chaotic Heaven Blade
+                            library.DrawBlend(40000 + 5000 * (byte)Gender + DrawFrame, DrawX, DrawY, Color.White, true, 0.8f, ImageType.Image);
+                            break;
+
+                        //Sin
+                        case 2550: //Chaotic Heaven glaive
+                            library.DrawBlend(20000 + 5000 * (byte)Gender + DrawFrame, DrawX, DrawY, Color.White, true, 0.8f, ImageType.Image);
                             break;
                     }
 

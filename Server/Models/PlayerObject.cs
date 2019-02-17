@@ -18279,14 +18279,17 @@ namespace Server.Models
 
         private void ChainLightningEnd(List<UserMagic> magics, Cell cell, int extra)
         {
-            if (cell?.Objects == null) return;
+            if (cell == null) return;
 
-            for (int i = cell.Objects.Count - 1; i >= 0; i--)
+            if (cell.Objects != null)
             {
-                MapObject ob = cell.Objects[i];
-                if (!CanAttackTarget(ob)) continue;
+                for (int i = cell.Objects.Count - 1; i >= 0; i--)
+                {
+                    MapObject ob = cell.Objects[i];
+                    if (!CanAttackTarget(ob)) continue;
 
-                MagicAttack(magics, ob, true, null, extra);
+                    MagicAttack(magics, ob, true, null, extra);
+                }
             }
         }
 
@@ -19240,6 +19243,11 @@ namespace Server.Models
             foreach (AutoPotionLink link in Character.AutoPotionLinks)
                 alinks.Add(link.ToClientInfo());
 
+            UserItem weapon = Equipment[(int)EquipmentSlot.Weapon];
+            int weaponimageoffset = 0;
+            if (weapon != null && weapon.Info.Effect == ItemEffect.ChaoticHeavenGlaive)
+                weaponimageoffset = Globals.ChaoticHeavenGlaiveImageOffset;
+
             return new StartInformation
             {
                 Index = Character.Index,
@@ -19264,6 +19272,8 @@ namespace Server.Models
                 HairColour = HairColour,
 
                 Weapon = Equipment[(int)EquipmentSlot.Weapon]?.Info.Shape ?? -1,
+
+                WeaponImage = Equipment[(int)EquipmentSlot.Weapon]?.Info.Image + weaponimageoffset ?? 0,
 
                 Shield = Equipment[(int)EquipmentSlot.Shield]?.Info.Shape ?? -1,
 
@@ -19326,6 +19336,11 @@ namespace Server.Models
         {
             if (ob == this) return null;
 
+            UserItem weapon = Equipment[(int)EquipmentSlot.Weapon];
+            int weaponimageoffset = 0;
+            if (weapon != null && weapon.Info.Effect == ItemEffect.ChaoticHeavenGlaive)
+                weaponimageoffset = Globals.ChaoticHeavenGlaiveImageOffset;
+
             return new S.ObjectPlayer
             {
                 Index = Character.Index,
@@ -19347,6 +19362,7 @@ namespace Server.Models
 
                 //TODO HElmet
                 Weapon = Equipment[(int)EquipmentSlot.Weapon]?.Info.Shape ?? -1,
+                WeaponImage = Equipment[(int)EquipmentSlot.Weapon]?.Info.Image + weaponimageoffset ?? 0,
 
                 Shield = Equipment[(int)EquipmentSlot.Shield]?.Info.Shape ?? -1,
 
@@ -19391,11 +19407,17 @@ namespace Server.Models
 
         public void SendShapeUpdate()
         {
+            UserItem weapon = Equipment[(int)EquipmentSlot.Weapon];
+            int weaponimageoffset = 0;
+            if (weapon != null && weapon.Info.Effect == ItemEffect.ChaoticHeavenGlaive)
+                weaponimageoffset = Globals.ChaoticHeavenGlaiveImageOffset;
+
             S.PlayerUpdate p = new S.PlayerUpdate
             {
                 ObjectID = ObjectID,
 
                 Weapon = Equipment[(int)EquipmentSlot.Weapon]?.Info.Shape ?? -1,
+                WeaponImage = Equipment[(int)EquipmentSlot.Weapon]?.Info.Image + weaponimageoffset ?? 0,
 
                 Shield = Character.HideShield ? 0 : Equipment[(int)EquipmentSlot.Shield]?.Info.Shape ?? -1,
 

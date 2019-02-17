@@ -265,6 +265,7 @@ namespace Library.Network.ServerPackets
         public int Emblem { get; set; }
         public Color ArmourColour { get; set; }
         public int ArmourImage { get; set; }
+        public int WeaponImage { get; set; }
 
         public int Light { get; set; }
 
@@ -353,6 +354,7 @@ namespace Library.Network.ServerPackets
         public int Armour { get; set; }
         public Color ArmourColour { get; set; }
         public int ArmourImage { get; set; }
+        public int WeaponImage { get; set; }
 
         public int HorseArmour { get; set; }
         public int Helmet { get; set; }

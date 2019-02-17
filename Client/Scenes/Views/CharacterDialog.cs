@@ -1791,6 +1791,40 @@ namespace Client.Scenes.Views
 
                     library.Draw(index, DisplayArea.X + x, DisplayArea.Y + y, Color.White, true, 1F, ImageType.Image);
                     library.Draw(index, DisplayArea.X + x, DisplayArea.Y + y, Grid[(int)EquipmentSlot.Weapon].Item.Colour, true, 1F, ImageType.Overlay);
+
+                    MirLibrary effectLibrary;
+
+                    if (CEnvir.LibraryList.TryGetValue(LibraryFile.EquipEffect_UI, out effectLibrary))
+                    {
+                        MirImage image = null;
+                        switch (index)
+                        {
+                            //Warrior/Wiz/Tao
+                            case 1076: //Chaotic Heaven Blade
+                                image = effectLibrary.CreateImage(2000 + (GameScene.Game.MapControl.Animation % 10), ImageType.Image);
+                                break;
+
+                            //Sin
+                            case 2550: //Chaotic Heaven Glaive
+                                if (Grid[(int)EquipmentSlot.Weapon].Item.Info.Effect == ItemEffect.ChaoticHeavenGlaive)
+                                    image = effectLibrary.CreateImage(1920 + (GameScene.Game.MapControl.Animation % 12), ImageType.Image);
+                                else
+                                    image = effectLibrary.CreateImage(1900 + (GameScene.Game.MapControl.Animation % 12), ImageType.Image);
+                                break;
+                        }
+                        if (image != null)
+                        {
+
+                            bool oldBlend = DXManager.Blending;
+                            float oldRate = DXManager.BlendRate;
+
+                            DXManager.SetBlend(true, 0.8F);
+
+                            PresentTexture(image.Image, CharacterTab, new Rectangle(DisplayArea.X + x + image.OffSetX, DisplayArea.Y + y + image.OffSetY, image.Width, image.Height), ForeColour, this);
+
+                            DXManager.SetBlend(oldBlend, oldRate);
+                        }
+                    }
                 }
 
                 if (Grid[(int)EquipmentSlot.Shield].Item != null)
