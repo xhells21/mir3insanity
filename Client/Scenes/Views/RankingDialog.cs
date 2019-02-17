@@ -465,6 +465,7 @@ namespace Client.Scenes.Views
             NameLabel.Text = "Name";
             ClassLabel.Text = "Class";
             LevelLabel.Text = "Level";
+            RebirthLabel.Text = "";
 
             DrawTexture = false;
 
@@ -535,6 +536,7 @@ namespace Client.Scenes.Views
                 LevelLabel.Text = $"{Rank.Level} - {percent:0.##%}";
                 if (Rank.Rebirth > 0)
                     RebirthLabel.Text = Rank.Rebirth == 1 ? string.Format("({0} Rebirth)", Rank.Rebirth) : string.Format("({0} Rebirths)", Rank.Rebirth);
+                else RebirthLabel.Text = "";
             }
 
             RankChanged?.Invoke(this, EventArgs.Empty);
