@@ -1,7 +1,7 @@
 ﻿namespace Server.Views
 {
-    //Latest Control: 108
-    //Latest TabIndex: 162
+    //Latest Control: 109
+    //Latest TabIndex: 164
     partial class ConfigView
     {
         /// <summary>
@@ -172,6 +172,8 @@
             this.labelControl46 = new DevExpress.XtraEditors.LabelControl();
             this.AvailableHuntGoldCapEdit = new DevExpress.XtraEditors.TextEdit();
             this.labelControl105 = new DevExpress.XtraEditors.LabelControl();
+            this.AccountCreationHuntGoldEdit = new DevExpress.XtraEditors.TextEdit();
+            this.labelControl109 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl45 = new DevExpress.XtraEditors.LabelControl();
             this.GlobalDelayEdit = new DevExpress.XtraEditors.TimeSpanEdit();
             this.labelControl44 = new DevExpress.XtraEditors.LabelControl();
@@ -341,6 +343,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.AvailableHuntGoldCapEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MarriageTeleportDelayEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RejoinGuildDelayEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AccountCreationHuntGoldEdit.Properties)).BeginInit();
             this.xtraTabPage7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LairRegionIndexEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MysteryShipRegionIndexEdit.Properties)).BeginInit();
@@ -437,7 +440,7 @@
             this.xtraTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.xtraTabControl1.Location = new System.Drawing.Point(0, 143);
             this.xtraTabControl1.Name = "xtraTabControl1";
-            this.xtraTabControl1.SelectedTabPage = this.xtraTabPage9;
+            this.xtraTabControl1.SelectedTabPage = this.xtraTabPage6;
             this.xtraTabControl1.Size = new System.Drawing.Size(775, 424);
             this.xtraTabControl1.TabIndex = 2;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
@@ -1585,6 +1588,8 @@
             this.xtraTabPage6.Controls.Add(this.MarriageTeleportDelayEdit);
             this.xtraTabPage6.Controls.Add(this.labelControl107);
             this.xtraTabPage6.Controls.Add(this.RejoinGuildDelayEdit);
+            this.xtraTabPage6.Controls.Add(this.AccountCreationHuntGoldEdit);
+            this.xtraTabPage6.Controls.Add(this.labelControl109);
             this.xtraTabPage6.Name = "xtraTabPage6";
             this.xtraTabPage6.Size = new System.Drawing.Size(769, 396);
             this.xtraTabPage6.Text = "Players";
@@ -1858,9 +1863,30 @@
             this.labelControl105.TabIndex = 156;
             this.labelControl105.Text = "Available Hunt Gold Cap:";
             // 
+            // AccountCreationHuntGoldEdit
+            // 
+            this.AccountCreationHuntGoldEdit.Location = new System.Drawing.Point(146, 251);
+            this.AccountCreationHuntGoldEdit.MenuManager = this.ribbon;
+            this.AccountCreationHuntGoldEdit.Name = "AccountCreationHuntGoldEdit";
+            this.AccountCreationHuntGoldEdit.Properties.Appearance.Options.UseTextOptions = true;
+            this.AccountCreationHuntGoldEdit.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+            this.AccountCreationHuntGoldEdit.Properties.Mask.EditMask = "n0";
+            this.AccountCreationHuntGoldEdit.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            this.AccountCreationHuntGoldEdit.Properties.Mask.UseMaskAsDisplayFormat = true;
+            this.AccountCreationHuntGoldEdit.Size = new System.Drawing.Size(100, 20);
+            this.AccountCreationHuntGoldEdit.TabIndex = 163;
+            // 
+            // labelControl109
+            // 
+            this.labelControl109.Location = new System.Drawing.Point(5, 254);
+            this.labelControl109.Name = "labelControl109";
+            this.labelControl109.Size = new System.Drawing.Size(52, 13);
+            this.labelControl109.TabIndex = 164;
+            this.labelControl109.Text = "Account Creation Hunt Gold:";
+            // 
             // labelControl106
             // 
-            this.labelControl106.Location = new System.Drawing.Point(5, 254);
+            this.labelControl106.Location = new System.Drawing.Point(5, 280);
             this.labelControl106.Name = "labelControl106";
             this.labelControl106.Size = new System.Drawing.Size(62, 13);
             this.labelControl106.TabIndex = 157;
@@ -1869,7 +1895,7 @@
             // MarriageTeleportDelayEdit
             // 
             this.MarriageTeleportDelayEdit.EditValue = System.TimeSpan.Parse("00:00:00");
-            this.MarriageTeleportDelayEdit.Location = new System.Drawing.Point(129, 251);
+            this.MarriageTeleportDelayEdit.Location = new System.Drawing.Point(129, 277);
             this.MarriageTeleportDelayEdit.MenuManager = this.ribbon;
             this.MarriageTeleportDelayEdit.Name = "MarriageTeleportDelayEdit";
             this.MarriageTeleportDelayEdit.Properties.AllowEditDays = false;
@@ -1878,6 +1904,7 @@
             this.MarriageTeleportDelayEdit.Properties.Mask.EditMask = "HH:mm:ss";
             this.MarriageTeleportDelayEdit.Size = new System.Drawing.Size(100, 20);
             this.MarriageTeleportDelayEdit.TabIndex = 158;
+
             // 
             // labelControl45
             // 
@@ -2943,6 +2970,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.AvailableHuntGoldCapEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MarriageTeleportDelayEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RejoinGuildDelayEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AccountCreationHuntGoldEdit.Properties)).EndInit();
             this.xtraTabPage7.ResumeLayout(false);
             this.xtraTabPage7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LairRegionIndexEdit.Properties)).EndInit();
@@ -3100,6 +3128,8 @@
         private DevExpress.XtraEditors.LabelControl labelControl46;
         private DevExpress.XtraEditors.TextEdit AvailableHuntGoldCapEdit;
         private DevExpress.XtraEditors.LabelControl labelControl105;
+        private DevExpress.XtraEditors.TextEdit AccountCreationHuntGoldEdit;
+        private DevExpress.XtraEditors.LabelControl labelControl109;
         private DevExpress.XtraEditors.LabelControl labelControl45;
         private DevExpress.XtraEditors.TimeSpanEdit GlobalDelayEdit;
         private DevExpress.XtraEditors.LabelControl labelControl44;

@@ -119,6 +119,7 @@ namespace Server.Views
             AvailableHuntGoldCapEdit.EditValue = Config.AvailableHuntGoldCap;
             MarriageTeleportDelayEdit.EditValue = Config.MarriageTeleportDelay;
             RejoinGuildDelayEdit.EditValue = Config.RejoinGuildDelay;
+            AccountCreationHuntGoldEdit.EditValue = Config.AccountCreationHuntGold;
 
             //Monsters
             DeadDurationEdit.EditValue = Config.DeadDuration;
@@ -249,6 +250,7 @@ namespace Server.Views
             Config.AvailableHuntGoldCap = (int)AvailableHuntGoldCapEdit.EditValue;
             Config.MarriageTeleportDelay = (TimeSpan)MarriageTeleportDelayEdit.EditValue;
             Config.RejoinGuildDelay = (TimeSpan)RejoinGuildDelayEdit.EditValue;
+            Config.AccountCreationHuntGold = (int)AccountCreationHuntGoldEdit.EditValue;
 
             //Monsters
             Config.DeadDuration = (TimeSpan)DeadDurationEdit.EditValue;
