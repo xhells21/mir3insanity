@@ -374,6 +374,9 @@ namespace Client.Scenes.Views
             if (MapObject.User.DrawWeaponEffectInfront())
                 MapObject.User.DrawWeaponEffect();
 
+            if (MapObject.User.DrawShieldEffectInfront())
+                MapObject.User.DrawShieldEffect();
+
             MapObject.User.Opacity = oldOpacity;
 
             if (Config.DrawEffects)

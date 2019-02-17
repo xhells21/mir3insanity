@@ -113,7 +113,7 @@ namespace Client.Models
             [11 + FemaleOffSet] = LibraryFile.WM_Helmet12,
             [12 + FemaleOffSet] = LibraryFile.WM_Helmet13,
             [13 + FemaleOffSet] = LibraryFile.WM_Helmet14,
-            
+
             [0 + AssassinOffSet] = LibraryFile.M_HelmetA1,
             [1 + AssassinOffSet] = LibraryFile.M_HelmetA2,
             [2 + AssassinOffSet] = LibraryFile.M_HelmetA3,
@@ -155,7 +155,7 @@ namespace Client.Models
             [1 + AssassinOffSet] = LibraryFile.M_HumAEx1,
             [2 + AssassinOffSet] = LibraryFile.M_HumAEx2,
             [3 + AssassinOffSet] = LibraryFile.M_HumAEx3,
-            
+
             [0 + AssassinOffSet + FemaleOffSet] = LibraryFile.WM_HumA,
             [1 + AssassinOffSet + FemaleOffSet] = LibraryFile.WM_HumAEx1,
             [2 + AssassinOffSet + FemaleOffSet] = LibraryFile.WM_HumAEx2,
@@ -171,6 +171,10 @@ namespace Client.Models
 
             [0 + FemaleOffSet] = LibraryFile.WM_Shield1,
             [1 + FemaleOffSet] = LibraryFile.WM_Shield2,
+
+            [100] = LibraryFile.EquipEffect_Part,
+
+            [100 + FemaleOffSet] = LibraryFile.EquipEffect_Part,
         };
         #endregion
 
@@ -215,12 +219,21 @@ namespace Client.Models
 
         public MirLibrary HorseLibrary, HorseShapeLibrary, HorseShapeLibrary2;
         public int HorseShape;
-        public int HorseFrame => DrawFrame + ((int) Horse - 1)*5000;
+        public int HorseFrame => DrawFrame + ((int)Horse - 1) * 5000;
         public HorseType Horse;
 
         public MirLibrary ShieldLibrary;
         public int ShieldShape;
-        public int ShieldFrame => DrawFrame + ((ShieldShape % 10) - 1) * ArmourShapeOffSet + ArmourShift;
+        public int ShieldFrame
+        {
+            get
+            {
+                if (ShieldShape < 1000)
+                    return DrawFrame + ((ShieldShape % 10) - 1) * ArmourShapeOffSet + ArmourShift;
+                else
+                    return 900 + 200 * ((ShieldShape % 10) - 1) + 10 * (byte)Direction + (GameScene.Game.MapControl.Animation % 4);
+            }
+        }
 
         public MirLibrary EmblemLibrary;
         public int EmblemShape;
@@ -640,6 +653,18 @@ namespace Client.Models
             return false;
         }
 
+        public bool DrawShieldEffectBehind()
+        {
+            switch (Direction)
+            {
+                case MirDirection.UpRight:
+                case MirDirection.Right:
+                case MirDirection.DownRight:
+                    return true;
+            }
+            return false;
+        }
+
         public bool DrawWingsInfront()
         {
             switch (Direction)
@@ -678,6 +703,20 @@ namespace Client.Models
             return false;
         }
 
+        public bool DrawShieldEffectInfront()
+        {
+            switch (Direction)
+            {
+                case MirDirection.Up:
+                case MirDirection.Down:
+                case MirDirection.DownLeft:
+                case MirDirection.Left:
+                case MirDirection.UpLeft:
+                    return true;
+            }
+            return false;
+        }
+
         public override void Draw()
         {
             if (BodyLibrary == null) return;
@@ -687,7 +726,10 @@ namespace Client.Models
 
             if (DrawWeaponEffectBehind())
                 DrawWeaponEffect();
-            
+
+            if (DrawShieldEffectBehind())
+                DrawShieldEffect();
+
             DrawBody(true);
 
             if (DrawWingsInfront())
@@ -695,7 +737,10 @@ namespace Client.Models
 
             if (DrawWeaponEffectInfront())
                 DrawWeaponEffect();
-            
+
+            if (DrawShieldEffectInfront())
+                DrawShieldEffect();
+
             DrawEmblemEffect();
         }
         public override void DrawBlend()
@@ -756,7 +801,7 @@ namespace Client.Models
                 case MirDirection.UpRight:
                 case MirDirection.Right:
                 case MirDirection.DownRight:
-                    if (ShieldShape > 0)
+                    if (ShieldShape > 0 && ShieldShape < 1000)
                     {
                         image = ShieldLibrary?.GetImage(ShieldFrame);
                         if (image != null)
@@ -852,7 +897,7 @@ namespace Client.Models
                 case MirDirection.DownLeft:
                 case MirDirection.Left:
                 case MirDirection.UpLeft:
-                    if (ShieldShape > 0)
+                    if (ShieldShape > 0 && ShieldShape < 1000)
                     {
                         image = ShieldLibrary?.GetImage(ShieldFrame);
                         if (image != null)
@@ -1084,6 +1129,26 @@ namespace Client.Models
                         case 2550: //Chaotic Heaven glaive
                             library.DrawBlend(20000 + 5000 * (byte)Gender + DrawFrame, DrawX, DrawY, Color.White, true, 0.8f, ImageType.Image);
                             break;
+                    }
+
+                    break;
+            }
+        }
+
+        public void DrawShieldEffect()
+        {
+            if (!Config.DrawEffects) return;
+
+            switch (CurrentAction)
+            {
+                case MirAction.Die:
+                case MirAction.Dead:
+                    break;
+                default:
+                    if (ShieldShape >= 1000)
+                    {
+                        ShieldLibrary.DrawBlend(ShieldFrame + 100, DrawX, DrawY, Color.White, true, 0.8f, ImageType.Image);
+                        ShieldLibrary.Draw(ShieldFrame, DrawX, DrawY, Color.White, true, 1F, ImageType.Image);
                     }
 
                     break;
