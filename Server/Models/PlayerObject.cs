@@ -15864,7 +15864,6 @@ namespace Server.Models
             bool canStuck = true;
 
             int power = 0;
-            UserMagic asteroid = null;
 
             foreach (UserMagic magic in magics)
             {
@@ -15880,8 +15879,8 @@ namespace Server.Models
                         break;
                     case MagicType.Asteroid:
                         element = Element.Fire;
-                        asteroid = magic;
                         canStuck = false;
+                        power += magic.GetPower() + GetMC();
                         break;
                     case MagicType.FireWall:
                         element = Element.Fire;
@@ -16178,10 +16177,7 @@ namespace Server.Models
                     power += GetElementPower(ob.Race, Stat.PhantomAttack) * 2;
                     power -= power * ob.Stats[Stat.PhantomResistance] / 10;
                     break;
-            }
-
-            if (asteroid != null)
-                power += asteroid.GetPower() + GetMC();
+            }            
 
             if (power <= 0)
             {
