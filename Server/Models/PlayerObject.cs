@@ -16377,8 +16377,11 @@ namespace Server.Models
             if ((Poison & PoisonType.Red) == PoisonType.Red)
                 power = (int)(power * 1.2F);
 
+            float rebirthmultiplier = 1F;
             for (int i = 0; i < attacker.Stats[Stat.Rebirth]; i++)
-                power = (int)(power * 1.2F);
+                rebirthmultiplier += 0.1F;
+
+            power = (int)(power * rebirthmultiplier);
 
             if (SEnvir.Random.Next(100) < attacker.Stats[Stat.CriticalChance] && canCrit)
             {
