@@ -2326,7 +2326,7 @@ namespace Server.Models
 
             power -= power * Stats[Stat.MagicShield] / 100;
 
-            if (SEnvir.Random.Next(100) < attacker.Stats[Stat.CriticalChance] && canCrit && power > 0)
+            if (PetOwner != null && SEnvir.Random.Next(100) < attacker.Stats[Stat.CriticalChance] && canCrit && power > 0)
             {
                 power += power + (power * attacker.Stats[Stat.CriticalDamage] / 100);
                 Critical();
@@ -2341,7 +2341,7 @@ namespace Server.Models
 
             if (Dead) return power;
             
-            if (CanAttackTarget(attacker)&& PetOwner == null || Target == null)
+            if (CanAttackTarget(attacker) && PetOwner == null || Target == null)
                 Target = attacker;
 
 
