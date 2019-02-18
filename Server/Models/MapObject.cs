@@ -233,8 +233,11 @@ namespace Server.Models
                         {
                             damage += poison.Value;
 
+                            float rebirthmultiplier = 1F;
                             for (int x = 0; x < poison.Owner.Stats[Stat.Rebirth]; x++)
-                                damage = (int)(damage * 1.5F);
+                                rebirthmultiplier += 0.5F;
+
+                            damage = (int)(damage * rebirthmultiplier);
                         }
                         
                         infection = true;
