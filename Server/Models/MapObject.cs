@@ -283,6 +283,7 @@ namespace Server.Models
                         #region Conquest Stats
 
                         UserConquestStats conquest;
+                        PlayerObject player = null;
 
                         switch (Race)
                         {
@@ -318,6 +319,9 @@ namespace Server.Models
                                             break;
                                     }
                                 }
+
+                                player = (PlayerObject)this;
+                                player.LastHitter = poison.Owner;
                                 break;
                             case ObjectType.Monster:
                                 mob = (MonsterObject)this;
@@ -347,9 +351,11 @@ namespace Server.Models
                                 }
                                 break;
                         }
-                        #endregion
+                        #endregion                        
                         
                         ChangeHP(-damage);
+                        if (player != null)
+                            player.LastHitter = null;
                     }
 
                     if (Dead) break;
