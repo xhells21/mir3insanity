@@ -15827,6 +15827,7 @@ namespace Server.Models
                     foreach (MapObject target in GetTargets(CurrentMap, ob.CurrentLocation, 2))
                     {
                         if (target.Race != ObjectType.Monster) continue;
+                        if (!Functions.InRange(CurrentLocation, target.CurrentLocation, 4)) continue;
 
                         MonsterObject mob = (MonsterObject) target;
 
