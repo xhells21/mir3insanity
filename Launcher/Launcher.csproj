@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Zircon.ico</ApplicationIcon>
+    <ApplicationIcon>Insanity.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.BonusSkins.v18.2">
@@ -118,6 +118,7 @@
   <ItemGroup>
     <None Include="Resources\Patcher.exe" />
     <None Include="Resources\patcher-6.bmp" />
+    <Content Include="Insanity.ico" />
     <Content Include="Zircon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
