@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Patcher.exe" />
+    <None Include="Resources\patcher-6.bmp" />
     <Content Include="Zircon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

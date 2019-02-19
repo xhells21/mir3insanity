@@ -719,7 +719,7 @@
             this.IsMdiContainer = true;
             this.Name = "SMain";
             this.Ribbon = this.ribbonControl1;
-            this.Text = "Zircon Server";
+            this.Text = "Insanity Server";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.SMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();

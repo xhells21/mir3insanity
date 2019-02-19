@@ -8,7 +8,7 @@ using Library;
 
 namespace Client.Envir
 {
-    [ConfigPath(@".\Zircon.ini")]
+    [ConfigPath(@".\Client.ini")]
     public static class Config
     {
         public static readonly Size IntroSceneSize = new Size(1024, 768);

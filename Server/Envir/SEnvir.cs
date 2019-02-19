@@ -173,7 +173,7 @@ namespace Server.Envir
 
                 TcpClient client = _userCountListener.EndAcceptTcpClient(result);
 
-                byte[] data = Encoding.ASCII.GetBytes(string.Format("c;/Zircon/{0}/;", Connections.Count));
+                byte[] data = Encoding.ASCII.GetBytes(string.Format("c;/Insanity/{0}/;", Connections.Count));
 
                 client.Client.BeginSend(data, 0, data.Length, SocketFlags.None, CountConnectionEnd, client);
             }
@@ -3500,11 +3500,11 @@ namespace Server.Envir
 
                     MailMessage message = new MailMessage(new MailAddress(Config.MailFrom, Config.MailDisplayName), new MailAddress(account.EMailAddress))
                     {
-                        Subject = "Zircon Account Activation",
+                        Subject = "Insanity Mir Account Activation",
                         IsBodyHtml = true,
 
                         Body = $"Dear {account.RealName}, <br><br>" +
-                               $"Thank you for registering a Zircon account, before you can log in to the game, you are required to activate your account.<br><br>" +
+                               $"Thank you for registering an Insanity Mir account, before you can log in to the game, you are required to activate your account.<br><br>" +
                                $"To complete your registration and activate the account please visit the following link:<br>" +
                                $"<a href=\"{Config.WebCommandLink}?Type={ActivationCommand}&{ActivationKey}={account.ActivationKey}\">Click here to Activate</a><br><br>" +
                                $"If the above link does not work please use the following Activation Key when you next attempt to log in to your account<br>" +
@@ -3513,7 +3513,7 @@ namespace Server.Envir
                                $"If you did not create this account and want to cancel the registration to delete this account please visit the following link:<br>" +
                                $"<a href=\"{Config.WebCommandLink}?Type={DeleteCommand}&{DeleteKey}={account.ActivationKey}\">Click here to Delete Account</a><br><br>" +
                                $"We'll see you in game<br>" +
-                               $"<a href=\"http://www.zirconserver.com\">Zircon Server</a>"
+                               $"<a href=\"http://www.insanitymir.com\">Insanity Mir</a>"
                     };
                     
                     client.Send(message);
@@ -3549,17 +3549,17 @@ namespace Server.Envir
 
                     MailMessage message = new MailMessage(new MailAddress(Config.MailFrom, Config.MailDisplayName), new MailAddress(account.EMailAddress))
                     {
-                        Subject = "Zircon Account Activation",
+                        Subject = "Insanity Mir Account Activation",
                         IsBodyHtml = false,
 
                         Body = $"Dear {account.RealName}\n" +
                                $"\n" +
-                               $"Thank you for registering a Zircon account, before you can log in to the game, you are required to activate your account.\n" +
+                               $"Thank you for registering an Insanity Mir account, before you can log in to the game, you are required to activate your account.\n" +
                                $"\n" +
                                $"Please use the following Activation Key when you next attempt to log in to your account\n" +
                                $"Activation Key: {account.ActivationKey}\n\n" +
                                $"We'll see you in game\n" +
-                               $"Zircon Server\n" +
+                               $"Insanity Mir Server\n" +
                                $"\n" +
                                $"This E-Mail has been sent without formatting to reduce failure",
                     };
@@ -3597,15 +3597,15 @@ namespace Server.Envir
 
                     MailMessage message = new MailMessage(new MailAddress(Config.MailFrom, Config.MailDisplayName), new MailAddress(account.EMailAddress))
                     {
-                        Subject = "Zircon Password Changed",
+                        Subject = "Insanity Mir Password Changed",
                         IsBodyHtml = true,
 
                         Body = $"Dear {account.RealName}, <br><br>" +
-                               $"This is an E-Mail to inform you that your password for Zircon has been changed.<br>" +
+                               $"This is an E-Mail to inform you that your password for Insanity Mir has been changed.<br>" +
                                $"IP Address: {ipAddress}<br><br>" +
                                $"If you did not make this change please contact an administrator immediately.<br><br>" +
                                $"We'll see you in game<br>" +
-                               $"<a href=\"http://www.zirconserver.com\">Zircon Server</a>" 
+                               $"<a href=\"http://www.insanitymir.com\">Insanity Mir Server</a>" 
                     };
 
                     client.Send(message);
@@ -3639,7 +3639,7 @@ namespace Server.Envir
 
                     MailMessage message = new MailMessage(new MailAddress(Config.MailFrom, Config.MailDisplayName), new MailAddress(account.EMailAddress))
                     {
-                        Subject = "Zircon Password Reset",
+                        Subject = "Insanity Mir Password Reset",
                         IsBodyHtml = true,
 
                         Body = $"Dear {account.RealName}, <br><br>" +
@@ -3651,7 +3651,7 @@ namespace Server.Envir
                                $"Reset Key: {account.ResetKey}<br><br>" +
                                $"If you did not request this reset, please ignore this email as your password will not be changed.<br><br>" +
                                $"We'll see you in game<br>" +
-                               $"<a href=\"http://www.zirconserver.com\">Zircon Server</a>"
+                               $"<a href=\"http://www.insanitymir.com\">Insanity Mir Server</a>"
                     };
 
                     client.Send(message);
@@ -3685,15 +3685,15 @@ namespace Server.Envir
 
                     MailMessage message = new MailMessage(new MailAddress(Config.MailFrom, Config.MailDisplayName), new MailAddress(account.EMailAddress))
                     {
-                        Subject = "Zircon Password has been Reset.",
+                        Subject = "Insanity Mir Password has been Reset.",
                         IsBodyHtml = true,
 
                         Body = $"Dear {account.RealName}, <br><br>" +
-                               $"This is an E-Mail to inform you that your password for Zircon has been reset.<br>" +
+                               $"This is an E-Mail to inform you that your password for Insanity Mir has been reset.<br>" +
                                $"Your new password: {password}<br><br>" +
                                $"If you did not make this reset please contact an administrator immediately.<br><br>" +
                                $"We'll see you in game<br>" +
-                               $"<a href=\"http://www.zirconserver.com\">Zircon Server</a>"
+                               $"<a href=\"http://www.insanitymir.com\">Insanity Mir Server</a>"
                     };
 
                     client.Send(message);

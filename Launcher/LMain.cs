@@ -22,7 +22,7 @@ namespace Launcher
     {
         public const string PListFileName = "PList.Bin";
         public const string ClientPath = ".\\";
-        public const string ClientFileName = "Zircon.exe";
+        public const string ClientFileName = "Client.exe";
 
         public DateTime LastSpeedCheck;
         public long TotalDownload, TotalProgress, CurrentProgress, LastDownloadProcess;

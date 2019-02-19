@@ -92,7 +92,7 @@ namespace Client.Envir
 
         private static void A()
         {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", "Zircon");
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", "InsanityMir3");
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);

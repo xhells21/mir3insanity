@@ -2827,8 +2827,8 @@
             // 
             // OpenDialog
             // 
-            this.OpenDialog.FileName = "Zircon.exe";
-            this.OpenDialog.Filter = "Zircon Client|Zircon.exe|All Files|*.*";
+            this.OpenDialog.FileName = "Client.exe";
+            this.OpenDialog.Filter = "Insanity Client|Client.exe|All Files|*.*";
             // 
             // FolderDialog
             // 

@@ -20,7 +20,7 @@ namespace Server.Envir
 
         [ConfigSection("System")]
         public static bool CheckVersion { get; set; } = true;
-        public static string VersionPath { get; set; } = @".\Zircon.exe";
+        public static string VersionPath { get; set; } = @".\Client.exe";
         public static TimeSpan DBSaveDelay { get; set; } = TimeSpan.FromMinutes(5);
         public static string MapPath { get; set; } = @".\Map\";
         public static byte[] ClientHash;
@@ -69,14 +69,14 @@ namespace Server.Envir
 
         [ConfigSection("WebServer")]
         public static string WebPrefix { get; set; } = @"http://*:80/Command/";
-        public static string WebCommandLink { get; set; } = @"https://www.zirconserver.com/Command";
+        public static string WebCommandLink { get; set; } = @"https://www.insanitymir.com/Command";
 
-        public static string ActivationSuccessLink { get; set; } = @"https://www.zirconserver.com/activation-successful/";
-        public static string ActivationFailLink { get; set; } = @"https://www.zirconserver.com/activation-unsuccessful/";
-        public static string ResetSuccessLink { get; set; } = @"https://www.zirconserver.com/password-reset-successful/";
-        public static string ResetFailLink { get; set; } = @"https://www.zirconserver.com/password-reset-unsuccessful/";
-        public static string DeleteSuccessLink { get; set; } = @"https://www.zirconserver.com/account-deletetion-successful/";
-        public static string DeleteFailLink { get; set; } = @"https://www.zirconserver.com/account-deletetion-unsuccessful/";
+        public static string ActivationSuccessLink { get; set; } = @"https://www.insanitymir.com/activation-successful/";
+        public static string ActivationFailLink { get; set; } = @"https://www.insanitymir.com/activation-unsuccessful/";
+        public static string ResetSuccessLink { get; set; } = @"https://www.insanitymir.com/password-reset-successful/";
+        public static string ResetFailLink { get; set; } = @"https://www.insanitymir.com/password-reset-unsuccessful/";
+        public static string DeleteSuccessLink { get; set; } = @"https://www.insanitymir.com/account-deletetion-successful/";
+        public static string DeleteFailLink { get; set; } = @"https://www.insanitymir.com/account-deletetion-unsuccessful/";
 
         public static string BuyPrefix { get; set; } = @"http://*:80/BuyGameGold/";
         public static string BuyAddress { get; set; } = @"http://51.255.70.73/BuyGameGold";
