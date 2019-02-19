@@ -124,10 +124,7 @@
   <data name="Zircon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\zircon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PatchHeader" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PatchHeader.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="patcher-6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="InsanityHeader" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\patcher-6.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

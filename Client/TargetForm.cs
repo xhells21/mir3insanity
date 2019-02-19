@@ -30,7 +30,7 @@ namespace Client
 
             ClientSize = new Size(1024, 768);
             
-            Icon = Properties.Resources.Zircon;
+            Icon = Properties.Resources.Insanity;
             
             FormBorderStyle = (Config.FullScreen || Config.Borderless) ? FormBorderStyle.None : FormBorderStyle.FixedSingle;
 

@@ -63,9 +63,9 @@ namespace Client.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon Zircon {
+        internal static System.Drawing.Icon Insanity {
             get {
-                object obj = ResourceManager.GetObject("Zircon", resourceCulture);
+                object obj = ResourceManager.GetObject("Insanity", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
