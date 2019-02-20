@@ -2125,6 +2125,12 @@ namespace Client.Models
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 3;
                     break;
+                case MonsterImage.FireBird:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_38, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.FireBird)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 4;
+                    break;
                 default:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_1, out BodyLibrary);
                     BodyShape = 0;
