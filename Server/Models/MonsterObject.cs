@@ -600,6 +600,12 @@ namespace Server.Models
                     };
                 case 127:
                     return new JinchonDevil {MonsterInfo = monsterInfo, CastDelay = TimeSpan.FromSeconds(8), DeathCloudDurationMin =  2000, DeathCloudDurationRandom = 5000};
+                case 128:
+                    return new HellBringer
+                    {
+                        MonsterInfo = monsterInfo,
+                        BatInfo = SEnvir.MonsterInfoList.Binding.First(x => x.Flag == MonsterFlag.HellishBat),
+                    };
                 default:
                     return new MonsterObject { MonsterInfo = monsterInfo };
             }

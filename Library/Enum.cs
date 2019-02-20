@@ -643,6 +643,8 @@ namespace Library
         PinkFireBall = 530,
         GreenSludgeBall = 540,
 
+        HellBringerBats = 550,
+
     }
 
     public enum MonsterImage
@@ -1331,6 +1333,8 @@ namespace Library
         QuartzTurtleSub = 205,
 
         Sacrafice = 210,
+
+        HellishBat = 211,
     }
 
     #region Packet Enums

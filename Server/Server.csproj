@@ -129,6 +129,7 @@
     <Compile Include="Models\Monsters\FerociousIceTiger.cs" />
     <Compile Include="Models\Monsters\FrostLordHwa.cs" />
     <Compile Include="Models\Monsters\HalloweenMonster.cs" />
+    <Compile Include="Models\Monsters\HellBringer.cs" />
     <Compile Include="Models\Monsters\JinhwanSpirit.cs" />
     <Compile Include="Models\Monsters\Affliction.cs" />
     <Compile Include="Models\Monsters\MonasteryBoss.cs" />

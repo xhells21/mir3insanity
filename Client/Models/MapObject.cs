@@ -3923,15 +3923,16 @@ namespace Client.Models
                     CreateProjectile();
                     PlayAttackSound();
                     break;
-              /*  case MirAction.Struck:
-                    if (FrameIndex == 0)
-                        PlayStruckSound();
-                    break;*/
+                /*  case MirAction.Struck:
+                      if (FrameIndex == 0)
+                          PlayStruckSound();
+                      break;*/
                 case MirAction.Die:
                     if (FrameIndex == 0)
                         PlayDieSound();
                     break;
             }
+
         }
 
         public virtual void CreateProjectile()

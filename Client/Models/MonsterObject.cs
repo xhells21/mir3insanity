@@ -2205,15 +2205,13 @@ namespace Client.Models
                     animation = MirAnimation.Combat2;
                     break;
                 case MirAction.Spell:
-                    type = (MagicType)action.Extra[0];
+                    type = (MagicType)action.Extra[0];                    
                     
-                    animation = MirAnimation.Combat3;
-
-                    if (type == MagicType.DragonRepulse)
-                        animation = MirAnimation.DragonRepulseStart;
-
                     switch (type)
                     {
+                        case MagicType.DragonRepulse:
+                            animation = MirAnimation.DragonRepulseStart;
+                            break;
                         case MagicType.DoomClawRightPinch:
                             animation = MirAnimation.Combat1;
                             break;
@@ -2231,6 +2229,12 @@ namespace Client.Models
                             break;
                         case MagicType.DoomClawLeftSwipe:
                             animation = MirAnimation.Combat5;
+                            break;
+                        case MagicType.HellBringerBats:
+                            animation = MirAnimation.Combat4;
+                            break;                        
+                        default:
+                            animation = MirAnimation.Combat3;
                             break;
                     }
                     break;
@@ -2763,6 +2767,29 @@ namespace Client.Models
                         effect.CompleteAction = () =>
                         {
                             attackTarget.Effects.Add(effect = new MirEffect(5100, 7, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx9, 10, 35, Globals.FireColour)
+                            {
+                                Blend = true,
+                                Target = attackTarget,
+                            });
+                            effect.Process();
+                        };
+                        effect.Process();
+                    }
+                    break;
+                case MonsterImage.HellBringer:
+                    foreach (MapObject attackTarget in AttackTargets)
+                    {
+                        MirEffect effect;
+                        Effects.Add(effect = new MirProjectile(1050, 4, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour, CurrentLocation)
+                        {
+                            Target = attackTarget,
+                            Blend = true,
+                            Has16Directions = false,
+                        });
+
+                        effect.CompleteAction = () =>
+                        {
+                            attackTarget.Effects.Add(effect = new MirEffect(1140, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 10, 35, Globals.FireColour)
                             {
                                 Blend = true,
                                 Target = attackTarget,
@@ -3497,6 +3524,49 @@ namespace Client.Models
                                 Target = this,
                                 Blend = true,
                             });
+                            break;
+                    }
+                    break;
+                case MonsterImage.HellBringer:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.RangeAttack:
+                            Effects.Add(new MirEffect(963, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 10, 35, Globals.FireColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                                Direction = Direction,
+                            });
+                            break;
+                        case MirAction.Attack:
+                            Effects.Add(new MirEffect(760, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 10, 35, Globals.FireColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                                Direction = Direction,
+                            });
+                            break;
+                        case MirAction.Spell:
+                            switch (CurrentAnimation)
+                            {
+                                case MirAnimation.Combat3:
+                                    Effects.Add(new MirEffect(870, 10, TimeSpan.FromMilliseconds(80), LibraryFile.MonMagicEx13, 10, 35, Globals.FireColour)
+                                    {
+                                        Blend = true,
+                                        Target = this,
+                                        Direction = Direction,
+                                    });
+                                    break;
+                                case MirAnimation.Combat4:
+                                    Effects.Add(new MirEffect(1180, 14, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 10, 35, Globals.NoneColour)
+                                    {
+                                        Blend = true,
+                                        Target = this,
+                                        Direction = Direction,
+                                    });
+                                    break;
+
+                            }
                             break;
                     }
                     break;
