@@ -43,7 +43,7 @@ namespace Server.Models.Monsters
                     direction = Functions.ShiftDirection(direction, rotation);
                 }
             }
-            else
+            else if (!Functions.InRange(CurrentLocation, Target.CurrentLocation, 1))
                 MoveTo(Target.CurrentLocation);
 
             if (InAttackRange() && CanAttack)
@@ -83,7 +83,6 @@ namespace Server.Models.Monsters
                         ob,
                         GetDC(),
                         AttackElement));
-                    break;
                 }
             }            
         }
@@ -93,7 +92,7 @@ namespace Server.Models.Monsters
             return mob.Spawn(CurrentMap.Info, CurrentMap.GetRandomLocation(CurrentLocation, AttackRange));
         }
 
-        public void RangeAttack()
+        private void RangeAttack()
         {
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
             switch (SEnvir.Random.Next(3))

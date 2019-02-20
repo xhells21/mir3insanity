@@ -606,6 +606,10 @@ namespace Server.Models
                         MonsterInfo = monsterInfo,
                         BatInfo = SEnvir.MonsterInfoList.Binding.First(x => x.Flag == MonsterFlag.HellishBat),
                     };
+                case 129:
+                    return new DuelHitMonster { MonsterInfo = monsterInfo };
+                case 130:
+                    return new CrawlerSlave { MonsterInfo = monsterInfo };
                 default:
                     return new MonsterObject { MonsterInfo = monsterInfo };
             }

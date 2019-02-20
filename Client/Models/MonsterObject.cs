@@ -3568,9 +3568,52 @@ namespace Client.Models
 
                             }
                             break;
+                        case MirAction.Die:
+                            Effects.Add(new MirEffect(1180, 14, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 10, 35, Globals.NoneColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                                Direction = Direction,
+                            });
+                            break;
+                    }
+                    break;
+                case MonsterImage.WhiteBeardedTiger:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.Spell:
+                            Effects.Add(new MirEffect(1270, 5, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                                Direction = Direction,
+                            });
+                            break;
+                    }
+                    break;
+                case MonsterImage.CursedSlave1:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.Attack:
+                            Effects.Add(new MirEffect(1570, 6, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                                Direction = Direction,
+                            });
+                            break;
+                        case MirAction.Spell:
+                            Effects.Add(new MirEffect(1650, 7, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                                Direction = Direction,
+                            });
+                            break;
                     }
                     break;
             }
+
         }
 
         public override void PlayAttackSound()

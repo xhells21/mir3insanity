@@ -125,10 +125,12 @@
     <Compile Include="Models\Monsters\DoomClaw.cs" />
     <Compile Include="Models\Monsters\DragonLord.cs" />
     <Compile Include="Models\Monsters\DragonQueen.cs" />
+    <Compile Include="Models\Monsters\CrawlerSlave.cs" />
     <Compile Include="Models\Monsters\EscortCommander.cs" />
     <Compile Include="Models\Monsters\FerociousIceTiger.cs" />
     <Compile Include="Models\Monsters\FrostLordHwa.cs" />
     <Compile Include="Models\Monsters\HalloweenMonster.cs" />
+    <Compile Include="Models\Monsters\DuelHitMonster.cs" />
     <Compile Include="Models\Monsters\HellBringer.cs" />
     <Compile Include="Models\Monsters\JinhwanSpirit.cs" />
     <Compile Include="Models\Monsters\Affliction.cs" />
