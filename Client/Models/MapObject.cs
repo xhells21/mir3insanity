@@ -531,6 +531,11 @@ namespace Client.Models
             }
             
             MovingOffSet = new Point(x, y);
+            if (this == User)
+            {
+                if (GameScene.Game.MapControl.BackgroundImage != null)
+                    GameScene.Game.MapControl.BackgroundMovingOffset = new Point((int)(x / GameScene.Game.MapControl.BackgroundScaleX), (int)(y / GameScene.Game.MapControl.BackgroundScaleY));
+            }
 
             if (Race == ObjectType.Player && CurrentAction == MirAction.Pushed)
                 frame = 0;

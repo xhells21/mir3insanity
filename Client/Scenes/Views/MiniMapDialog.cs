@@ -128,6 +128,18 @@ namespace Client.Scenes.Views
 
             ScaleX = Image.Size.Width/(float) GameScene.Game.MapControl.Width;
             ScaleY = Image.Size.Height/(float) GameScene.Game.MapControl.Height;
+
+            MirLibrary library;
+            if (CEnvir.LibraryList.TryGetValue(LibraryFile.Background, out library))
+            {
+                MirImage image = library.CreateImage(GameScene.Game.MapControl.MapInfo.Background, ImageType.Image);
+                GameScene.Game.MapControl.BackgroundImage = image;
+                if (image != null)
+                {
+                    GameScene.Game.MapControl.BackgroundScaleX = GameScene.Game.MapControl.Width * MapControl.CellWidth / (float)(image.Width - Config.GameSize.Width);
+                    GameScene.Game.MapControl.BackgroundScaleY = GameScene.Game.MapControl.Height * MapControl.CellWidth / (float)(image.Height - Config.GameSize.Height);
+                }
+            }
             
             foreach (NPCInfo ob in Globals.NPCInfoList.Binding)
                 Update(ob);
@@ -270,7 +282,6 @@ namespace Client.Scenes.Views
                 if (ob.ItemInfo != null && ob.ItemInfo.Rarity <= Rarity.Common) return;
                 if (ob.MonsterInfo != null && ob.Dead) return;
 
-
                 MapInfoObjects[ob] = control = new DXControl
                 {
                     DrawTexture = true,
@@ -278,8 +289,6 @@ namespace Client.Scenes.Views
                     Opacity = Opacity,
                     //MonsterInfo.AI < 0 ? Color.FromArgb(150, 200, 255) : Color.Red,
                 };
-
-
             }
             else if (ob.MapIndex != GameScene.Game.MapControl.MapInfo.Index || (ob.MonsterInfo != null && ob.Dead) || (ob.ItemInfo != null && ob.ItemInfo.Rarity <= Rarity.Common))
             {
@@ -287,7 +296,6 @@ namespace Client.Scenes.Views
                 MapInfoObjects.Remove(ob);
                 return;
             }
-
 
             Size size = new Size(3, 3);
             Color colour = Color.White;

@@ -1999,27 +1999,20 @@ namespace Client.Models
                 case MonsterImage.MonasteryMon0:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_49, out BodyLibrary);
                     BodyShape = 0;
-
                     break;
                 case MonsterImage.MonasteryMon1:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_49, out BodyLibrary);
                     BodyShape = 1;
-
-
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.MonasteryMon1)
                         Frames[frame.Key] = frame.Value;
                     break;
                 case MonsterImage.MonasteryMon2:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_49, out BodyLibrary);
                     BodyShape = 2;
-
                     break;
                 case MonsterImage.MonasteryMon3:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_49, out BodyLibrary);
                     BodyShape = 3;
-
-                    //Fucked up mob
-
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.MonasteryMon3)
                         Frames[frame.Key] = frame.Value;
                     break;
@@ -2031,15 +2024,106 @@ namespace Client.Models
                 case MonsterImage.MonasteryMon5:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_49, out BodyLibrary);
                     BodyShape = 5;
-
-
                     break;
                 case MonsterImage.MonasteryMon6:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_49, out BodyLibrary);
                     BodyShape = 6;
-
-                    //Fuckjed up Mob
-
+                    break;
+                case MonsterImage.CrazedPrimate:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_36, out BodyLibrary);
+                    BodyShape = 2;
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.CrazedPrimate)
+                        Frames[frame.Key] = frame.Value;
+                    break;
+                case MonsterImage.HellBringer:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_36, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.HellBringer)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 3;
+                    break;
+                case MonsterImage.YurinMon0:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.YurinMon0)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 0;
+                    break;
+                case MonsterImage.YurinMon1:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.YurinMon1)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 1;
+                    break;
+                case MonsterImage.WhiteBeardedTiger:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.WhiteBeardedTiger)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 2;
+                    break;
+                case MonsterImage.BlackBeardedTiger:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.WhiteBeardedTiger)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 3;
+                    break;
+                case MonsterImage.HardenedRhino:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.HardenedRhino)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 4;
+                    break;
+                case MonsterImage.Mammoth:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.Mammoth)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 5;
+                    break;
+                case MonsterImage.CursedSlave1:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.CursedSlave1)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 6;
+                    break;
+                case MonsterImage.CursedSlave2:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.CursedSlave2)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 7;
+                    break;
+                case MonsterImage.CursedSlave3:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.CursedSlave3)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 8;
+                    break;
+                case MonsterImage.PoisonousGolem:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.PoisonousGolem)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 9;
+                    break;
+                case MonsterImage.GardenSoldier:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_38, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.GardenSoldier)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 0;
+                    break;
+                case MonsterImage.GardenDefender:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_38, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.GardenDefender)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 1;
+                    break;
+                case MonsterImage.RedBlossom:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_38, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.RedBlossom)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 2;
+                    break;
+                case MonsterImage.BlueBlossom:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_38, out BodyLibrary);
+                    foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.BlueBlossom)
+                        Frames[frame.Key] = frame.Value;
+                    BodyShape = 3;
                     break;
                 default:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_1, out BodyLibrary);

@@ -929,6 +929,27 @@ namespace Library
         MonasteryMon4,
         MonasteryMon5,
         MonasteryMon6,
+
+        //Yurin Forest
+        CrazedPrimate,
+        HellBringer,
+        YurinMon0,
+        YurinMon1,
+        WhiteBeardedTiger,
+        BlackBeardedTiger,
+        HardenedRhino,
+        Mammoth,
+        CursedSlave1,
+        CursedSlave2,
+        CursedSlave3,
+        PoisonousGolem,
+
+        //Blossom
+        GardenSoldier,
+        GardenDefender,
+        RedBlossom,
+        BlueBlossom,
+        FireBird,
     }
 
     

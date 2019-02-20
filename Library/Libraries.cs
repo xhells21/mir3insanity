@@ -336,6 +336,7 @@ namespace Library
             [LibraryFile.WM_Shield1] = @"Data\WM-Shield1.Zl",
             [LibraryFile.WM_Shield2] = @"Data\WM-Shield2.Zl",
 
+            [LibraryFile.Background] = @"Data\Background.Zl",
         };
 
         public static Dictionary<int, LibraryFile> KROrder = new Dictionary<int, LibraryFile>
@@ -732,5 +733,7 @@ namespace Library
         M_Shield2,
         WM_Shield1,
         WM_Shield2,
+
+        Background,
     }
 }
