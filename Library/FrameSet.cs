@@ -855,7 +855,7 @@ namespace Library
             };
             FireBird = new Dictionary<MirAnimation, Frame>
             {
-                [MirAnimation.Standing] = new Frame(0, 8, 10, TimeSpan.FromMilliseconds(500)),
+                [MirAnimation.Standing] = new Frame(0, 8, 10, TimeSpan.FromMilliseconds(100)),
                 [MirAnimation.Combat1] = new Frame(160, 7, 10, TimeSpan.FromMilliseconds(100)),
                 [MirAnimation.Combat2] = new Frame(240, 5, 10, TimeSpan.FromMilliseconds(100)),
                 [MirAnimation.Combat3] = new Frame(320, 5, 10, TimeSpan.FromMilliseconds(100)),

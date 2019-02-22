@@ -2342,6 +2342,11 @@ namespace Client.Models
                     if (!CEnvir.LibraryList.TryGetValue(LibraryFile.MonMagicEx6, out library)) break;
                     library.DrawBlend((GameScene.Game.MapControl.Animation % 30) + 1400, x, y, Color.White, true, 1f, ImageType.Image);
                     break;
+                case MonsterImage.FireBird:
+                    if (CurrentAction == MirAction.Dead) break;
+                    if (!CEnvir.LibraryList.TryGetValue(LibraryFile.MonMagicEx14, out library)) break;
+                    library.DrawBlend(DrawFrame + 2000, x, y, Color.White, true, 1f, ImageType.Image);
+                    break;
 
             }
 
