@@ -3612,6 +3612,53 @@ namespace Client.Models
                             break;
                     }
                     break;
+                case MonsterImage.CursedSlave2:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.Attack:
+                            Effects.Add(new MirEffect(2050, 6, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                                Direction = Direction,
+                            });
+                            break;
+                        case MirAction.RangeAttack:
+                            Effects.Add(new MirEffect(2140, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 10, 35, Globals.NoneColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                                Direction = Direction,
+                            });
+                            Effects.Add(new MirEffect(2160, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
+                            {
+                                Blend = true,
+                                Target = AttackTargets?[0] ?? null,
+                                Direction = Direction,
+                            });
+                            break;
+                    }
+                    break;
+                case MonsterImage.CursedSlave3:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.Attack:
+                            Effects.Add(new MirEffect(1850, 7, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                                Direction = Direction,
+                            });
+                            break;
+                        case MirAction.RangeAttack:
+                            Effects.Add(new MirEffect(1940, 6, TimeSpan.FromMilliseconds(130), LibraryFile.MonMagicEx13, 10, 35, Globals.NoneColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                            });
+                            break;
+                    }
+                    break;
             }
 
         }

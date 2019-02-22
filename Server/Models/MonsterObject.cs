@@ -610,6 +610,10 @@ namespace Server.Models
                     return new DuelHitMonster { MonsterInfo = monsterInfo };
                 case 130:
                     return new CrawlerSlave { MonsterInfo = monsterInfo };
+                case 131:
+                    return new CursedSlave { MonsterInfo = monsterInfo };
+                case 132:
+                    return new EvilCursedSlave { MonsterInfo = monsterInfo };
                 default:
                     return new MonsterObject { MonsterInfo = monsterInfo };
             }

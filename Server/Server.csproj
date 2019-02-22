@@ -122,6 +122,7 @@
     <Compile Include="Models\Monsters\BanyoCaptain.cs" />
     <Compile Include="Models\Monsters\BanyoLordGuzak.cs" />
     <Compile Include="Models\Monsters\ChristmasMonster.cs" />
+    <Compile Include="Models\Monsters\EvilCursedSlave.cs" />
     <Compile Include="Models\Monsters\DoomClaw.cs" />
     <Compile Include="Models\Monsters\DragonLord.cs" />
     <Compile Include="Models\Monsters\DragonQueen.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="Models\Monsters\FrostLordHwa.cs" />
     <Compile Include="Models\Monsters\HalloweenMonster.cs" />
     <Compile Include="Models\Monsters\DuelHitMonster.cs" />
+    <Compile Include="Models\Monsters\CursedSlave.cs" />
     <Compile Include="Models\Monsters\HellBringer.cs" />
     <Compile Include="Models\Monsters\JinhwanSpirit.cs" />
     <Compile Include="Models\Monsters\Affliction.cs" />
