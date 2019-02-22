@@ -644,6 +644,7 @@ namespace Library
         GreenSludgeBall = 540,
 
         HellBringerBats = 550,
+        PoisonousGolemLineAoE = 551,
 
     }
 

@@ -2190,6 +2190,35 @@ namespace Client.Models
 
                         #endregion
 
+                        #region PoisonousGolemLineAoE
+
+                        case MagicType.PoisonousGolemLineAoE:
+                            if (Config.DrawEffects)
+
+                                foreach (Point point in MagicLocations)
+                                {
+                                    Effects.Add(new MirEffect(1210, 6, TimeSpan.FromMilliseconds(80), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
+                                    {
+                                        Blend = true,
+                                        MapTarget = point,
+                                        StartTime = CEnvir.Now.AddMilliseconds(Functions.Distance(point, CurrentLocation) * 50),
+                                        BlendRate = 1F,
+                                    });
+                                    Effects.Add(new MirEffect(1230, 7, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
+                                    {
+                                        MapTarget = point,
+                                        StartTime = CEnvir.Now.AddMilliseconds(Functions.Distance(point, CurrentLocation) * 50),
+                                    });
+                                }
+
+
+                            // if (MagicLocations.Count > 0)
+                            //   DXSoundManager.Play(SoundIndex.LavaStrikeEnd);
+
+                            break;
+
+                        #endregion
+
                         #region MonsterIceStorm
 
                         case MagicType.MonsterIceStorm:
@@ -3862,9 +3891,7 @@ namespace Client.Models
                             }
                             break;
 
-                            #endregion
-
-
+                        #endregion
                     }
 
 

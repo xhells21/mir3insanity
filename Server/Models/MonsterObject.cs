@@ -614,6 +614,8 @@ namespace Server.Models
                     return new CursedSlave { MonsterInfo = monsterInfo };
                 case 132:
                     return new EvilCursedSlave { MonsterInfo = monsterInfo };
+                case 133:
+                    return new PoisonousGolem { MonsterInfo = monsterInfo, PoisonType = PoisonType.Green, PoisonTicks = 20, PoisonRate = 5 };
                 default:
                     return new MonsterObject { MonsterInfo = monsterInfo };
             }
