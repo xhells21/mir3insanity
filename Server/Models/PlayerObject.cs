@@ -16997,6 +16997,7 @@ namespace Server.Models
 
             for (int i = cell.Objects.Count - 1; i >= 0; i--)
             {
+                if (i > cell.Objects.Count) break;
                 MapObject ob = cell.Objects[i];
                 if (!CanAttackTarget(ob)) continue;
 
