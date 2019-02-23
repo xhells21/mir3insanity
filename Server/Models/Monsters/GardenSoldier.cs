@@ -5,7 +5,7 @@ using S = Library.Network.ServerPackets;
 
 namespace Server.Models.Monsters
 {
-    public class CursedSlave : MonsterObject
+    public class GardenSoldier : MonsterObject
     {
         public int AttackRange = 7;
 
@@ -33,7 +33,7 @@ namespace Server.Models.Monsters
                     direction = Functions.ShiftDirection(direction, rotation);
                 }
             }
-            else if (!Functions.InRange(CurrentLocation, Target.CurrentLocation, 1))
+            else if (!Functions.InRange(CurrentLocation, Target.CurrentLocation, 2))
                 MoveTo(Target.CurrentLocation);
 
             if (InAttackRange() && CanAttack)
@@ -45,20 +45,26 @@ namespace Server.Models.Monsters
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
             UpdateAttackTime();
 
-            if ( !Functions.InRange(Target.CurrentLocation, CurrentLocation, 1))
+            if ( !Functions.InRange(Target.CurrentLocation, CurrentLocation, 2))
                 RangeAttack();
             else
             {
                 Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation }); //Animation ?
 
-                foreach (MapObject ob in GetTargets(CurrentMap, Functions.Move(CurrentLocation, Direction), 1))
+                for (int radius = 1; radius <= 2; radius++)
                 {
-                    ActionList.Add(new DelayedAction(
-                        SEnvir.Now.AddMilliseconds(400),
-                        ActionType.DelayAttack,
-                        ob,
-                        GetDC(),
-                        AttackElement));
+                    for (int dis = -1; dis <= 1; dis++)
+                    {
+                        foreach (MapObject ob in GetTargets(CurrentMap, Functions.Move(CurrentLocation, Functions.ShiftDirection(Direction, dis)), radius))
+                        {
+                            ActionList.Add(new DelayedAction(
+                                SEnvir.Now.AddMilliseconds(400),
+                                ActionType.DelayAttack,
+                                ob,
+                                GetDC(),
+                                AttackElement));
+                        }
+                    }
                 }
             }            
         }

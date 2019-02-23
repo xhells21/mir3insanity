@@ -122,6 +122,7 @@
     <Compile Include="Models\Monsters\BanyoCaptain.cs" />
     <Compile Include="Models\Monsters\BanyoLordGuzak.cs" />
     <Compile Include="Models\Monsters\ChristmasMonster.cs" />
+    <Compile Include="Models\Monsters\GardenSoldier.cs" />
     <Compile Include="Models\Monsters\PoisonousGolem.cs" />
     <Compile Include="Models\Monsters\EvilCursedSlave.cs" />
     <Compile Include="Models\Monsters\DoomClaw.cs" />
