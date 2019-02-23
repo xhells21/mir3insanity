@@ -2821,7 +2821,41 @@ namespace Client.Models
                 default:
                     return BodyLibrary.VisiblePixel(BodyFrame, new Point(p.X - DrawX, p.Y - DrawY), false, true);
             }
+        }
 
+        public override void FrameIndexChanged()
+        {
+            switch (CurrentAction)
+            {
+                case MirAction.Attack:
+                    if (FrameIndex == 1)
+                        PlayAttackSound();
+
+                    switch (Image)
+                    {
+                        case MonsterImage.RedBlossom:
+                            if (FrameIndex == 6)
+                            {
+                                Effects.Add(new MirEffect(400, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx14, 0, 0, Globals.FireColour)
+                                {
+                                    Blend = true,
+                                    Target = this,
+                                    Direction = Direction,
+                                });
+                            }
+                            break;
+                    }
+                    break;
+                case MirAction.RangeAttack:
+                    if (FrameIndex != 4) return;
+                    CreateProjectile();
+                    PlayAttackSound();
+                    break;
+                case MirAction.Die:
+                    if (FrameIndex == 0)
+                        PlayDieSound();
+                    break;
+            }
         }
 
         public override void SetAction(ObjectAction action)
@@ -3689,6 +3723,18 @@ namespace Client.Models
                     {
                         case MirAction.RangeAttack:
                             Effects.Add(new MirEffect(300, 7, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx14, 10, 35, Globals.NoneColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                            });
+                            break;
+                    }
+                    break;
+                case MonsterImage.RedBlossom:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.RangeAttack:
+                            Effects.Add(new MirEffect(500, 10, TimeSpan.FromMilliseconds(130), LibraryFile.MonMagicEx14, 10, 35, Globals.FireColour)
                             {
                                 Blend = true,
                                 Target = this,

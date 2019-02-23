@@ -198,6 +198,7 @@
     <Compile Include="Models\Monsters\SamaFireGuardian.cs" />
     <Compile Include="Models\Monsters\Shinsu.cs" />
     <Compile Include="Models\Monsters\SonicLizard.cs" />
+    <Compile Include="Models\Monsters\RedBlossom.cs" />
     <Compile Include="Models\Monsters\Stomper.cs" />
     <Compile Include="Models\Monsters\SunFeralWarrior.cs" />
     <Compile Include="Models\Monsters\Warewolf.cs" />

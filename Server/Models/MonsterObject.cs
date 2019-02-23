@@ -620,6 +620,8 @@ namespace Server.Models
                     return new GardenSoldier { MonsterInfo = monsterInfo };
                 case 135:
                     return new GardenDefender { MonsterInfo = monsterInfo };
+                case 136:
+                    return new RedBlossom { MonsterInfo = monsterInfo };
                 default:
                     return new MonsterObject { MonsterInfo = monsterInfo };
             }

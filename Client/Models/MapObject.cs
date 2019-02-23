@@ -3959,7 +3959,6 @@ namespace Client.Models
                         PlayDieSound();
                     break;
             }
-
         }
 
         public virtual void CreateProjectile()
