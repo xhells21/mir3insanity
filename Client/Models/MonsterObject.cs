@@ -3684,6 +3684,18 @@ namespace Client.Models
                             break;
                     }
                     break;
+                case MonsterImage.GardenDefender:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.RangeAttack:
+                            Effects.Add(new MirEffect(300, 7, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx14, 10, 35, Globals.NoneColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                            });
+                            break;
+                    }
+                    break;
             }
 
         }

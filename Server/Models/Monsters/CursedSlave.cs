@@ -46,7 +46,7 @@ namespace Server.Models.Monsters
             UpdateAttackTime();
 
             if ( !Functions.InRange(Target.CurrentLocation, CurrentLocation, 1))
-                RangeAttack();
+                MassAttack();
             else
             {
                 Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation }); //Animation ?
@@ -63,7 +63,7 @@ namespace Server.Models.Monsters
             }            
         }
 
-        private void RangeAttack()
+        private void MassAttack()
         {
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
 

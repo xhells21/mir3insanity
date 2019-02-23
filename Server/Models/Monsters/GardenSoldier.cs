@@ -81,6 +81,5 @@ namespace Server.Models.Monsters
                         GetMC(),
                         AttackElement));
         }
-
     }
 }

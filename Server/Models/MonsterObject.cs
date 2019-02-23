@@ -618,6 +618,8 @@ namespace Server.Models
                     return new PoisonousGolem { MonsterInfo = monsterInfo, PoisonType = PoisonType.Green, PoisonTicks = 20, PoisonRate = 5 };
                 case 134:
                     return new GardenSoldier { MonsterInfo = monsterInfo };
+                case 135:
+                    return new GardenDefender { MonsterInfo = monsterInfo };
                 default:
                     return new MonsterObject { MonsterInfo = monsterInfo };
             }

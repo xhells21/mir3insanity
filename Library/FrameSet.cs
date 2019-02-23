@@ -832,7 +832,7 @@ namespace Library
             GardenDefender = new Dictionary<MirAnimation, Frame>
             {
                 [MirAnimation.Standing] = new Frame(0, 9, 10, TimeSpan.FromMilliseconds(500)),
-                [MirAnimation.Combat1] = new Frame(160, 8, 10, TimeSpan.FromMilliseconds(100)),
+                [MirAnimation.Combat1] = new Frame(160, 7, 10, TimeSpan.FromMilliseconds(100)),
                 [MirAnimation.Combat2] = new Frame(240, 8, 10, TimeSpan.FromMilliseconds(100)),
                 [MirAnimation.Struck] = new Frame(320, 3, 10, TimeSpan.FromMilliseconds(100)),
                 [MirAnimation.Die] = new Frame(400, 10, 10, TimeSpan.FromMilliseconds(100)),
