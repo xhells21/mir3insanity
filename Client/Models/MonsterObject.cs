@@ -3734,7 +3734,19 @@ namespace Client.Models
                     switch (CurrentAction)
                     {
                         case MirAction.RangeAttack:
-                            Effects.Add(new MirEffect(500, 10, TimeSpan.FromMilliseconds(130), LibraryFile.MonMagicEx14, 10, 35, Globals.FireColour)
+                            Effects.Add(new MirEffect(500, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx14, 10, 35, Globals.FireColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                            });
+                            break;
+                    }
+                    break;
+                case MonsterImage.BlueBlossom:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.RangeAttack:
+                            Effects.Add(new MirEffect(600, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx14, 10, 35, Globals.NoneColour)
                             {
                                 Blend = true,
                                 Target = this,
