@@ -253,6 +253,8 @@ namespace Client.Scenes.Views
                     }
             }
 
+            //GameScene.Game.particleEngine.Draw();
+
             DXManager.Sprite.Flush();
             DXManager.Device.SetRenderState(RenderState.SourceBlend, Blend.DestinationColor);
             DXManager.Device.SetRenderState(RenderState.DestinationBlend, Blend.BothInverseSourceAlpha);

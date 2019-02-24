@@ -102,6 +102,7 @@
     <Compile Include="Models\ItemObject.cs" />
     <Compile Include="Models\MapObject.cs" />
     <Compile Include="Models\MirEffect.cs" />
+    <Compile Include="Models\ParticleEngine.cs" />
     <Compile Include="Models\MirProjectile.cs" />
     <Compile Include="Models\MonsterObject.cs" />
     <Compile Include="Models\NPCObject.cs" />

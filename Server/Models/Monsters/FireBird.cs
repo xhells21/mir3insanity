@@ -141,7 +141,7 @@ namespace Server.Models.Monsters
                                 SEnvir.Now.AddMilliseconds(500 + i * 75),
                                 ActionType.DelayAttack,
                                 ob,
-                                GetDC(),
+                                GetMC(),
                                 element));
                         }
                     }
@@ -168,7 +168,7 @@ namespace Server.Models.Monsters
                                         SEnvir.Now.AddMilliseconds(500 + i * 75),
                                         ActionType.DelayAttack,
                                         ob,
-                                        GetDC() / 2,
+                                        GetMC(),
                                         element));
                                 }
                             }
@@ -188,7 +188,7 @@ namespace Server.Models.Monsters
                                         SEnvir.Now.AddMilliseconds(500 + i * 75),
                                         ActionType.DelayAttack,
                                         ob,
-                                        GetDC() / 2,
+                                        GetMC(),
                                         element));
                                 }
                             }
@@ -213,7 +213,7 @@ namespace Server.Models.Monsters
                                         SEnvir.Now.AddMilliseconds(500 + i * 75),
                                         ActionType.DelayAttack,
                                         ob,
-                                        GetDC() / 2,
+                                        GetMC(),
                                         element));
                                 }
                             }
@@ -233,7 +233,7 @@ namespace Server.Models.Monsters
                                         SEnvir.Now.AddMilliseconds(500 + i * 75),
                                         ActionType.DelayAttack,
                                         ob,
-                                        GetDC() / 2,
+                                        GetMC(),
                                         element));
                                 }
                             }

@@ -16,6 +16,7 @@ using Library.SystemModels;
 using MirDB;
 using C = Library.Network.ClientPackets;
 using UserObject = Client.Models.UserObject;
+using SlimDX;
 
 //Cleaned
 namespace Client.Scenes
@@ -209,6 +210,8 @@ namespace Client.Scenes
         public Dictionary<ItemInfo, ClientFortuneInfo> FortuneDictionary = new Dictionary<ItemInfo, ClientFortuneInfo>();
 
         public Dictionary<CastleInfo, string> CastleOwners = new Dictionary<CastleInfo, string>();
+
+        //public ParticleEngine particleEngine;
 
         public bool MoveFrame { get; set; }
         private DateTime MoveTime, OutputTime, ItemRefreshTime;
@@ -634,6 +637,10 @@ namespace Client.Scenes
                 Parent = this,
             };
 
+            /*List<ParticleImageInfo> textures = new List<ParticleImageInfo>();
+            textures.Add(new ParticleImageInfo(LibraryFile.MagicEx5, 5521));
+            particleEngine = new ParticleEngine(textures, new Vector2(400, 240));*/
+
             SetDefaultLocations();
 
             LoadChatTabs();
@@ -895,6 +902,9 @@ namespace Client.Scenes
 
 
             MapControl.ProcessInput();
+
+            //particleEngine.GenerateNewParticle();
+            //particleEngine.Update();
 
             foreach (MapObject ob in MapControl.Objects)
                 ob.Process();
