@@ -16994,6 +16994,7 @@ namespace Server.Models
         private void AttackCell(List<UserMagic> magics, Cell cell, bool primary)
         {
             if (cell?.Objects == null) return;
+            if (cell.Objects.Count <= 0) return;
 
             for (int i = cell.Objects.Count - 1; i >= 0; i--)
             {
