@@ -2232,7 +2232,10 @@ namespace Client.Models
                             break;
                         case MagicType.HellBringerBats:
                             animation = MirAnimation.Combat4;
-                            break;                        
+                            break;
+                        case MagicType.IgyuCyclone:
+                            animation = MirAnimation.Combat4;
+                            break;
                         default:
                             animation = MirAnimation.Combat3;
                             break;
@@ -2837,6 +2840,17 @@ namespace Client.Models
                             if (FrameIndex == 6)
                             {
                                 Effects.Add(new MirEffect(400, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx14, 0, 0, Globals.FireColour)
+                                {
+                                    Blend = true,
+                                    Target = this,
+                                    Direction = Direction,
+                                });
+                            }
+                            break;
+                        case MonsterImage.FireBird:
+                            if (FrameIndex == 5)
+                            {
+                                Effects.Add(new MirEffect(700, 5, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx14, 0, 0, Globals.FireColour)
                                 {
                                     Blend = true,
                                     Target = this,
@@ -3751,6 +3765,24 @@ namespace Client.Models
                                 Blend = true,
                                 Target = this,
                             });
+                            break;
+                    }
+                    break;
+                case MonsterImage.FireBird:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.Spell:
+                            switch (CurrentAnimation)
+                            {
+                                case MirAnimation.Combat3:
+                                    Effects.Add(new MirEffect(800, 10, TimeSpan.FromMilliseconds(150), LibraryFile.MonMagicEx14, 20, 55, Globals.FireColour)
+                                    {
+                                        Blend = true,
+                                        Target = this,
+                                        Direction = Direction,
+                                    });
+                                    break;
+                            }
                             break;
                     }
                     break;

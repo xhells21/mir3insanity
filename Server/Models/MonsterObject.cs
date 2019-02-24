@@ -624,6 +624,8 @@ namespace Server.Models
                     return new RedBlossom { MonsterInfo = monsterInfo };
                 case 137:
                     return new BlueBlossom { MonsterInfo = monsterInfo };
+                case 138:
+                    return new FireBird { MonsterInfo = monsterInfo };
                 default:
                     return new MonsterObject { MonsterInfo = monsterInfo };
             }
@@ -882,6 +884,7 @@ namespace Server.Models
                             break;
                     }
                     break;
+                
             }
 
             base.ProcessAction(action);
@@ -1753,19 +1756,22 @@ namespace Server.Models
         public void LineAoE(int distance, int min, int max, MagicType magic, Element element)
         {
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
-
+            LineAoE(distance, min, max, magic, element, Direction);
+        }
+        public virtual void LineAoE(int distance, int min, int max, MagicType magic, Element element, MirDirection dir)
+        {
             List<uint> targetIDs = new List<uint>();
             List<Point> locations = new List<Point>();
 
 
-            Broadcast(new S.ObjectMagic { ObjectID = ObjectID, Direction = Direction, CurrentLocation = CurrentLocation, Cast = true, Type = magic, Targets = targetIDs, Locations = locations });
+            Broadcast(new S.ObjectMagic { ObjectID = ObjectID, Direction = dir, CurrentLocation = CurrentLocation, Cast = true, Type = magic, Targets = targetIDs, Locations = locations });
 
             UpdateAttackTime();
 
 
             for (int d = min; d <= max; d++)
             {
-                MirDirection direction = Functions.ShiftDirection(Direction, d);
+                MirDirection direction = Functions.ShiftDirection(dir, d);
 
                 if (magic == MagicType.LightningBeam || magic == MagicType.BlowEarth)
                     locations.Add(Functions.Move(CurrentLocation, direction, distance));
@@ -2141,14 +2147,14 @@ namespace Server.Models
         }
 
 
-        public void MassCyclone()
+        public void MassCyclone(MagicType type, int chance = 30)
         {
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
 
             List<uint> targetIDs = new List<uint>();
             List<Point> locations = new List<Point>();
 
-            Broadcast(new S.ObjectMagic { ObjectID = ObjectID, Direction = Direction, CurrentLocation = CurrentLocation, Cast = true, Type = MagicType.Cyclone, Targets = targetIDs, Locations = locations });
+            Broadcast(new S.ObjectMagic { ObjectID = ObjectID, Direction = Direction, CurrentLocation = CurrentLocation, Cast = true, Type = type, Targets = targetIDs, Locations = locations });
 
             UpdateAttackTime();
 
@@ -2157,7 +2163,7 @@ namespace Server.Models
             {
                 if (cell.Objects == null)
                 {
-                    if (SEnvir.Random.Next(30) == 0)
+                    if (SEnvir.Random.Next(chance) == 0)
                         locations.Add(cell.Location);
 
                     continue;

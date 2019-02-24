@@ -125,6 +125,7 @@
     <Compile Include="Models\Monsters\GardenDefender.cs" />
     <Compile Include="Models\Monsters\GardenSoldier.cs" />
     <Compile Include="Models\Monsters\BlueBlossom.cs" />
+    <Compile Include="Models\Monsters\FireBird.cs" />
     <Compile Include="Models\Monsters\PoisonousGolem.cs" />
     <Compile Include="Models\Monsters\EvilCursedSlave.cs" />
     <Compile Include="Models\Monsters\DoomClaw.cs" />

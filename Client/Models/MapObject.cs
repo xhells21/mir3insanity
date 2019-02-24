@@ -585,7 +585,6 @@ namespace Client.Models
                 case MirAction.Spell:
                     if (!MagicCast) break;
 
-
                     switch (MagicType)
                     {
                         #region Warrior
@@ -2215,6 +2214,63 @@ namespace Client.Models
                             // if (MagicLocations.Count > 0)
                             //   DXSoundManager.Play(SoundIndex.LavaStrikeEnd);
 
+                            break;
+
+                        #endregion
+
+                        #region Igyu Scorched Earth
+
+                        case MagicType.IgyuScorchedEarth:
+                            if (Config.DrawEffects)
+                                foreach (Point point in MagicLocations)
+                                {
+                                    Effects.Add(new MirEffect(220, 1, TimeSpan.FromMilliseconds(2500), LibraryFile.ProgUse, 0, 0, Globals.NoneColour)
+                                    {
+                                        MapTarget = point,
+                                        StartTime = CEnvir.Now.AddMilliseconds(500 + Functions.Distance(point, CurrentLocation) * 50),
+                                        Opacity = 0.8F,
+                                        DrawType = DrawType.Floor,
+                                    });
+
+                                    Effects.Add(new MirEffect(2450 + CEnvir.Random.Next(5) * 10, 10, TimeSpan.FromMilliseconds(250), LibraryFile.Magic, 0, 0, Globals.NoneColour)
+                                    {
+                                        Blend = true,
+                                        MapTarget = point,
+                                        StartTime = CEnvir.Now.AddMilliseconds(500 + Functions.Distance(point, CurrentLocation) * 50),
+                                        DrawType = DrawType.Floor,
+                                    });
+
+                                    Effects.Add(new MirEffect(1430, 30, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx14, 20, 70, Globals.FireColour)
+                                    {
+                                        Blend = true,
+                                        MapTarget = point,
+                                        StartTime = CEnvir.Now.AddMilliseconds(Functions.Distance(point, CurrentLocation) * 50),
+                                        BlendRate = 1F,
+                                    });
+                                }
+
+                            // if (MagicLocations.Count > 0)
+                            //   DXSoundManager.Play(SoundIndex.LavaStrikeEnd);
+
+                            break;
+
+                        #endregion
+
+                        #region IgyuCyclone
+
+                        case MagicType.IgyuCyclone:
+                            foreach (Point point in MagicLocations)
+                            {
+                                spell = new MirEffect(900, 12, TimeSpan.FromMilliseconds(150), LibraryFile.MonMagicEx14, 50, 80, Globals.FireColour)
+                                {
+                                    Blend = true,
+                                    MapTarget = point,
+                                };
+
+                                spell.Process();
+                            }
+
+                            //DXSoundManager.Play(SoundIndex.CycloneEnd);
                             break;
 
                         #endregion

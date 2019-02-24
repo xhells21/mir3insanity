@@ -645,7 +645,8 @@ namespace Library
 
         HellBringerBats = 550,
         PoisonousGolemLineAoE = 551,
-
+        IgyuScorchedEarth = 552,
+        IgyuCyclone = 553,
     }
 
     public enum MonsterImage
