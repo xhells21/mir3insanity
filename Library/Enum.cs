@@ -2407,9 +2407,75 @@ namespace Library
         WhiteTigerStruck,
         WhiteTigerDie,
 
+        CrazedPrimateAttack,
+        CrazedPrimateStruck,
+        CrazedPrimateDie,
 
+        HellBringerAttack,
+        HellBringerAttack2,
+        HellBringerAttack3,
+        HellBringerStruck,
+        HellBringerDie,
 
+        YurinHoundAttack,
+        YurinHoundStruck,
+        YurinHoundDie,
 
+        YurinTigerAttack,
+        YurinTigerStruck,
+        YurinTigerDie,
+
+        HardenedRhinoAttack,
+        HardenedRhinoStruck,
+        HardenedRhinoDie,
+
+        MammothAttack,
+        MammothStruck,
+        MammothDie,
+
+        CursedSlave1Attack,
+        CursedSlave1Attack2,
+        CursedSlave1Struck,
+        CursedSlave1Die,
+
+        CursedSlave2Attack,
+        CursedSlave2Struck,
+        CursedSlave2Die,
+
+        CursedSlave3Attack,
+        CursedSlave3Attack2,
+        CursedSlave3Struck,
+        CursedSlave3Die,
+
+        PoisonousGolemAttack,
+        PoisonousGolemAttack2,
+        PoisonousGolemStruck,
+        PoisonousGolemDie,
+
+        GardenSoldierAttack,
+        GardenSoldierAttack2,
+        GardenSoldierStruck,
+        GardenSoldierDie,
+
+        GardenDefenderAttack,
+        GardenDefenderAttack2,
+        GardenDefenderStruck,
+        GardenDefenderDie,
+
+        RedBlossomAttack,
+        RedBlossomAttack2,
+        RedBlossomStruck,
+        RedBlossomDie,
+
+        BlueBlossomAttack,
+        BlueBlossomStruck,
+        BlueBlossomDie,
+
+        FireBirdAttack,
+        FireBirdAttack2,
+        FireBirdAttack3,
+        FireBirdStruck,
+        FireBirdDie,
         #endregion
 
         ThunderKickEnd,

@@ -2034,102 +2034,162 @@ namespace Client.Models
                     BodyShape = 2;
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.CrazedPrimate)
                         Frames[frame.Key] = frame.Value;
+
+                    AttackSound = SoundIndex.CrazedPrimateAttack;
+                    StruckSound = SoundIndex.CrazedPrimateStruck;
+                    DieSound = SoundIndex.CrazedPrimateDie;
                     break;
                 case MonsterImage.HellBringer:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_36, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.HellBringer)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 3;
+
+                    StruckSound = SoundIndex.HellBringerStruck;
+                    DieSound = SoundIndex.HellBringerDie;
                     break;
                 case MonsterImage.YurinMon0:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.YurinMon0)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 0;
+
+                    AttackSound = SoundIndex.YurinHoundAttack;
+                    StruckSound = SoundIndex.YurinHoundStruck;
+                    DieSound = SoundIndex.YurinHoundDie;
                     break;
                 case MonsterImage.YurinMon1:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.YurinMon1)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 1;
+
+                    AttackSound = SoundIndex.YurinHoundAttack;
+                    StruckSound = SoundIndex.YurinHoundStruck;
+                    DieSound = SoundIndex.YurinHoundDie;
                     break;
                 case MonsterImage.WhiteBeardedTiger:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.WhiteBeardedTiger)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 2;
+
+                    AttackSound = SoundIndex.YurinTigerAttack;
+                    StruckSound = SoundIndex.YurinTigerStruck;
+                    DieSound = SoundIndex.YurinTigerDie;
                     break;
                 case MonsterImage.BlackBeardedTiger:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.WhiteBeardedTiger)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 3;
+
+                    AttackSound = SoundIndex.YurinTigerAttack;
+                    StruckSound = SoundIndex.YurinTigerStruck;
+                    DieSound = SoundIndex.YurinTigerDie;
                     break;
                 case MonsterImage.HardenedRhino:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.HardenedRhino)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 4;
+
+                    AttackSound = SoundIndex.HardenedRhinoAttack;
+                    StruckSound = SoundIndex.HardenedRhinoStruck;
+                    DieSound = SoundIndex.HardenedRhinoDie;
                     break;
                 case MonsterImage.Mammoth:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.Mammoth)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 5;
+
+                    AttackSound = SoundIndex.MammothAttack;
+                    StruckSound = SoundIndex.MammothStruck;
+                    DieSound = SoundIndex.MammothDie;
                     break;
                 case MonsterImage.CursedSlave1:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.CursedSlave1)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 6;
+
+                    StruckSound = SoundIndex.CursedSlave1Struck;
+                    DieSound = SoundIndex.CursedSlave1Die;
                     break;
                 case MonsterImage.CursedSlave2:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.CursedSlave2)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 7;
+
+                    AttackSound = SoundIndex.CursedSlave2Attack;
+                    StruckSound = SoundIndex.CursedSlave2Struck;
+                    DieSound = SoundIndex.CursedSlave2Die;
                     break;
                 case MonsterImage.CursedSlave3:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.CursedSlave3)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 8;
+
+                    StruckSound = SoundIndex.CursedSlave3Struck;
+                    DieSound = SoundIndex.CursedSlave3Die;
                     break;
                 case MonsterImage.PoisonousGolem:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_37, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.PoisonousGolem)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 9;
+
+                    StruckSound = SoundIndex.PoisonousGolemStruck;
+                    DieSound = SoundIndex.PoisonousGolemDie;
                     break;
                 case MonsterImage.GardenSoldier:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_38, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.GardenSoldier)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 0;
+
+                    StruckSound = SoundIndex.GardenSoldierStruck;
+                    DieSound = SoundIndex.GardenSoldierDie;
                     break;
                 case MonsterImage.GardenDefender:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_38, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.GardenDefender)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 1;
+
+                    StruckSound = SoundIndex.GardenDefenderStruck;
+                    DieSound = SoundIndex.GardenDefenderDie;
                     break;
                 case MonsterImage.RedBlossom:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_38, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.RedBlossom)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 2;
+
+                    StruckSound = SoundIndex.RedBlossomStruck;
+                    DieSound = SoundIndex.RedBlossomDie;
                     break;
                 case MonsterImage.BlueBlossom:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_38, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.BlueBlossom)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 3;
+
+                    AttackSound = SoundIndex.BlueBlossomAttack;
+                    StruckSound = SoundIndex.BlueBlossomStruck;
+                    DieSound = SoundIndex.BlueBlossomDie;
                     break;
                 case MonsterImage.FireBird:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_38, out BodyLibrary);
                     foreach (KeyValuePair<MirAnimation, Frame> frame in FrameSet.FireBird)
                         Frames[frame.Key] = frame.Value;
                     BodyShape = 4;
+
+                    StruckSound = SoundIndex.FireBirdStruck;
+                    DieSound = SoundIndex.FireBirdDie;
                     break;
                 default:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.Mon_1, out BodyLibrary);
@@ -2839,6 +2899,7 @@ namespace Client.Models
                         case MonsterImage.RedBlossom:
                             if (FrameIndex == 6)
                             {
+                                DXSoundManager.Play(SoundIndex.RedBlossomAttack);
                                 Effects.Add(new MirEffect(400, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx14, 0, 0, Globals.FireColour)
                                 {
                                     Blend = true,
@@ -2850,6 +2911,7 @@ namespace Client.Models
                         case MonsterImage.FireBird:
                             if (FrameIndex == 5)
                             {
+                                DXSoundManager.Play(SoundIndex.FireBirdAttack);
                                 Effects.Add(new MirEffect(700, 5, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx14, 0, 0, Globals.FireColour)
                                 {
                                     Blend = true,
@@ -3584,6 +3646,7 @@ namespace Client.Models
                     switch (CurrentAction)
                     {
                         case MirAction.RangeAttack:
+                            DXSoundManager.Play(SoundIndex.HellBringerAttack2);
                             Effects.Add(new MirEffect(963, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 10, 35, Globals.FireColour)
                             {
                                 Blend = true,
@@ -3592,6 +3655,7 @@ namespace Client.Models
                             });
                             break;
                         case MirAction.Attack:
+                            DXSoundManager.Play(SoundIndex.HellBringerAttack);
                             Effects.Add(new MirEffect(760, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 10, 35, Globals.FireColour)
                             {
                                 Blend = true,
@@ -3600,6 +3664,7 @@ namespace Client.Models
                             });
                             break;
                         case MirAction.Spell:
+                            DXSoundManager.Play(SoundIndex.HellBringerAttack3);
                             switch (CurrentAnimation)
                             {
                                 case MirAnimation.Combat3:
@@ -3648,6 +3713,7 @@ namespace Client.Models
                     switch (CurrentAction)
                     {
                         case MirAction.Attack:
+                            DXSoundManager.Play(SoundIndex.CursedSlave1Attack);
                             Effects.Add(new MirEffect(1570, 6, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
                             {
                                 Blend = true,
@@ -3656,6 +3722,7 @@ namespace Client.Models
                             });
                             break;
                         case MirAction.Spell:
+                            DXSoundManager.Play(SoundIndex.CursedSlave1Attack2);
                             Effects.Add(new MirEffect(1650, 7, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
                             {
                                 Blend = true,
@@ -3696,6 +3763,7 @@ namespace Client.Models
                     switch (CurrentAction)
                     {
                         case MirAction.Attack:
+                            DXSoundManager.Play(SoundIndex.CursedSlave3Attack);
                             Effects.Add(new MirEffect(1850, 7, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
                             {
                                 Blend = true,
@@ -3704,6 +3772,7 @@ namespace Client.Models
                             });
                             break;
                         case MirAction.RangeAttack:
+                            DXSoundManager.Play(SoundIndex.CursedSlave3Attack2);
                             Effects.Add(new MirEffect(1940, 6, TimeSpan.FromMilliseconds(130), LibraryFile.MonMagicEx13, 10, 35, Globals.NoneColour)
                             {
                                 Blend = true,
@@ -3712,10 +3781,22 @@ namespace Client.Models
                             break;
                     }
                     break;
+                case MonsterImage.PoisonousGolem:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.Attack:
+                            DXSoundManager.Play(SoundIndex.PoisonousGolemAttack);
+                            break;
+                        case MirAction.Spell:
+                            DXSoundManager.Play(SoundIndex.PoisonousGolemAttack2);
+                            break;
+                    }
+                    break;
                 case MonsterImage.GardenSoldier:
                     switch (CurrentAction)
                     {
                         case MirAction.Attack:
+                            DXSoundManager.Play(SoundIndex.GardenSoldierAttack);
                             Effects.Add(new MirEffect(0, 7, TimeSpan.FromMilliseconds(120), LibraryFile.MonMagicEx14, 0, 0, Globals.NoneColour)
                             {
                                 Blend = true,
@@ -3724,6 +3805,7 @@ namespace Client.Models
                             });
                             break;
                         case MirAction.RangeAttack:
+                            DXSoundManager.Play(SoundIndex.GardenSoldierAttack2);
                             Effects.Add(new MirEffect(270, 8, TimeSpan.FromMilliseconds(130), LibraryFile.MonMagicEx14, 10, 35, Globals.NoneColour)
                             {
                                 Blend = true,
@@ -3735,7 +3817,11 @@ namespace Client.Models
                 case MonsterImage.GardenDefender:
                     switch (CurrentAction)
                     {
+                        case MirAction.Attack:
+                            DXSoundManager.Play(SoundIndex.GardenDefenderAttack);                            
+                            break;
                         case MirAction.RangeAttack:
+                            DXSoundManager.Play(SoundIndex.GardenDefenderAttack2);
                             Effects.Add(new MirEffect(300, 7, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx14, 10, 35, Globals.NoneColour)
                             {
                                 Blend = true,
@@ -3748,6 +3834,7 @@ namespace Client.Models
                     switch (CurrentAction)
                     {
                         case MirAction.RangeAttack:
+                            DXSoundManager.Play(SoundIndex.RedBlossomAttack2);
                             Effects.Add(new MirEffect(500, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx14, 10, 35, Globals.FireColour)
                             {
                                 Blend = true,
@@ -3774,8 +3861,12 @@ namespace Client.Models
                         case MirAction.Spell:
                             switch (CurrentAnimation)
                             {
+                                case MirAnimation.Combat4:
+                                    DXSoundManager.Play(SoundIndex.FireBirdAttack3);
+                                    break;
                                 case MirAnimation.Combat3:
-                                    Effects.Add(new MirEffect(800, 10, TimeSpan.FromMilliseconds(150), LibraryFile.MonMagicEx14, 20, 55, Globals.FireColour)
+                                    DXSoundManager.Play(SoundIndex.FireBirdAttack2);
+                                    Effects.Add(new MirEffect(800, 10, TimeSpan.FromMilliseconds(130), LibraryFile.MonMagicEx14, 20, 55, Globals.FireColour)
                                     {
                                         Blend = true,
                                         Target = this,
