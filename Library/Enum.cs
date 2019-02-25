@@ -1150,7 +1150,8 @@ namespace Library
         SpiritBlade = 91,
         RefineExtractor = 92,
         ChaoticHeavenBlade = 93,
-        ChaoticHeavenGlaive = 94
+        ChaoticHeavenGlaive = 94,
+        Level75ArmourUpgrade = 95,
     }
 
     [Flags]
