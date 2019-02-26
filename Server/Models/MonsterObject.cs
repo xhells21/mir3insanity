@@ -2594,6 +2594,8 @@ namespace Server.Models
                         exp /= ExtraExperienceRate;
 
                     EXPOwner.GainExperience(exp, PlayerTagged, Level);
+
+                    OnYieldReward(EXPOwner);
                 }
             }
             else
@@ -2611,6 +2613,8 @@ namespace Server.Models
                         expfinal /= ExtraExperienceRate;
 
                     player.GainExperience(expfinal, PlayerTagged, Level);
+
+                    OnYieldReward(player);
                 }
             }
 
@@ -2623,8 +2627,11 @@ namespace Server.Models
             {
                 foreach (PlayerObject player in dPlayers)
                     Drop(player, dPlayers.Count, dRate);
-            }
+            }            
+        }
 
+        public virtual void OnYieldReward(PlayerObject player)
+        {
         }
 
         public virtual void Drop(PlayerObject owner, int players, decimal rate)

@@ -6988,7 +6988,6 @@ namespace Server.Models
 
                     toCount = toItem.Count;
                     fromCount = 0;
-
                 }
                 else
                 {
@@ -19252,9 +19251,7 @@ namespace Server.Models
                 alinks.Add(link.ToClientInfo());
 
             UserItem weapon = Equipment[(int)EquipmentSlot.Weapon];
-            int weaponimageoffset = 0;
-            if (weapon != null && weapon.Info.Effect == ItemEffect.ChaoticHeavenGlaive)
-                weaponimageoffset = Globals.ChaoticHeavenGlaiveImageOffset;
+            UserItem armour = Equipment[(int)EquipmentSlot.Armour];
 
             return new StartInformation
             {
@@ -19281,7 +19278,7 @@ namespace Server.Models
 
                 Weapon = Equipment[(int)EquipmentSlot.Weapon]?.Info.Shape ?? -1,
 
-                WeaponImage = Equipment[(int)EquipmentSlot.Weapon]?.Info.Image + weaponimageoffset ?? 0,
+                WeaponImage = Equipment[(int)EquipmentSlot.Weapon]?.Info.Image ?? 0,
 
                 Shield = Equipment[(int)EquipmentSlot.Shield]?.Info.Shape ?? -1,
 
@@ -19290,7 +19287,7 @@ namespace Server.Models
                 Armour = Equipment[(int)EquipmentSlot.Armour]?.Info.Shape ?? 0,
                 ArmourColour = Equipment[(int)EquipmentSlot.Armour]?.Colour ?? Color.Empty,
                 ArmourImage = Equipment[(int)EquipmentSlot.Armour]?.Info.Image ?? 0,
-
+                ArmourEffect = Equipment[(int)EquipmentSlot.Armour]?.Info.Effect ?? ItemEffect.None,
 
                 Experience = Experience,
 
@@ -19345,9 +19342,7 @@ namespace Server.Models
             if (ob == this) return null;
 
             UserItem weapon = Equipment[(int)EquipmentSlot.Weapon];
-            int weaponimageoffset = 0;
-            if (weapon != null && weapon.Info.Effect == ItemEffect.ChaoticHeavenGlaive)
-                weaponimageoffset = Globals.ChaoticHeavenGlaiveImageOffset;
+            UserItem armour = Equipment[(int)EquipmentSlot.Armour];
 
             return new S.ObjectPlayer
             {
@@ -19370,7 +19365,7 @@ namespace Server.Models
 
                 //TODO HElmet
                 Weapon = Equipment[(int)EquipmentSlot.Weapon]?.Info.Shape ?? -1,
-                WeaponImage = Equipment[(int)EquipmentSlot.Weapon]?.Info.Image + weaponimageoffset ?? 0,
+                WeaponImage = Equipment[(int)EquipmentSlot.Weapon]?.Info.Image ?? 0,
 
                 Shield = Equipment[(int)EquipmentSlot.Shield]?.Info.Shape ?? -1,
 
@@ -19379,8 +19374,7 @@ namespace Server.Models
                 Armour = Equipment[(int)EquipmentSlot.Armour]?.Info.Shape ?? 0,
                 ArmourColour = Equipment[(int)EquipmentSlot.Armour]?.Colour ?? Color.Empty,
                 ArmourImage = Equipment[(int)EquipmentSlot.Armour]?.Info.Image ?? 0,
-
-
+                ArmourEffect = Equipment[(int)EquipmentSlot.Armour]?.Info.Effect ?? ItemEffect.None,
 
                 Poison = Poison,
 
@@ -19416,22 +19410,21 @@ namespace Server.Models
         public void SendShapeUpdate()
         {
             UserItem weapon = Equipment[(int)EquipmentSlot.Weapon];
-            int weaponimageoffset = 0;
-            if (weapon != null && weapon.Info.Effect == ItemEffect.ChaoticHeavenGlaive)
-                weaponimageoffset = Globals.ChaoticHeavenGlaiveImageOffset;
+            UserItem armour = Equipment[(int)EquipmentSlot.Armour];
 
             S.PlayerUpdate p = new S.PlayerUpdate
             {
                 ObjectID = ObjectID,
 
                 Weapon = Equipment[(int)EquipmentSlot.Weapon]?.Info.Shape ?? -1,
-                WeaponImage = Equipment[(int)EquipmentSlot.Weapon]?.Info.Image + weaponimageoffset ?? 0,
+                WeaponImage = Equipment[(int)EquipmentSlot.Weapon]?.Info.Image ?? 0,
 
                 Shield = Character.HideShield ? 0 : Equipment[(int)EquipmentSlot.Shield]?.Info.Shape ?? -1,
 
                 Armour = Equipment[(int)EquipmentSlot.Armour]?.Info.Shape ?? 0,
                 ArmourColour = Equipment[(int)EquipmentSlot.Armour]?.Colour ?? Color.Empty,
                 ArmourImage = Equipment[(int)EquipmentSlot.Armour]?.Info.Image ?? 0,
+                ArmourEffect = Equipment[(int)EquipmentSlot.Armour]?.Info.Effect ?? ItemEffect.None,
 
                 Helmet = Character.HideHelmet ? 0 : Equipment[(int)EquipmentSlot.Helmet]?.Info.Shape ?? 0,
                 Emblem =  Equipment[(int)EquipmentSlot.Emblem]?.Info.Shape ?? -1,

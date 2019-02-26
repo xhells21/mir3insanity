@@ -866,6 +866,7 @@ namespace Client.Envir
                 player.HorseShape = p.HorseArmour;
                 player.ShieldShape = p.Shield;
                 player.ArmourImage = p.ArmourImage;
+                player.ArmourEffect = p.ArmourEffect;
                 player.WeaponImage = p.WeaponImage;
                 player.EmblemShape = p.Emblem;
 
@@ -2008,6 +2009,36 @@ namespace Client.Envir
             DXItemCell fromCell = grid[p.Slot];
 
             fromCell.Item.AddedStats = p.NewStats;
+
+            fromCell.RefreshItem();
+        }
+        public void Process(S.ItemInfoRefreshed p)
+        {
+            DXItemCell[] grid;
+
+            switch (p.GridType)
+            {
+                case GridType.Inventory:
+                    grid = GameScene.Game.InventoryBox.Grid.Grid;
+                    break;
+                case GridType.Equipment:
+                    grid = GameScene.Game.CharacterBox.Grid;
+                    break;
+                case GridType.Storage:
+                    grid = GameScene.Game.StorageBox.Grid.Grid;
+                    break;
+                case GridType.CompanionInventory:
+                    grid = GameScene.Game.CompanionBox.InventoryGrid.Grid;
+                    break;
+                case GridType.CompanionEquipment:
+                    grid = GameScene.Game.CompanionBox.EquipmentGrid;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            DXItemCell fromCell = grid[p.Slot];
+
+            fromCell.Item.Info = p.NewInfo;
 
             fromCell.RefreshItem();
         }

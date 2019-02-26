@@ -239,6 +239,7 @@ namespace Client.Models
         public int EmblemShape;
 
         public int ArmourImage, WeaponImage;
+        public ItemEffect ArmourEffect;
 
         public bool DrawWeapon;
 
@@ -283,6 +284,7 @@ namespace Client.Models
             EmblemShape = info.Emblem;
 
             ArmourImage = info.ArmourImage;
+            ArmourEffect = info.ArmourEffect;
             WeaponImage = info.WeaponImage;
 
 
@@ -1060,13 +1062,14 @@ namespace Client.Models
                 default:
                     MirLibrary library;
 
-                    if (!CEnvir.LibraryList.TryGetValue(LibraryFile.EquipEffect_Part, out library)) return;
+                    
 
                     switch (ArmourImage)
                     {
                         //All
                         case 962:
                         case 972:
+                            if (!CEnvir.LibraryList.TryGetValue(LibraryFile.EquipEffect_Part, out library)) return;
                             library.DrawBlend(820 + (GameScene.Game.MapControl.Animation / 2) % 13, DrawX, DrawY, Color.White, true, 0.7f, ImageType.Image);
                             //820 ~ 832
                             break;
@@ -1074,30 +1077,58 @@ namespace Client.Models
                         //War
                         case 963:
                         case 973:
+                            if (!CEnvir.LibraryList.TryGetValue(LibraryFile.EquipEffect_Part, out library)) return;
                             library.DrawBlend(400 + (GameScene.Game.MapControl.Animation / 2) % 15 + (int)Direction * 20, DrawX, DrawY, Color.White, true, 1f, ImageType.Image);
                             // 400 - 414 // 420 ....
                             break;
-
+                        case 3320:
+                        case 3330:
+                            if (!CEnvir.LibraryList.TryGetValue(LibraryFile.EquipEffect_Full, out library)) return;
+                            if (ArmourEffect == ItemEffect.Level75ArmourUpgrade)
+                                library.DrawBlend(50000 + ((byte)Gender * 5000) + DrawFrame, DrawX, DrawY, Color.White, true, 1f, ImageType.Image);
+                            break;
                         //Wiz
                         case 964:
                         case 974:
+                            if (!CEnvir.LibraryList.TryGetValue(LibraryFile.EquipEffect_Part, out library)) return;
                             library.DrawBlend(200 + (GameScene.Game.MapControl.Animation / 2) % 15 + (int)Direction * 20, DrawX, DrawY, Color.White, true, 1f, ImageType.Image);
                             // 200 - 214 // 220 ....
+                            break;
+                        case 3340:
+                        case 3350:
+                            if (!CEnvir.LibraryList.TryGetValue(LibraryFile.EquipEffect_Full, out library)) return;
+                            if (ArmourEffect == ItemEffect.Level75ArmourUpgrade)
+                                library.DrawBlend(60000 + ((byte)Gender * 5000) + DrawFrame, DrawX, DrawY, Color.White, true, 1f, ImageType.Image);
                             break;
 
                         //Tao
                         case 965:
                         case 975:
+                            if (!CEnvir.LibraryList.TryGetValue(LibraryFile.EquipEffect_Part, out library)) return;
                             library.DrawBlend(0 + (GameScene.Game.MapControl.Animation / 2) % 15 + (int)Direction * 20, DrawX, DrawY, Color.White, true, 1f, ImageType.Image);
                             // 000 - 014 // 020 ....
+                            break;
+                        case 3360:
+                        case 3370:
+                            if (!CEnvir.LibraryList.TryGetValue(LibraryFile.EquipEffect_Full, out library)) return;
+                            if (ArmourEffect == ItemEffect.Level75ArmourUpgrade)
+                                library.DrawBlend(70000 + ((byte)Gender * 5000) + DrawFrame, DrawX, DrawY, Color.White, true, 1f, ImageType.Image);
                             break;
 
                         //Ass
                         case 2007:
                         case 2017:
+                            if (!CEnvir.LibraryList.TryGetValue(LibraryFile.EquipEffect_Part, out library)) return;
                             library.DrawBlend(600 + (GameScene.Game.MapControl.Animation / 2) % 13 + (int)Direction * 20, DrawX, DrawY, Color.White, true, 1f, ImageType.Image);
                             // 600 - 614 // 620 ....
                             break;
+                        case 3380:
+                        case 3390:
+                            if (!CEnvir.LibraryList.TryGetValue(LibraryFile.EquipEffect_Full, out library)) return;
+                            if (ArmourEffect == ItemEffect.Level75ArmourUpgrade)
+                                library.DrawBlend(80000 + ((byte)Gender * 5000) + DrawFrame, DrawX, DrawY, Color.White, true, 1f, ImageType.Image);
+                            break;
+
                     }
 
                     break;

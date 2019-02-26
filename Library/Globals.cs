@@ -449,6 +449,7 @@ namespace Library
         public int Emblem { get; set; }
         public Color ArmourColour { get; set; }
         public int ArmourImage { get; set; }
+        public ItemEffect ArmourEffect { get; set; }
         public int WeaponImage { get; set; }
 
         public decimal Experience { get; set; }

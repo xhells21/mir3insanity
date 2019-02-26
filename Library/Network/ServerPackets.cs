@@ -265,6 +265,7 @@ namespace Library.Network.ServerPackets
         public int Emblem { get; set; }
         public Color ArmourColour { get; set; }
         public int ArmourImage { get; set; }
+        public ItemEffect ArmourEffect { get; set; }
         public int WeaponImage { get; set; }
 
         public int Light { get; set; }
@@ -354,6 +355,7 @@ namespace Library.Network.ServerPackets
         public int Armour { get; set; }
         public Color ArmourColour { get; set; }
         public int ArmourImage { get; set; }
+        public ItemEffect ArmourEffect { get; set; }
         public int WeaponImage { get; set; }
 
         public int HorseArmour { get; set; }
@@ -530,6 +532,19 @@ namespace Library.Network.ServerPackets
         public GridType GridType { get; set; }
         public int Slot { get; set; }
         public Stats NewStats { get; set; }
+    }
+    public sealed class ItemInfoRefreshed : Packet
+    {
+        public GridType GridType { get; set; }
+        public int Slot { get; set; }
+        public int ItemIndex { get; set; }
+        public ItemInfo NewInfo { get; set; }
+
+        [CompleteObject]
+        public void OnComplete()
+        {
+            NewInfo = Globals.ItemInfoList.Binding.First(x => x.Index == ItemIndex);
+        }
     }
     public sealed class ItemDurability : Packet
     {

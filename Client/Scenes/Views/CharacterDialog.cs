@@ -1776,6 +1776,26 @@ namespace Client.Scenes.Views
                             case 952:
                                 effectLibrary.Draw(720, DisplayArea.X + x, DisplayArea.Y + y, Color.White, true, 1F, ImageType.Image);
                                 break;
+                            case 3320:
+                            case 3330:
+                                if (Grid[(int)EquipmentSlot.Armour].Item.Info.Effect == ItemEffect.Level75ArmourUpgrade)
+                                    effectLibrary.Draw(2100, DisplayArea.X + x, DisplayArea.Y + y, Color.White, true, 1F, ImageType.Image);
+                                break;
+                            case 3340:
+                            case 3350:
+                                if (Grid[(int)EquipmentSlot.Armour].Item.Info.Effect == ItemEffect.Level75ArmourUpgrade)
+                                    effectLibrary.Draw(2101, DisplayArea.X + x, DisplayArea.Y + y, Color.White, true, 1F, ImageType.Image);
+                                break;
+                            case 3360:
+                            case 3370:
+                                if (Grid[(int)EquipmentSlot.Armour].Item.Info.Effect == ItemEffect.Level75ArmourUpgrade)
+                                    effectLibrary.Draw(2102, DisplayArea.X + x, DisplayArea.Y + y, Color.White, true, 1F, ImageType.Image);
+                                break;
+                            case 3380:
+                            case 3390:
+                                if (Grid[(int)EquipmentSlot.Armour].Item.Info.Effect == ItemEffect.Level75ArmourUpgrade)
+                                    effectLibrary.Draw(2103, DisplayArea.X + x, DisplayArea.Y + y, Color.White, true, 1F, ImageType.Image);
+                                break;
                         }
                     }
 

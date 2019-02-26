@@ -1152,6 +1152,7 @@ namespace Library
         ChaoticHeavenBlade = 93,
         ChaoticHeavenGlaive = 94,
         Level75ArmourUpgrade = 95,
+        Level75ArmourBase = 96,
     }
 
     [Flags]

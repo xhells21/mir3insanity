@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Library;
+using Library.SystemModels;
 using Server.Envir;
+using Server.DBModels;
 using S = Library.Network.ServerPackets;
 
 namespace Server.Models.Monsters
@@ -241,6 +244,23 @@ namespace Server.Models.Monsters
                     }
                 }
             }
+        }
+
+        public override void OnYieldReward(PlayerObject player)
+        {
+            if (player == null) return;
+            if (SEnvir.Random.Next(20) > 0) return;
+
+            UserItem armour = player.Equipment[(int)EquipmentSlot.Armour];
+            if (armour == null || armour.Info.Effect != ItemEffect.Level75ArmourBase) return;
+           
+            ItemInfo newarmour = SEnvir.ItemInfoList.Binding.First(x => x.Effect == ItemEffect.Level75ArmourUpgrade && x.Image == armour.Info.Image);
+            armour.Info = newarmour;            
+
+            player.Enqueue(new S.ItemInfoRefreshed { Slot = (int)EquipmentSlot.Armour, GridType = GridType.Equipment, ItemIndex = newarmour.Index });
+
+            player.RefreshWeight();
+            player.SendShapeUpdate();
         }
     }
 }

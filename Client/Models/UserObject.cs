@@ -320,6 +320,7 @@ namespace Client.Models
 
             ArmourShape = info.Armour;
             ArmourImage = info.ArmourImage;
+            ArmourEffect = info.ArmourEffect;
             ArmourColour = info.ArmourColour;
             LibraryWeaponShape = info.Weapon;
             WeaponImage = info.WeaponImage;
