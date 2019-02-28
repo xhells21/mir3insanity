@@ -135,11 +135,11 @@ namespace Client.Models.ParticleEngine
 
         public void Dispose()
         {
-            for (int i = particles.Count - 1; i > 0; i++)
+            for (int i = particles.Count - 1; i > 0; i--)
                 particles.RemoveAt(i);
             particles = null;
 
-            for (int i = Textures.Count - 1; i > 0; i++)
+            for (int i = Textures.Count - 1; i > 0; i--)
                 Textures.RemoveAt(i);
             Textures = null;
 
