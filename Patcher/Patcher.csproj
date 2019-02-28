@@ -119,4 +119,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="AfterCompile">
+    <Exec Command="if &quot;$(PlatformName)&quot; == &quot;AnyCPU&quot; (if &quot;$(ConfigurationName)&quot; == &quot;Release&quot; (powershell.exe  -ExecutionPolicy Bypass -File  &quot;$(ProjectDir)confuserEx\confuserps.ps1&quot; &quot;'E:\Mir Sources\ConfuserEx\Confuser.CLI.exe'&quot; &quot;'$(ProjectDir)confuserEx\confuser.crproj'&quot; &quot;'$(ProjectDir)obj\$(ConfigurationName)\'&quot; &quot;'$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName)'&quot; &quot;$(ProjectDir)bin\$(ConfigurationName)&quot;)&#xD;&#xA;) else (if &quot;$(ConfigurationName)&quot; == &quot;Release&quot; (powershell.exe  -ExecutionPolicy Bypass -File  &quot;$(ProjectDir)confuserEx\confuserps.ps1&quot; &quot;'E:\Mir Sources\ConfuserEx\Confuser.CLI.exe'&quot; &quot;'$(ProjectDir)confuserEx\confuser.crproj'&quot; &quot;'$(ProjectDir)obj\$(PlatformName)\$(ConfigurationName)\'&quot; &quot;'$(ProjectDir)obj\$(PlatformName)\$(ConfigurationName)\$(TargetFileName)'&quot; &quot;$(ProjectDir)bin\$(PlatformName)\$(ConfigurationName)&quot;)&#xD;&#xA;)" />
+  </Target>
 </Project>

@@ -1,0 +1,16 @@
+<project outputDir="{OutputDir}" baseDir="{OutputDir}" xmlns="http://confuser.codeplex.com">
+<rule pattern="true" />
+<module path="{ModuleName}">
+<rule pattern="true">
+<protection id="anti ildasm" />
+<protection id="anti tamper" />
+<protection id="constants" />
+<protection id="ctrl flow" />
+<protection id="anti debug" />
+<protection id="invalid metadata" />
+<protection id="ref proxy" />
+<protection id="resources" />
+</rule>
+  </module>
+<probePath>E:\Mir Sources\Insanity Mir3\mir3\Library\obj\Release</probePath>
+</project>

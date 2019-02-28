@@ -1,0 +1,9 @@
+E:\Mir Sources\Insanity Mir3\Release\ImageManager\ImageManager.exe.config
+E:\Mir Sources\Insanity Mir3\Release\ImageManager\ImageManager.exe
+E:\Mir Sources\Insanity Mir3\Release\ImageManager\ImageManager.pdb
+E:\Mir Sources\Insanity Mir3\mir3\ImageManager\obj\Release\ImageManager.IMain.resources
+E:\Mir Sources\Insanity Mir3\mir3\ImageManager\obj\Release\ImageManager.Properties.Resources.resources
+E:\Mir Sources\Insanity Mir3\mir3\ImageManager\obj\Release\ImageManager.csproj.GenerateResource.Cache
+E:\Mir Sources\Insanity Mir3\mir3\ImageManager\obj\Release\ImageManager.exe.licenses
+E:\Mir Sources\Insanity Mir3\mir3\ImageManager\obj\Release\ImageManager.exe
+E:\Mir Sources\Insanity Mir3\mir3\ImageManager\obj\Release\ImageManager.pdb

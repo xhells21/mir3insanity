@@ -1,0 +1,8 @@
+E:\Mir Sources\Insanity Mir3\Release\Client\Client.exe
+E:\Mir Sources\Insanity Mir3\Release\Client\Client.pdb
+E:\Mir Sources\Insanity Mir3\mir3\Client\obj\Release\Client.Properties.Resources.resources
+E:\Mir Sources\Insanity Mir3\mir3\Client\obj\Release\Client.TargetForm.resources
+E:\Mir Sources\Insanity Mir3\mir3\Client\obj\Release\Client.csproj.GenerateResource.Cache
+E:\Mir Sources\Insanity Mir3\mir3\Client\obj\Release\Client.exe
+E:\Mir Sources\Insanity Mir3\mir3\Client\obj\Release\Client.pdb
+E:\Mir Sources\Insanity Mir3\mir3\Client\obj\Release\Client.csprojResolveAssemblyReference.cache

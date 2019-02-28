@@ -268,6 +268,14 @@ namespace Library
         Twilight,
     }
 
+    public enum WeatherSetting : byte
+    {
+        None,
+        Default,
+        Fog,
+        BurningFog,
+    }
+
     public enum FightSetting : byte
     {
         None,

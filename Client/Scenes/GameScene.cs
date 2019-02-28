@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Client.Controls;
 using Client.Envir;
 using Client.Models;
+using Client.Models.ParticleEngine;
 using Client.Scenes.Views;
 using Client.UserModels;
 using Library;
@@ -211,7 +212,7 @@ namespace Client.Scenes
 
         public Dictionary<CastleInfo, string> CastleOwners = new Dictionary<CastleInfo, string>();
 
-        //public ParticleEngine particleEngine;
+        public List<ParticleEngine> ParticleEngines = new List<ParticleEngine>();
 
         public bool MoveFrame { get; set; }
         private DateTime MoveTime, OutputTime, ItemRefreshTime;
@@ -635,11 +636,7 @@ namespace Client.Scenes
             {
                 Visible = false,
                 Parent = this,
-            };
-
-            /*List<ParticleImageInfo> textures = new List<ParticleImageInfo>();
-            textures.Add(new ParticleImageInfo(LibraryFile.MagicEx5, 5521));
-            particleEngine = new ParticleEngine(textures, new Vector2(400, 240));*/
+            };      
 
             SetDefaultLocations();
 
@@ -903,8 +900,8 @@ namespace Client.Scenes
 
             MapControl.ProcessInput();
 
-            //particleEngine.GenerateNewParticle();
-            //particleEngine.Update();
+            foreach (ParticleEngine engine in ParticleEngines)
+                engine.Update();
 
             foreach (MapObject ob in MapControl.Objects)
                 ob.Process();

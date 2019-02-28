@@ -79,6 +79,21 @@ namespace Library.SystemModels
         }
         private LightSetting _Light;
 
+        public WeatherSetting Weather
+        {
+            get { return _Weather; }
+            set
+            {
+                if (_Weather == value) return;
+
+                var oldValue = _Weather;
+                _Weather = value;
+
+                OnChanged(oldValue, value, "Weather");
+            }
+        }
+        private WeatherSetting _Weather;
+
         public FightSetting Fight
         {
             get { return _Fight; }

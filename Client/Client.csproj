@@ -29,7 +29,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -41,7 +41,7 @@
     <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\Release\Client\</OutputPath>
@@ -102,7 +102,9 @@
     <Compile Include="Models\ItemObject.cs" />
     <Compile Include="Models\MapObject.cs" />
     <Compile Include="Models\MirEffect.cs" />
-    <Compile Include="Models\ParticleEngine.cs" />
+    <Compile Include="Models\ParticleEngine\Particles\Particle.cs" />
+    <Compile Include="Models\ParticleEngine\Particles\FogParticle.cs" />
+    <Compile Include="Models\ParticleEngine\ParticleEngine.cs" />
     <Compile Include="Models\MirProjectile.cs" />
     <Compile Include="Models\MonsterObject.cs" />
     <Compile Include="Models\NPCObject.cs" />
@@ -218,4 +220,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="AfterCompile">
+    <Exec Command="if &quot;$(PlatformName)&quot; == &quot;AnyCPU&quot; (if &quot;$(ConfigurationName)&quot; == &quot;Release&quot; (powershell.exe  -ExecutionPolicy Bypass -File  &quot;$(ProjectDir)confuserEx\confuserps.ps1&quot; &quot;'E:\Mir Sources\ConfuserEx\Confuser.CLI.exe'&quot; &quot;'$(ProjectDir)confuserEx\confuser.crproj'&quot; &quot;'$(ProjectDir)obj\$(ConfigurationName)\'&quot; &quot;'$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName)'&quot; &quot;$(ProjectDir)bin\$(ConfigurationName)&quot;)&#xD;&#xA;) else (if &quot;$(ConfigurationName)&quot; == &quot;Release&quot; (powershell.exe  -ExecutionPolicy Bypass -File  &quot;$(ProjectDir)confuserEx\confuserps.ps1&quot; &quot;'E:\Mir Sources\ConfuserEx\Confuser.CLI.exe'&quot; &quot;'$(ProjectDir)confuserEx\confuser.crproj'&quot; &quot;'$(ProjectDir)obj\$(PlatformName)\$(ConfigurationName)\'&quot; &quot;'$(ProjectDir)obj\$(PlatformName)\$(ConfigurationName)\$(TargetFileName)'&quot; &quot;$(ProjectDir)bin\$(PlatformName)\$(ConfigurationName)&quot;)&#xD;&#xA;)" />
+  </Target>
 </Project>

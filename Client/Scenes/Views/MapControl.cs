@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Client.Controls;
 using Client.Envir;
 using Client.Models;
+using Client.Models.ParticleEngine;
 using Library;
 using Library.SystemModels;
 using SlimDX;
@@ -54,6 +55,7 @@ namespace Client.Scenes.Views
                 DXSoundManager.Play(nValue.Music);
 
             LLayer.UpdateLights();
+            UpdateWeather();
             MapInfoChanged?.Invoke(this, EventArgs.Empty);
         }
 
@@ -253,7 +255,8 @@ namespace Client.Scenes.Views
                     }
             }
 
-            //GameScene.Game.particleEngine.Draw();
+            foreach (ParticleEngine engine in GameScene.Game.ParticleEngines)
+                engine.Draw();
 
             DXManager.Sprite.Flush();
             DXManager.Device.SetRenderState(RenderState.SourceBlend, Blend.DestinationColor);
@@ -393,7 +396,51 @@ namespace Client.Scenes.Views
                     ob.Draw();
                 }
             }
+        }
 
+        public void UpdateWeather()
+        {
+            for (int i = GameScene.Game.ParticleEngines.Count - 1; i > 0; i--)
+                GameScene.Game.ParticleEngines[i].Dispose();
+            GameScene.Game.ParticleEngines.Clear();
+
+            switch (GameScene.Game.MapControl.MapInfo.Weather)
+            {
+                case WeatherSetting.BurningFog:
+                    List<ParticleImageInfo> textures = new List<ParticleImageInfo>();
+                    textures.Add(new ParticleImageInfo(LibraryFile.ProgUse, 550));
+
+                    ParticleEngine engine = new ParticleEngine(textures, new Vector2(0, 0));
+                    Vector2 velocity = new Vector2(1F, -1F);
+                    for (int y = -512; y < Config.GameSize.Height + 512; y += 512)
+                        for (int x = -512; x < Config.GameSize.Width + 512; x += 512)
+                        {
+                            Particle part = engine.GenerateNewParticle(ParticleType.Fog);
+                            part.Position = new Vector2(x, y);
+                            part.Velocity = velocity;
+                        }
+                    engine.GenerateParticles = false;
+                    GameScene.Game.ParticleEngines.Add(engine);
+
+                    engine = new ParticleEngine(textures, new Vector2(0, 0));
+                    velocity = new Vector2(2F, -2F);
+                    for (int y = -512; y < Config.GameSize.Height + 512; y += 512)
+                        for (int x = -512; x < Config.GameSize.Width + 512; x += 512)
+                        {
+                            Particle part = engine.GenerateNewParticle(ParticleType.BurningFog);
+                            part.Position = new Vector2(x, y);
+                            part.Velocity = velocity;
+                        }
+                    engine.GenerateParticles = false;
+                    GameScene.Game.ParticleEngines.Add(engine);
+
+                    textures = new List<ParticleImageInfo>();
+                    textures.Add(new ParticleImageInfo(LibraryFile.ProgUse, 40));
+                    textures.Add(new ParticleImageInfo(LibraryFile.ProgUse, 41));
+                    engine = new ParticleEngine(textures, new Vector2(0, 0));
+                    GameScene.Game.ParticleEngines.Add(engine);
+                    break;
+            }
         }
 
 
@@ -1461,7 +1508,6 @@ namespace Client.Scenes.Views
                         Visible = MapObject.User != null && (MapObject.User.Poison & PoisonType.Abyss) != PoisonType.Abyss;
                         break;
                 }
-
             }
             protected override void DrawControl()
             {

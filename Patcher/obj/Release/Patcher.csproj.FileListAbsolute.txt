@@ -1,0 +1,8 @@
+E:\Mir Sources\Insanity Mir3\Release\Patcher\Patcher.exe.config
+E:\Mir Sources\Insanity Mir3\Release\Patcher\Patcher.exe
+E:\Mir Sources\Insanity Mir3\Release\Patcher\Patcher.pdb
+E:\Mir Sources\Insanity Mir3\mir3\Patcher\obj\Release\Patcher.PMain.resources
+E:\Mir Sources\Insanity Mir3\mir3\Patcher\obj\Release\Patcher.Properties.Resources.resources
+E:\Mir Sources\Insanity Mir3\mir3\Patcher\obj\Release\Patcher.csproj.GenerateResource.Cache
+E:\Mir Sources\Insanity Mir3\mir3\Patcher\obj\Release\Patcher.exe
+E:\Mir Sources\Insanity Mir3\mir3\Patcher\obj\Release\Patcher.pdb

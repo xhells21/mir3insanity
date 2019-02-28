@@ -1,0 +1,8 @@
+E:\Mir Sources\Insanity Mir3\Release\Launcher\Launcher.exe
+E:\Mir Sources\Insanity Mir3\Release\Launcher\Launcher.pdb
+E:\Mir Sources\Insanity Mir3\mir3\Launcher\obj\Release\Launcher.LMain.resources
+E:\Mir Sources\Insanity Mir3\mir3\Launcher\obj\Release\Launcher.Properties.Resources.resources
+E:\Mir Sources\Insanity Mir3\mir3\Launcher\obj\Release\Launcher.csproj.GenerateResource.Cache
+E:\Mir Sources\Insanity Mir3\mir3\Launcher\obj\Release\Launcher.exe.licenses
+E:\Mir Sources\Insanity Mir3\mir3\Launcher\obj\Release\Launcher.exe
+E:\Mir Sources\Insanity Mir3\mir3\Launcher\obj\Release\Launcher.pdb
