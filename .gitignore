@@ -7,6 +7,13 @@
 /PatchManager/obj/Debug
 /Patcher/obj/Debug
 /Server/obj/Debug
+/Client/obj/Release
+/ImageManager/obj/Release
+/Launcher/obj/Release
+/Library/obj/Release
+/PatchManager/obj/Release
+/Patcher/obj/Release
+/Server/obj/Release
 /.vs/Zircon Server/v15/Server/sqlite3
 /LibraryEditor/obj
 /LibraryEditor/bin
