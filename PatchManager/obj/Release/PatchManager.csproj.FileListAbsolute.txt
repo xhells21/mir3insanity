@@ -1,9 +1,0 @@
-E:\Mir Sources\Insanity Mir3\Release\PatchManager\PatchManager.exe
-E:\Mir Sources\Insanity Mir3\Release\PatchManager\PatchManager.pdb
-E:\Mir Sources\Insanity Mir3\mir3\PatchManager\obj\Release\PatchManager.csprojResolveAssemblyReference.cache
-E:\Mir Sources\Insanity Mir3\mir3\PatchManager\obj\Release\PatchManager.PMain.resources
-E:\Mir Sources\Insanity Mir3\mir3\PatchManager\obj\Release\PatchManager.Properties.Resources.resources
-E:\Mir Sources\Insanity Mir3\mir3\PatchManager\obj\Release\PatchManager.csproj.GenerateResource.Cache
-E:\Mir Sources\Insanity Mir3\mir3\PatchManager\obj\Release\PatchManager.exe.licenses
-E:\Mir Sources\Insanity Mir3\mir3\PatchManager\obj\Release\PatchManager.exe
-E:\Mir Sources\Insanity Mir3\mir3\PatchManager\obj\Release\PatchManager.pdb
