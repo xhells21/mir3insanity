@@ -21,7 +21,7 @@ namespace Client.Models.ParticleEngine
         {
             if (CEnvir.Now < NextUpdateTime) return;
 
-            NextUpdateTime = CEnvir.Now.AddMilliseconds(20);
+            NextUpdateTime = CEnvir.Now.AddMilliseconds(100);
             Position += Velocity;
         }
 

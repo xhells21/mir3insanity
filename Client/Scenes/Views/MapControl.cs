@@ -411,7 +411,7 @@ namespace Client.Scenes.Views
                     textures.Add(new ParticleImageInfo(LibraryFile.ProgUse, 550));
 
                     ParticleEngine engine = new ParticleEngine(textures, new Vector2(0, 0));
-                    Vector2 velocity = new Vector2(1F, -1F);
+                    Vector2 velocity = new Vector2(5F, -5F);
                     for (int y = -512; y < Config.GameSize.Height + 512; y += 512)
                         for (int x = -512; x < Config.GameSize.Width + 512; x += 512)
                         {
@@ -423,7 +423,7 @@ namespace Client.Scenes.Views
                     GameScene.Game.ParticleEngines.Add(engine);
 
                     engine = new ParticleEngine(textures, new Vector2(0, 0));
-                    velocity = new Vector2(2F, -2F);
+                    velocity = new Vector2(4F, -4F);
                     for (int y = -512; y < Config.GameSize.Height + 512; y += 512)
                         for (int x = -512; x < Config.GameSize.Width + 512; x += 512)
                         {
