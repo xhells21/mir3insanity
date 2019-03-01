@@ -1,6 +1,0 @@
-E:\Mir Sources\Insanity Mir3\Release\Library\Library.dll
-E:\Mir Sources\Insanity Mir3\Release\Library\Library.pdb
-E:\Mir Sources\Insanity Mir3\mir3\Library\obj\Release\Library.dll
-E:\Mir Sources\Insanity Mir3\mir3\Library\obj\Release\Library.pdb
-E:\Mir Sources\Insanity Mir3\Release\Server\Library.dll
-E:\Mir Sources\Insanity Mir3\Release\Server\Library.pdb
