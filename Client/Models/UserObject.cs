@@ -290,7 +290,6 @@ namespace Client.Models
         }
         private bool _CanFlameSplash;
 
-
         public UserObject(StartInformation info)
         {
             CharacterIndex = info.Index;
@@ -676,10 +675,14 @@ namespace Client.Models
                     break;
             }
         }
+        public Point ReverseMovingOffSet = Point.Empty;
         public override void MovingOffSetChanged()
         {
             base.MovingOffSetChanged();
-            GameScene.Game.MapControl.FLayer.TextureValid = false;
+            GameScene.Game.MapControl.FLayer.TextureValid = false;            
+
+            for (int i = 0; i < GameScene.Game.ParticleEngines.Count; i++)
+                GameScene.Game.ParticleEngines[i].ParticlesOffSet(ReverseMovingOffSet);
         }
 
 
@@ -692,6 +695,113 @@ namespace Client.Models
 
             GameScene.Game.CharacterBox.CharacterNameLabel.Text = Name;
             GameScene.Game.TradeBox.UserLabel.Text = Name;
+        }
+
+        public override void UpdateFrame()
+        {
+            if (Frames == null || CurrentFrame == null) return;
+
+
+            switch (CurrentAction)
+            {
+                case MirAction.Moving:
+                case MirAction.Pushed:
+                    if (!GameScene.Game.MoveFrame) return;
+                    break;
+            }
+
+            int frame = CurrentFrame.GetFrame(FrameStart, CEnvir.Now, (this != User || GameScene.Game.Observer) && ActionQueue.Count > 1);
+
+            if (frame == CurrentFrame.FrameCount || (Interupt && ActionQueue.Count > 0))
+            {
+                DoNextAction();
+                frame = CurrentFrame.GetFrame(FrameStart, CEnvir.Now, (this != User || GameScene.Game.Observer) && ActionQueue.Count > 1);
+                if (frame == CurrentFrame.FrameCount)
+                    frame -= 1;
+            }
+
+            int x = 0, y = 0, reversex = 0, reversey = 0;
+            switch (CurrentAction)
+            {
+                case MirAction.Moving:
+                case MirAction.Pushed:
+                    switch (Direction)
+                    {
+                        case MirDirection.Up:
+                            x = 0;
+                            reversex = 0;
+                            y = (int)(CellHeight * MoveDistance / (float)CurrentFrame.FrameCount * (CurrentFrame.FrameCount - (frame + 1)));
+                            reversey = 6;
+                            break;
+                        case MirDirection.UpRight:
+                            x = -(int)(CellWidth * MoveDistance / (float)CurrentFrame.FrameCount * (CurrentFrame.FrameCount - (frame + 1)));
+                            reversex = -8;
+                            y = (int)(CellHeight * MoveDistance / (float)CurrentFrame.FrameCount * (CurrentFrame.FrameCount - (frame + 1)));
+                            reversey = 6;
+                            break;
+                        case MirDirection.Right:
+                            x = -(int)(CellWidth * MoveDistance / (float)CurrentFrame.FrameCount * (CurrentFrame.FrameCount - (frame + 1)));
+                            reversex = -8;
+                            y = 0;
+                            reversey = 0;
+                            break;
+                        case MirDirection.DownRight:
+                            x = -(int)(CellWidth * MoveDistance / (float)CurrentFrame.FrameCount * (CurrentFrame.FrameCount - (frame + 1)));
+                            reversex = -8;
+                            y = -(int)(CellHeight * MoveDistance / (float)CurrentFrame.FrameCount * (CurrentFrame.FrameCount - (frame + 1)));
+                            reversey = -6;
+                            break;
+                        case MirDirection.Down:
+                            x = 0;
+                            reversex = 0;
+                            y = -(int)(CellHeight * MoveDistance / (float)CurrentFrame.FrameCount * (CurrentFrame.FrameCount - (frame + 1)));
+                            reversey = -6;
+                            break;
+                        case MirDirection.DownLeft:
+                            x = (int)(CellWidth * MoveDistance / (float)CurrentFrame.FrameCount * (CurrentFrame.FrameCount - (frame + 1)));
+                            reversex = 8;
+                            y = -(int)(CellHeight * MoveDistance / (float)CurrentFrame.FrameCount * (CurrentFrame.FrameCount - (frame + 1)));
+                            reversey = -6;
+                            break;
+                        case MirDirection.Left:
+                            x = (int)(CellWidth * MoveDistance / (float)CurrentFrame.FrameCount * (CurrentFrame.FrameCount - (frame + 1)));
+                            reversex = 8;
+                            y = 0;
+                            reversey = 0;
+                            break;
+                        case MirDirection.UpLeft:
+                            x = (int)(CellWidth * MoveDistance / (float)CurrentFrame.FrameCount * (CurrentFrame.FrameCount - (frame + 1)));
+                            reversex = 8;
+                            y = (int)(CellHeight * MoveDistance / (float)CurrentFrame.FrameCount * (CurrentFrame.FrameCount - (frame + 1)));
+                            reversey = 6;
+                            break;
+                    }
+                    break;
+            }
+            x -= x % 2;
+            y -= y % 2;
+            reversex -= reversex % 2;
+            reversey -= reversey % 2;
+
+            if (CurrentFrame.Reversed)
+            {
+                frame = CurrentFrame.FrameCount - frame - 1;
+                x *= -1;
+                y *= -1;
+                reversex *= -1;
+                reversey *= -1;
+            }
+
+            if (GameScene.Game.MapControl.BackgroundImage != null)
+                GameScene.Game.MapControl.BackgroundMovingOffset = new Point((int)(x / GameScene.Game.MapControl.BackgroundScaleX), (int)(y / GameScene.Game.MapControl.BackgroundScaleY));
+            ReverseMovingOffSet = new Point(reversex, reversey);
+            MovingOffSet = new Point(x, y);
+
+            if (CurrentAction == MirAction.Pushed)
+                frame = 0;
+
+            FrameIndex = frame;
+            DrawFrame = FrameIndex + CurrentFrame.StartIndex + CurrentFrame.OffSet * (int)Direction;
         }
     }
 }

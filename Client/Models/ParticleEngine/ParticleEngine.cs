@@ -133,6 +133,12 @@ namespace Client.Models.ParticleEngine
                 particles[index].Draw();
         }
 
+        public void ParticlesOffSet(Point offset)
+        {
+            for (int particle = 0; particle < particles.Count; particle++)
+                particles[particle].Position += new Vector2(offset.X, offset.Y);
+        }
+
         public void Dispose()
         {
             for (int i = particles.Count - 1; i > 0; i--)
@@ -146,5 +152,7 @@ namespace Client.Models.ParticleEngine
             EmitterLocation = Vector2.Zero;
             ForceVelocity = Vector2.Zero;
         }
+
+
     }
 }
