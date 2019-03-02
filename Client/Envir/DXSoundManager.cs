@@ -38,6 +38,10 @@ namespace Client.Envir
             [SoundIndex.BD60] = new DXSound(SoundPath + @"BD60.wav", SoundType.Music) { Loop = true },
             [SoundIndex.BD70] = new DXSound(SoundPath + @"BD70.wav", SoundType.Music) { Loop = true },
             [SoundIndex.BD99] = new DXSound(SoundPath + @"BD99.wav", SoundType.Music) { Loop = true },
+            [SoundIndex.D3101] = new DXSound(SoundPath + @"D3101.wav", SoundType.Music) { Loop = true },
+            [SoundIndex.ID1_001] = new DXSound(SoundPath + @"ID1_001.wav", SoundType.Music) { Loop = true },
+            [SoundIndex.ID1_002] = new DXSound(SoundPath + @"ID1_002.wav", SoundType.Music) { Loop = true },
+            [SoundIndex.ID1_003] = new DXSound(SoundPath + @"ID1_003.wav", SoundType.Music) { Loop = true },
 
             #endregion
 
