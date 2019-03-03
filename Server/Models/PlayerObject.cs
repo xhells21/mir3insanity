@@ -646,6 +646,20 @@ namespace Server.Models
 
                     member.Account.Connection.Enqueue(new S.GuildMemberOffline { Index = Character.Account.GuildMember.Index, ObserverPacket = false });
                 }
+
+                foreach (GuildAllianceInfo allianceInfo in Character.Account.GuildMember.Guild.Alliances)
+                {
+                    foreach (GuildMemberInfo member in allianceInfo.Guild1 == Character.Account.GuildMember.Guild ? allianceInfo.Guild2.Members : allianceInfo.Guild1.Members)
+                    {
+                        if (member.Account.Connection?.Player == null) continue;
+
+                        member.Account.Connection.Enqueue(new S.GuildAllyOffline
+                        {
+                            Index = allianceInfo.Index,
+                            ObserverPacket = false
+                        });
+                    }
+                }
             }
 
             TradeClose();
@@ -743,6 +757,20 @@ namespace Server.Models
                         ObjectID = ObjectID,
                         ObserverPacket = false
                     });
+                }
+
+                foreach (GuildAllianceInfo allianceInfo in Character.Account.GuildMember.Guild.Alliances)
+                {
+                    foreach (GuildMemberInfo member in allianceInfo.Guild1 == Character.Account.GuildMember.Guild ? allianceInfo.Guild2.Members : allianceInfo.Guild1.Members)
+                    {
+                        if (member.Account.Connection?.Player == null) continue;
+
+                        member.Account.Connection.Enqueue(new S.GuildAllyOnline
+                        {
+                            Index = allianceInfo.Index,
+                            ObserverPacket = false
+                        });
+                    }
                 }
             }
 
@@ -4920,6 +4948,145 @@ namespace Server.Models
                 member.Account.Connection?.Player?.Enqueue(new S.GuildWarStarted { GuildName = Character.Account.GuildMember.Guild.GuildName, Duration = warInfo.Duration });
             }
         }
+        public void RequestGuildAlliance(string guildName)
+        {
+            S.GuildAlliance result = new S.GuildAlliance { ObserverPacket = false };
+            Enqueue(result);
+
+            GuildInfo guild = SEnvir.GuildInfoList.Binding.FirstOrDefault(x => string.Compare(x.GuildName, guildName, StringComparison.OrdinalIgnoreCase) == 0);
+
+            if (!CanGuildAlliance(Character.Account.GuildMember.Guild, guild, guildName)) return;
+
+            result.Success = true;            
+
+            ItemInfo info = SEnvir.ItemInfoList.Binding.FirstOrDefault(x => x.Effect == ItemEffect.GuildAllianceTreaty);
+            if (info == null)
+            {
+                SEnvir.Log(string.Format("[TREATY ITEM NOT FOUND]"));
+                return;
+            }
+            ItemCheck check = new ItemCheck(info, 1, UserItemFlags.Expirable | UserItemFlags.Worthless, TimeSpan.FromSeconds(3600));
+            if (CanGainItems(false, check))
+            {
+                UserItem item = SEnvir.CreateFreshItem(check);
+                item.AddStat(Stat.Guild1, Character.Account.GuildMember.Guild.Index, StatSource.None);
+                item.AddStat(Stat.Guild2, guild.Index, StatSource.None);
+                item.StatsChanged();
+                GainItem(item);
+            };
+
+            Connection.ReceiveChat(string.Format(Connection.Language.GuildAllianceTreatyCreated, guild.GuildName), MessageType.System);
+        }        
+        public bool AcceptGuildAlliance(UserItem item)
+        {
+            if (item.Stats[Stat.Guild1] <= 0 || item.Stats[Stat.Guild2] <= 0)
+            {
+                SEnvir.Log("AcceptGuildAlliance: no guild stat", true);
+                return true;
+            }
+
+            GuildInfo guild1 = SEnvir.GuildInfoList.Binding.FirstOrDefault(x => x.Index == item.Stats[Stat.Guild1]);
+            GuildInfo guild2 = SEnvir.GuildInfoList.Binding.FirstOrDefault(x => x.Index == item.Stats[Stat.Guild2]);
+            
+            if (!CanGuildAlliance(guild2, guild1)) return false;
+
+            if (Character.Account.GuildMember.Guild != guild2)
+            {
+                Connection.ReceiveChat(Connection.Language.WrongAllianceGuild, MessageType.System);
+                return false;
+            }
+
+            GuildAllianceInfo allianceInfo = SEnvir.GuildAllianceInfoList.CreateNewObject();
+
+            allianceInfo.Guild1 = Character.Account.GuildMember.Guild;
+            allianceInfo.Guild2 = guild1;
+
+            foreach (GuildMemberInfo member in Character.Account.GuildMember.Guild.Members)
+                member.Account.Connection?.Player?.Enqueue(new S.GuildAllianceStarted { AllianceInfo = allianceInfo.ToClientInfo(allianceInfo.Guild1) });
+
+            foreach (GuildMemberInfo member in guild1.Members)
+                member.Account.Connection?.Player?.Enqueue(new S.GuildAllianceStarted { AllianceInfo = allianceInfo.ToClientInfo(allianceInfo.Guild2) });
+
+            return true;
+        }
+        public void EndGuildAlliance(string guildName)
+        {
+            if (Character.Account.GuildMember == null)
+            {
+                Connection.ReceiveChat(Connection.Language.GuildNoGuild, MessageType.System);
+                return;
+            }
+
+            if ((Character.Account.GuildMember.Permission & GuildPermission.Alliance) != GuildPermission.Alliance)
+            {
+                Connection.ReceiveChat(Connection.Language.GuildAlliancePermission, MessageType.System);
+                return;
+            }
+
+            GuildInfo guild = SEnvir.GuildInfoList.Binding.FirstOrDefault(x => string.Compare(x.GuildName, guildName, StringComparison.OrdinalIgnoreCase) == 0);
+
+            if (guild == null)
+            {
+                Connection.ReceiveChat(string.Format(Connection.Language.GuildNotFoundGuild, guildName), MessageType.System);
+                return;
+            }
+
+            if (guild == Character.Account.GuildMember.Guild)
+            {
+                Connection.ReceiveChat(Connection.Language.GuildAllianceOwnGuild, MessageType.System);
+                return;
+            }
+
+            GuildAllianceInfo allianceInfo = SEnvir.GuildAllianceInfoList.Binding.FirstOrDefault(x => (x.Guild1 == guild && x.Guild2 == Character.Account.GuildMember.Guild) || (x.Guild2 == guild && x.Guild1 == Character.Account.GuildMember.Guild));
+
+            if (allianceInfo == null)
+            {
+                Connection.ReceiveChat(string.Format(Connection.Language.GuildNoAlliance, guild.GuildName), MessageType.System);
+                return;
+            }
+
+            allianceInfo.Delete();
+
+            foreach (GuildMemberInfo member in Character.Account.GuildMember.Guild.Members)
+                member.Account.Connection?.Player?.Enqueue(new S.GuildAllianceEnded { GuildName = guild.GuildName });
+
+            foreach (GuildMemberInfo member in guild.Members)
+                member.Account.Connection?.Player?.Enqueue(new S.GuildAllianceEnded { GuildName = Character.Account.GuildMember.Guild.GuildName });
+        }
+        public bool CanGuildAlliance(GuildInfo senderguild, GuildInfo recieveguild, string tryname = "")
+        {
+            if (Character.Account.GuildMember == null)
+            {
+                Connection.ReceiveChat(Connection.Language.GuildNoGuild, MessageType.System);
+                return false;
+            }
+
+            if (senderguild == null || recieveguild == null)
+            {
+                Connection.ReceiveChat(string.Format(Connection.Language.GuildNotFoundGuild, tryname), MessageType.System);
+                return false;
+            }
+
+            if ((Character.Account.GuildMember.Permission & GuildPermission.Alliance) != GuildPermission.Alliance)
+            {
+                Connection.ReceiveChat(Connection.Language.GuildAlliancePermission, MessageType.System);
+                return false;
+            }
+
+            if (recieveguild == Character.Account.GuildMember.Guild)
+            {
+                Connection.ReceiveChat(Connection.Language.GuildAllianceOwnGuild, MessageType.System);
+                return false;
+            }
+
+            if (SEnvir.GuildAllianceInfoList.Binding.Any(x => (x.Guild1 == recieveguild && x.Guild2 == senderguild) || (x.Guild2 == recieveguild && x.Guild1 == senderguild)))
+            {
+                Connection.ReceiveChat(string.Format(Connection.Language.GuildAlreadyAlliance, recieveguild.GuildName), MessageType.System);
+                return false;
+            }
+
+            return true;
+        }
         public void GuildConquest(int index)
         {
             if (Character.Account.GuildMember == null)
@@ -5124,9 +5291,7 @@ namespace Server.Models
             {
                 if (conquest.Map != CurrentMap) continue;
 
-                if (Character.Account.GuildMember == null || player.Character.Account.GuildMember == null) return true;
-
-                return Character.Account.GuildMember.Guild != player.Character.Account.GuildMember.Guild;
+                return !InGuild(player);
             }
 
             if (player.Character.Account.GuildMember == null) return false;
@@ -5152,6 +5317,9 @@ namespace Server.Models
             };
 
             result.Guild.UserIndex = Character.Account.GuildMember.Index;
+
+            foreach (GuildAllianceInfo allianceInfo in Character.Account.GuildMember.Guild.Alliances)
+                result.Guild.Alliances.Add(allianceInfo.ToClientInfo(Character.Account.GuildMember.Guild));
 
             Enqueue(result);
 
@@ -6436,6 +6604,9 @@ namespace Server.Models
 
                             Enqueue(new S.ItemStatsRefreshed { Slot = (int)EquipmentSlot.Weapon, GridType = GridType.Equipment, NewStats = new Stats(weapon.Stats) });
                             RefreshStats();
+                            break;
+                        case 23:
+                            if (!AcceptGuildAlliance(item)) return;
                             break;
                     }
 
@@ -17430,7 +17601,7 @@ namespace Server.Models
 
             if (Character.Account.GuildMember == null || player.Character.Account.GuildMember == null) return false;
 
-            return Character.Account.GuildMember.Guild == player.Character.Account.GuildMember.Guild;
+            return (Character.Account.GuildMember.Guild == player.Character.Account.GuildMember.Guild) || (SEnvir.GuildAllianceInfoList.Binding.Any(x => (x.Guild1 == Character.Account.GuildMember.Guild && x.Guild2 == player.Character.Account.GuildMember.Guild) || (x.Guild2 == Character.Account.GuildMember.Guild && x.Guild1 == player.Character.Account.GuildMember.Guild)));
         }
 
         public void CheckBrown(MapObject ob)

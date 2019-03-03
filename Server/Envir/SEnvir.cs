@@ -562,6 +562,7 @@ namespace Server.Envir
         public static DBCollection<GameGoldPayment> GameGoldPaymentList;
         public static DBCollection<GameStoreSale> GameStoreSaleList;
         public static DBCollection<GuildWarInfo> GuildWarInfoList;
+        public static DBCollection<GuildAllianceInfo> GuildAllianceInfoList;
         public static DBCollection<UserConquestStats> UserConquestStatsList;
         public static DBCollection<UserFortuneInfo> UserFortuneInfoList; 
         public static DBCollection<WeaponCraftStatInfo> WeaponCraftStatInfoList; 
@@ -674,6 +675,7 @@ namespace Server.Envir
             GameGoldPaymentList = Session.GetCollection<GameGoldPayment>();
             GameStoreSaleList = Session.GetCollection<GameStoreSale>();
             GuildWarInfoList = Session.GetCollection<GuildWarInfo>();
+            GuildAllianceInfoList = Session.GetCollection<GuildAllianceInfo>();
             UserConquestStatsList = Session.GetCollection<UserConquestStats>();
             UserFortuneInfoList = Session.GetCollection<UserFortuneInfo>();
             WeaponCraftStatInfoList = Session.GetCollection<WeaponCraftStatInfo>(); 
@@ -1593,8 +1595,8 @@ namespace Server.Envir
 
                 warInfo.Delete();
             }
-
         }
+
         public static void CalculateLights()
         {
             DayTime = Math.Max(0.05F, Math.Abs((float)Math.Round(((Now.TimeOfDay.TotalMinutes * Config.DayCycleCount) % 1440) / 1440F * 2 - 1, 2))); //12 hour rotation

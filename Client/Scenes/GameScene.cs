@@ -204,6 +204,7 @@ namespace Client.Scenes
         public List<ClientUserQuest> QuestLog = new List<ClientUserQuest>();
 
         public HashSet<string> GuildWars = new HashSet<string>();
+        public HashSet<string> GuildAlliances = new HashSet<string>();
         public HashSet<CastleInfo> ConquestWars = new HashSet<CastleInfo>();
 
         public SortedDictionary<uint, ClientObjectData> DataDictionary = new SortedDictionary<uint, ClientObjectData>();
@@ -1558,7 +1559,7 @@ namespace Client.Scenes
             {
                 case ItemType.Consumable:
                 case ItemType.Scroll:
-                    if (MouseItem.Info.Effect == ItemEffect.StatExtractor || MouseItem.Info.Effect == ItemEffect.RefineExtractor)
+                    if (MouseItem.Info.Effect == ItemEffect.StatExtractor || MouseItem.Info.Effect == ItemEffect.RefineExtractor || MouseItem.Info.Effect == ItemEffect.GuildAllianceTreaty)
                         EquipmentItemInfo();
                     else
                         CreatePotionLabel();
@@ -2247,6 +2248,12 @@ namespace Client.Scenes
                     case Stat.PhysicalResistance:
                         label.ForeColour = !firstele ? Color.Lime : Color.IndianRed;
                         firstele = true;
+                        break;
+                    case Stat.Guild1:
+                        label.Text += $"{MouseItem.Guild1Name}";
+                        break;
+                    case Stat.Guild2:
+                        label.Text += $"{MouseItem.Guild2Name}";
                         break;
                     default:
                         if (MouseItem.AddedStats[pair.Key] == 0) break;
@@ -3439,7 +3446,6 @@ namespace Client.Scenes
                     switch (item.Info.Shape)
                     {
                         case 1: //Item Buffs
-
                             ClientBuffInfo buff = User.Buffs.FirstOrDefault(x => x.Type == BuffType.ItemBuff && x.ItemIndex == item.Info.Index);
 
                             if (buff != null && buff.RemainingTime == TimeSpan.MaxValue) return false;

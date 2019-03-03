@@ -252,12 +252,11 @@ namespace Server.DBModels
         [Association("Items", true)]
         public DBBindingList<UserItem> Items { get; set; }
 
-        
         public ClientGuildInfo ToClientInfo()
         {
             return new ClientGuildInfo
             {
-                GuildName =  GuildName,
+                GuildName = GuildName,
 
                 DailyGrowth = DailyGrowth,
                 GuildFunds = GuildFunds,
@@ -266,20 +265,28 @@ namespace Server.DBModels
 
                 MemberLimit = MemberLimit,
                 StorageLimit = StorageSize,
-                
+
                 Notice = GuildNotice,
 
                 DefaultPermission = DefaultPermission,
                 DefaultRank = DefaultRank,
-                
+
                 Tax = (int)(GuildTax * 100),
 
                 Members = Members.Select(x => x.ToClientInfo()).ToList(),
 
                 Storage = Items.Select(x => x.ToClientInfo()).ToList(),
+
+                Alliances = new List<ClientGuildAllianceInfo>(),
             };
         }
-        
+
+        [IgnoreProperty]
+        public List<GuildAllianceInfo> Alliances
+        {
+            get { return SEnvir.GuildAllianceInfoList.Binding.Where(x => x.Guild1 == this || (x.Guild2 == this)).ToList(); }
+        }
+
         protected override void OnLoaded()
         {
             base.OnLoaded();

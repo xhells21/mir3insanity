@@ -966,6 +966,14 @@ namespace Library.Network.ServerPackets
         public string Name { get; set; }
         public uint ObjectID { get; set; }
     }
+    public sealed class GuildAllyOffline : Packet
+    {
+        public int Index { get; set; }
+    }
+    public sealed class GuildAllyOnline : Packet
+    {
+        public int Index { get; set; }
+    }
     public sealed class GuildMemberContribution : Packet
     {
         public int Index { get; set; }
@@ -997,11 +1005,27 @@ namespace Library.Network.ServerPackets
         public bool Success { get; set; }
     }
 
+    public sealed class GuildAlliance : Packet
+    {
+        public bool Success { get; set; }
+    }
+
     public sealed class GuildWarStarted : Packet
     {
         public string GuildName { get; set; }
         public TimeSpan Duration { get; set; }
     }
+
+    public sealed class GuildAllianceStarted : Packet
+    {
+        public ClientGuildAllianceInfo AllianceInfo { get; set; }
+    }
+
+    public sealed class GuildAllianceEnded : Packet
+    {
+        public string GuildName { get; set; }
+    }
+
     public sealed class GuildConquestDate : Packet
     {
         public int Index { get; set; }

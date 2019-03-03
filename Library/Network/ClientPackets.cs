@@ -498,6 +498,16 @@ namespace Library.Network.ClientPackets
         public string GuildName { get; set; }
     }
 
+    public sealed class GuildAlliance : Packet
+    {
+        public string GuildName { get; set; }
+    }
+
+    public sealed class EndGuildAlliance : Packet
+    {
+        public string GuildName { get; set; }
+    }
+
     public sealed class GuildRequestConquest : Packet
     {
         public int Index { get; set; }

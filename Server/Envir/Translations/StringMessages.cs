@@ -190,6 +190,12 @@ namespace Server.Envir
         public abstract string GuildInviteRoom { get; set; }
         public abstract string GuildNoGuild { get; set; }
         public abstract string GuildWarPermission { get; set; }
+        public abstract string GuildAlliancePermission { get; set; }
+        public abstract string GuildAllianceOwnGuild { get; set; }
+        public abstract string GuildAlreadyAlliance { get; set; }
+        public abstract string GuildNoAlliance { get; set; }
+        public abstract string GuildAllianceTreatyCreated { get; set; }
+        public abstract string WrongAllianceGuild { get; set; }
         public abstract string GuildNotFoundGuild { get; set; }
         public abstract string GuildWarOwnGuild { get; set; }
         public abstract string GuildAlreadyWar { get; set; }

@@ -1019,6 +1019,18 @@ namespace Server.Envir
 
             Player.GuildWar(p.GuildName);
         }
+        public void Process(C.GuildAlliance p)
+        {
+            if (Stage != GameStage.Game) return;
+
+            Player.RequestGuildAlliance(p.GuildName);
+        }
+        public void Process(C.EndGuildAlliance p)
+        {
+            if (Stage != GameStage.Game) return;
+
+            Player.EndGuildAlliance(p.GuildName);
+        }
         public void Process(C.GuildRequestConquest p)
         {
             if (Stage != GameStage.Game) return;

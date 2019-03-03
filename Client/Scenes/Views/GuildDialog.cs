@@ -185,10 +185,13 @@ namespace Client.Scenes.Views
         public DXLabel GuildFundLabel1, MemberLimitLabel1, StorageSizeLabel;
         public DXTextBox AddMemberTextBox;
         public DXNumberTextBox MemberTaxBox;
-        public DXButton AddMemberButton, EditDefaultMemberButton, SetTaxButton, IncreaseMemberButton, IncreaseStorageButton, StartWarButton;
+        public DXButton AddMemberButton, EditDefaultMemberButton, SetTaxButton, IncreaseMemberButton, IncreaseStorageButton, StartWarButton, StartAllyButton;
         public DXNumberTextBox GuildTaxBox;
-        public DXControl AddMemberPanel, TreasuryPanel, UpgradePanel, GuildWarPanel;
-        public DXTextBox GuildWarTextBox;
+        public DXControl AddMemberPanel, TreasuryPanel, UpgradePanel, GuildWarPanel, GuildAllyPanel;
+        public DXTextBox GuildWarTextBox, GuildAllyTextBox;
+
+        public GuildAllianceRow[] AllianceRows;
+        public DXVScrollBar AllianceScrollBar;
 
         public Dictionary<CastleInfo, GuildCastlePanel> CastlePanels = new Dictionary<CastleInfo, GuildCastlePanel>();
 
@@ -245,8 +248,58 @@ namespace Client.Scenes.Views
         
         public bool CanWar => !WarAttempted && GuildWarNameValid;
 
+        #region GuildAllyNameValid
 
+        public bool GuildAllyNameValid
+        {
+            get { return _GuildAllyNameValid; }
+            set
+            {
+                if (_GuildAllyNameValid == value) return;
 
+                bool oldValue = _GuildAllyNameValid;
+                _GuildAllyNameValid = value;
+
+                OnGuildAllyNameValidChanged(oldValue, value);
+            }
+        }
+        private bool _GuildAllyNameValid;
+        public event EventHandler<EventArgs> GuildAllyNameValidChanged;
+        public void OnGuildAllyNameValidChanged(bool oValue, bool nValue)
+        {
+            GuildAllyNameValidChanged?.Invoke(this, EventArgs.Empty);
+
+            StartAllyButton.Enabled = CanAlly;
+        }
+
+        #region AllyAttempted
+
+        public bool AllyAttempted
+        {
+            get { return _AllyAttempted; }
+            set
+            {
+                if (_AllyAttempted == value) return;
+
+                bool oldValue = _AllyAttempted;
+                _AllyAttempted = value;
+
+                OnAllyAttemptedChanged(oldValue, value);
+            }
+        }
+        private bool _AllyAttempted;
+        public event EventHandler<EventArgs> AllyAttemptedChanged;
+        public void OnAllyAttemptedChanged(bool oValue, bool nValue)
+        {
+            AllyAttemptedChanged?.Invoke(this, EventArgs.Empty);
+            StartAllyButton.Enabled = CanAlly;
+        }
+
+        #endregion
+
+        public bool CanAlly => !AllyAttempted && GuildAllyNameValid;
+
+        #endregion
 
         #endregion
 
@@ -363,6 +416,9 @@ namespace Client.Scenes.Views
             foreach (GuildMemberRow row in MemberRows)
                 row.MemberInfo = null;
 
+            foreach (GuildAllianceRow row in AllianceRows)
+                row.AllianceInfo = null;
+
             StorageGrid.GridSize = new Size(1, 1);
 
             StorageScrollBar.MaxValue = 0;
@@ -396,6 +452,7 @@ namespace Client.Scenes.Views
             DailyContributionLabel.Text = GuildInfo.DailyContribution.ToString("#,##0");
 
             UpdateMemberRows();
+            UpdateAllianceRows();
 
             PermissionChanged();
 
@@ -1278,7 +1335,6 @@ namespace Client.Scenes.Views
                 DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
             };
 
-
             DXLabel label = new DXLabel
             {
                 Parent = AddMemberPanel,
@@ -1329,7 +1385,6 @@ namespace Client.Scenes.Views
                 GameScene.Game.GuildMemberBox.BringToFront();
             };
 
-
             TreasuryPanel = new DXControl
             {
                 Parent = ManageTab,
@@ -1374,7 +1429,6 @@ namespace Client.Scenes.Views
                 Location = new Point(ClientArea.X + 115, 32),
             };
 
-
             SetTaxButton = new DXButton
             {
                 Parent = TreasuryPanel,
@@ -1405,7 +1459,6 @@ namespace Client.Scenes.Views
                 Location = new Point(ClientArea.X + 52, label.Location.Y),
                 ForeColour = Color.White,
             };
-
 
             UpgradePanel = new DXControl
             {
@@ -1464,7 +1517,6 @@ namespace Client.Scenes.Views
                 Location = new Point(ClientArea.X + 205, label.Location.Y)
             };
 
-
             label = new DXLabel
             {
                 Parent = UpgradePanel,
@@ -1500,7 +1552,6 @@ namespace Client.Scenes.Views
                 Location = new Point(ClientArea.X + 205, label.Location.Y)
             };
 
-
             GuildWarPanel = new DXControl
             {
                 Parent = ManageTab,
@@ -1522,7 +1573,6 @@ namespace Client.Scenes.Views
                 Size = new Size(GuildWarPanel.Size.Width, 22),
                 DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
             };
-
 
             label = new DXLabel
             {
@@ -1559,7 +1609,87 @@ namespace Client.Scenes.Views
                 Location = new Point(ClientArea.X + 55, label.Location.Y + 25),
             };
 
-            
+            GuildAllyPanel = new DXControl
+            {
+                Parent = ManageTab,
+                Location = new Point(10 + (HomeTab.Size.Width - 11 - 5) / 2, 93),
+                Size = new Size((HomeTab.Size.Width - 11 - 5) / 2, 168),
+                Border = true,
+                BorderColour = Color.FromArgb(198, 166, 99),
+            };
+
+            new DXLabel
+            {
+                Text = "Alliance",
+                Parent = GuildAllyPanel,
+                Font = new Font(Config.FontName, CEnvir.FontSize(10F), FontStyle.Bold),
+                ForeColour = Color.FromArgb(198, 166, 99),
+                Outline = true,
+                OutlineColour = Color.Black,
+                IsControl = false,
+                Size = new Size(GuildAllyPanel.Size.Width, 22),
+                DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
+            };
+
+
+            label = new DXLabel
+            {
+                Parent = GuildAllyPanel,
+                Text = "Guild:",
+            };
+            label.Location = new Point(ClientArea.X + 55 - label.Size.Width, 32);
+
+            GuildAllyTextBox = new DXTextBox
+            {
+                Parent = GuildAllyPanel,
+                Location = new Point(ClientArea.X + 55, label.Location.Y),
+                Size = new Size(110, 20),
+                MaxLength = Globals.MaxCharacterNameLength
+            };
+            GuildAllyTextBox.TextBox.TextChanged += GuildAllyTextBox_TextChanged;
+            GuildAllyTextBox.TextBox.KeyPress += GuildAllyTextBox_KeyPress;
+
+            StartAllyButton = new DXButton
+            {
+                Parent = GuildAllyPanel,
+                Location = new Point(ClientArea.X + 170, label.Location.Y - 1),
+                ButtonType = ButtonType.SmallButton,
+                Size = new Size(60, SmallButtonHeight),
+                Label = { Text = "Alliance" },
+                Enabled = false,
+            };
+            StartAllyButton.MouseClick += (o, e) => StartAlly();
+
+            new GuildAllianceRow
+            {
+                Location = new Point(5, 55),
+                Parent = GuildAllyPanel,
+                IsHeader = true,
+            };
+
+            AllianceScrollBar = new DXVScrollBar
+            {
+                Parent = GuildAllyPanel,
+                Location = new Point(GuildAllyPanel.Size.Width - 20, 78),
+                Size = new Size(14, 87),
+                VisibleSize = 4,
+                Change = 1,
+            };
+            AllianceScrollBar.ValueChanged += AllianceScrollBar_ValueChanged;
+
+            AllianceRows = new GuildAllianceRow[4];
+            for (int i = 0; i < AllianceRows.Length; i++)
+            {
+                AllianceRows[i] = new GuildAllianceRow
+                {
+                    Parent = GuildAllyPanel,
+                    Location = new Point(5, 55 + i * 23 + 23),
+                    Visible = false
+                };
+
+                AllianceRows[i].MouseWheel += AllianceScrollBar.DoMouseWheel;
+            }
+            MouseWheel += AllianceScrollBar.DoMouseWheel;            
 
             int count = 0;
             foreach (CastleInfo castle in CEnvir.CastleInfoList.Binding)
@@ -1571,27 +1701,25 @@ namespace Client.Scenes.Views
                     Location =  new Point(5 + count * 255, 275)
                 };
                 count++;
-            }
-
-            /*
-
-            new DXLabel
-            {
-                Text = "Desert Conquest",
-                Parent = panel,
-                Font = new Font(Config.FontName, CEnvir.FontSize(10F), FontStyle.Bold),
-                ForeColour = Color.FromArgb(198, 166, 99),
-                Outline = true,
-                OutlineColour = Color.Black,
-                IsControl = false,
-                Size = new Size(panel.Size.Width, 22),
-                DrawFormat = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
-                Enabled = false
-            };*/
-            
-
+            }     
         }
-        
+
+        private void AllianceScrollBar_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateAllianceRows();
+        }
+
+        public void UpdateAllianceRows()
+        {
+            if (GuildInfo == null) return;
+            GuildInfo.Alliances.Sort((x, y) => y.OnlineCount.CompareTo(x.OnlineCount));
+
+            AllianceScrollBar.MaxValue = GuildInfo.Alliances.Count;
+
+            for (int i = 0; i < AllianceRows.Length; i++)
+                AllianceRows[i].AllianceInfo = i + AllianceScrollBar.Value >= GuildInfo.Alliances.Count ? null : GuildInfo.Alliances[i + AllianceScrollBar.Value];
+        }
+
         public void StartWar()
         {
             WarAttempted = true;
@@ -1621,6 +1749,38 @@ namespace Client.Scenes.Views
                 GuildWarTextBox.BorderColour = Color.FromArgb(198, 166, 99);
             else
                 GuildWarTextBox.BorderColour = GuildWarNameValid ? Color.Green : Color.Red;
+        }
+
+        public void StartAlly()
+        {
+            AllyAttempted = true;
+
+            C.GuildAlliance p = new C.GuildAlliance
+            {
+                GuildName = GuildAllyTextBox.TextBox.Text,
+            };
+
+            CEnvir.Enqueue(p);
+        }
+
+        private void GuildAllyTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != (char)Keys.Enter) return;
+
+            e.Handled = true;
+
+            if (StartAllyButton.Enabled)
+                StartAlly();
+        }
+
+        private void GuildAllyTextBox_TextChanged(object sender, EventArgs e)
+        {
+            GuildAllyNameValid = Globals.GuildNameRegex.IsMatch(GuildAllyTextBox.TextBox.Text);
+
+            if (string.IsNullOrEmpty(GuildAllyTextBox.TextBox.Text))
+                GuildAllyTextBox.BorderColour = Color.FromArgb(198, 166, 99);
+            else
+                GuildAllyTextBox.BorderColour = GuildAllyNameValid ? Color.Green : Color.Red;
         }
 
         #endregion
@@ -2292,7 +2452,176 @@ namespace Client.Scenes.Views
 
         #endregion
     }
-    
+
+    public sealed class GuildAllianceRow : DXControl
+    {
+        #region Properties
+
+        public DXLabel NameLabel, OnlineLabel;
+        public DXButton EndAllianceButton;
+
+        #region IsHeader
+
+        public bool IsHeader
+        {
+            get => _IsHeader;
+            set
+            {
+                if (_IsHeader == value) return;
+
+                bool oldValue = _IsHeader;
+                _IsHeader = value;
+
+                OnIsHeaderChanged(oldValue, value);
+            }
+        }
+        private bool _IsHeader;
+        public event EventHandler<EventArgs> IsHeaderChanged;
+        public void OnIsHeaderChanged(bool oValue, bool nValue)
+        {
+            NameLabel.Text = "Name";
+            NameLabel.ForeColour = Color.FromArgb(198, 166, 99);
+
+            OnlineLabel.Text = "Online";
+            OnlineLabel.ForeColour = Color.FromArgb(198, 166, 99);
+
+            EndAllianceButton.Visible = !IsHeader;
+
+            DrawTexture = false;
+
+            IsHeaderChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        #endregion
+
+        #region AllianceInfo
+
+        public ClientGuildAllianceInfo AllianceInfo
+        {
+            get => _AllianceInfo;
+            set
+            {
+                ClientGuildAllianceInfo oldValue = _AllianceInfo;
+                _AllianceInfo = value;
+
+                OnAllianceInfoChanged(oldValue, value);
+            }
+        }
+        private ClientGuildAllianceInfo _AllianceInfo;
+        public event EventHandler<EventArgs> AllianceInfoChanged;
+        public void OnAllianceInfoChanged(ClientGuildAllianceInfo oValue, ClientGuildAllianceInfo nValue)
+        {
+            Visible = AllianceInfo != null;
+
+            if (AllianceInfo == null) return;
+
+            NameLabel.Text = AllianceInfo.Name;
+            OnlineLabel.Text = AllianceInfo.OnlineCount.ToString();
+
+
+            AllianceInfoChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        #endregion
+
+        #endregion
+
+        public GuildAllianceRow()
+        {
+            Size = new Size(223, 20);
+
+            DrawTexture = true;
+            BackColour = /*Selected ? Color.FromArgb(80, 80, 125) :*/ Color.FromArgb(25, 20, 0);
+
+            NameLabel = new DXLabel
+            {
+                IsControl = false,
+                Parent = this,
+                Location = new Point(10, 2),
+                ForeColour = Color.White,
+            };
+
+            OnlineLabel = new DXLabel
+            {
+                IsControl = false,
+                Parent = this,
+                Location = new Point(110, 2),
+                ForeColour = Color.White,
+            };
+
+            EndAllianceButton = new DXButton
+            {
+                Parent = this,
+                Location = new Point(203, 1),
+                ButtonType = ButtonType.SmallButton,
+                Size = new Size(20, SmallButtonHeight),
+                Label = { Text = "X" },
+            };
+            EndAllianceButton.MouseClick += (o, e) =>
+            {
+                DXMessageBox box = new DXMessageBox($"End Alliance with {NameLabel.Text}?", "Alliance", DXMessageBoxButtons.YesNo);
+
+
+                box.YesButton.MouseClick += (o1, e1) =>
+                {
+                    C.EndGuildAlliance p = new C.EndGuildAlliance
+                    {
+                        GuildName = NameLabel.Text,
+                    };
+
+                    CEnvir.Enqueue(p);
+                };
+            };
+        }
+
+        #region Methods
+
+        public override void Process()
+        {
+            base.Process();
+
+            if (AllianceInfo == null) return;
+        }
+        #endregion
+
+        #region IDisposable
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+            {
+                if (NameLabel != null)
+                {
+                    if (!NameLabel.IsDisposed)
+                        NameLabel.Dispose();
+
+                    NameLabel = null;
+                }
+
+                if (OnlineLabel != null)
+                {
+                    if (!OnlineLabel.IsDisposed)
+                        OnlineLabel.Dispose();
+
+                    OnlineLabel = null;
+                }
+
+                if (EndAllianceButton != null)
+                {
+                    if (!EndAllianceButton.IsDisposed)
+                        EndAllianceButton.Dispose();
+
+                    EndAllianceButton = null;
+                }
+            }
+
+        }
+
+        #endregion
+    }
+
     public sealed class GuildMemberDialog : DXWindow
     {
         #region Properties

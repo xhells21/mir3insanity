@@ -55,7 +55,7 @@ namespace Server.Models.Monsters
                 {
                     for (int dis = -1; dis <= 1; dis++)
                     {
-                        foreach (MapObject ob in GetTargets(CurrentMap, Functions.Move(CurrentLocation, Functions.ShiftDirection(Direction, dis)), radius))
+                        foreach (MapObject ob in GetTargets(CurrentMap, Functions.Move(CurrentLocation, Functions.ShiftDirection(Direction, dis), radius), 0))
                         {
                             ActionList.Add(new DelayedAction(
                                 SEnvir.Now.AddMilliseconds(400),

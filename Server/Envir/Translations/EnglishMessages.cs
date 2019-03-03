@@ -177,6 +177,12 @@ namespace Server.Envir.Translations
         public override string GuildInvitedNotAllowed { get; set; } = "{0} wishes to invite you to the guild {1}, but you are not allowing Invites. @AllowGuild";
         public override string GuildInviteRoom { get; set; } = "Your guild already has reached it's member limit.";
         public override string GuildNoGuild { get; set; } = "You are not in a guild.";
+        public override string GuildAlreadyAlliance { get; set; } = "You are already allied with {0}.";
+        public override string GuildAlliancePermission { get; set; } = "You do not have the permission to change guild alliance.";
+        public override string GuildAllianceOwnGuild { get; set; } = "You cannot ally your own guild.";
+        public override string GuildNoAlliance { get; set; } = "You are not allied with {0}.";
+        public override string GuildAllianceTreatyCreated { get; set; } = "Alliance Treaty written to {0}.";
+        public override string WrongAllianceGuild { get; set; } = "This Treaty does not include your guild.";
         public override string GuildWarPermission { get; set; } = "You do not have the permission to start a guild war.";
         public override string GuildNotFoundGuild { get; set; } = "Could not find the guild {0}.";
         public override string GuildWarOwnGuild { get; set; } = "You cannot war your own guild.";

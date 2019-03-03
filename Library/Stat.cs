@@ -811,6 +811,12 @@ namespace Library
         [StatDescription(Title = "Level 4 Book Upgrade Rate", Format = "{0:+#0%;-#0%;#0%}", Mode = StatType.Percent)]
         BookUpgradeRate,
 
+        [StatDescription(Title = "Sending Guild: ", Mode = StatType.Text)]
+        Guild1,
+
+        [StatDescription(Title = "Recipient Guild: ", Mode = StatType.Text)]
+        Guild2,
+
         [StatDescription(Title = "Duration", Mode = StatType.Time)]
         Duration = 10000,
     }

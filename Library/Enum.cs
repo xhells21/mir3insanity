@@ -1161,6 +1161,7 @@ namespace Library
         ChaoticHeavenGlaive = 94,
         Level75ArmourUpgrade = 95,
         Level75ArmourBase = 96,
+        GuildAllianceTreaty = 97,
     }
 
     [Flags]
@@ -1203,6 +1204,7 @@ namespace Library
         FundsMerchant = 32,
         FundsMarket = 64,
         StartWar = 128,
+        Alliance = 256,
     }
 
     [Flags]

@@ -3335,6 +3335,9 @@ namespace Client.Envir
 
             GameScene.Game.GuildBox.GuildInfo = p.Guild;
 
+            foreach (ClientGuildAllianceInfo allianceInfo in p.Guild.Alliances)
+                GameScene.Game.GuildAlliances.Add(allianceInfo.Name);
+
             if (GameScene.Game.GuildBox.GuildInfo != null)
             {
                 foreach (ClientGuildMemberInfo member in GameScene.Game.GuildBox.GuildInfo.Members)
@@ -3349,7 +3352,10 @@ namespace Client.Envir
 
                 GameScene.Game.BigMapBox.Update(data);
                 GameScene.Game.MiniMapBox.Update(data);
-            }
+            }            
+
+            foreach (MapObject ob in GameScene.Game.MapControl.Objects)
+                ob.NameChanged();
         }
         public void Process(S.GuildNoticeChanged p)
         {
@@ -3512,8 +3518,6 @@ namespace Client.Envir
         }
         public void Process(S.GuildInvite p)
         {
-            
-
             DXMessageBox messageBox = new DXMessageBox($"{p.Name} has invited you to the guild {p.GuildName}\n" +
                                                        $"Do you want to join the guild?", "Guild Invitation", DXMessageBoxButtons.YesNo);
 
@@ -3525,9 +3529,7 @@ namespace Client.Envir
             
         }
         public void Process(S.GuildMemberOnline p)
-        {
-            
-
+        {          
             ClientGuildMemberInfo info = GameScene.Game.GuildBox.GuildInfo.Members.First(x => x.Index == p.Index);
 
             info.LastOnline = DateTime.MaxValue;
@@ -3537,10 +3539,26 @@ namespace Client.Envir
             if (GameScene.Game.GuildBox.Visible)
                 GameScene.Game.GuildBox.RefreshGuildDisplay();
         }
+        public void Process(S.GuildAllyOffline p)
+        {
+            ClientGuildAllianceInfo info = GameScene.Game.GuildBox.GuildInfo.Alliances.First(x => x.Index == p.Index);
+
+            info.OnlineCount--;
+
+            if (GameScene.Game.GuildBox.Visible)
+                GameScene.Game.GuildBox.RefreshGuildDisplay();
+        }
+        public void Process(S.GuildAllyOnline p)
+        {
+            ClientGuildAllianceInfo info = GameScene.Game.GuildBox.GuildInfo.Alliances.First(x => x.Index == p.Index);
+
+            info.OnlineCount++;
+
+            if (GameScene.Game.GuildBox.Visible)
+                GameScene.Game.GuildBox.RefreshGuildDisplay();
+        }
         public void Process(S.GuildMemberContribution p)
         {
-            
-
             ClientGuildMemberInfo info = GameScene.Game.GuildBox.GuildInfo.Members.First(x => x.Index == p.Index);
 
             info.DailyContribution += p.Contribution;
@@ -3596,6 +3614,37 @@ namespace Client.Envir
             if (p.Success)
                 GameScene.Game.GuildBox.GuildWarTextBox.TextBox.Text = string.Empty;
         }
+        public void Process(S.GuildAlliance p)
+        {
+            GameScene.Game.GuildBox.AllyAttempted = false;
+
+            if (p.Success)
+                GameScene.Game.GuildBox.GuildAllyTextBox.TextBox.Text = string.Empty;
+        }
+        public void Process(S.GuildAllianceStarted p)
+        {
+            GameScene.Game.GuildAlliances.Add(p.AllianceInfo.Name);
+            GameScene.Game.GuildBox.GuildInfo.Alliances.Add(p.AllianceInfo);
+            GameScene.Game.ReceiveChat($"You have formed an Alliance with {p.AllianceInfo.Name}", MessageType.Hint);
+
+            GameScene.Game.GuildBox.RefreshGuildDisplay();
+        }
+        public void Process(S.GuildAllianceEnded p)
+        {
+            GameScene.Game.GuildAlliances.Remove(p.GuildName);
+            for (int i = 0; i < GameScene.Game.GuildBox.GuildInfo.Alliances.Count; i++)
+            {
+                if (GameScene.Game.GuildBox.GuildInfo.Alliances[i].Name == p.GuildName)
+                {
+                    GameScene.Game.GuildBox.GuildInfo.Alliances.RemoveAt(i);
+                    break;
+                }
+            }
+            GameScene.Game.ReceiveChat($"The Alliance with {p.GuildName} has ended.", MessageType.Hint);
+
+            GameScene.Game.GuildBox.RefreshGuildDisplay();
+        }
+
         public void Process(S.GuildWarStarted p)
         {
             GameScene.Game.GuildWars.Add(p.GuildName);

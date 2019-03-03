@@ -93,6 +93,7 @@
     <Compile Include="DBModels\GameStoreSale.cs" />
     <Compile Include="DBModels\GuildInfo.cs" />
     <Compile Include="DBModels\GuildMemberInfo.cs" />
+    <Compile Include="DBModels\GuildAllianceInfo.cs" />
     <Compile Include="DBModels\GuildWarInfo.cs" />
     <Compile Include="DBModels\MailInfo.cs" />
     <Compile Include="DBModels\RefineInfo.cs" />

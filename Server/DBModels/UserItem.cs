@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using Library;
 using Library.SystemModels;
 using MirDB;
@@ -468,7 +469,6 @@ namespace Server.DBModels
             {
                 if (addedStat.Stat != stat || addedStat.StatSource != source) continue;
 
-
                 addedStat.Amount += amount;
 
                 return;
@@ -488,7 +488,7 @@ namespace Server.DBModels
         {
             return new ClientUserItem
             {
-                Index =  Index,
+                Index = Index,
 
                 InfoIndex = Info.Index,
 
@@ -496,7 +496,7 @@ namespace Server.DBModels
                 MaxDurability = MaxDurability,
 
                 Count = Count,
-                
+
                 Slot = Slot,
 
                 Level = Level,
@@ -511,7 +511,10 @@ namespace Server.DBModels
 
                 Flags = Flags,
 
-                ExpireTime =  ExpireTime,
+                ExpireTime = ExpireTime,
+
+                Guild1Name = Stats[Stat.Guild1] > 0 ? SEnvir.GuildInfoList.Binding.FirstOrDefault(x => x.Index == Stats[Stat.Guild1])?.GuildName : null,
+                Guild2Name = Stats[Stat.Guild2] > 0 ? SEnvir.GuildInfoList.Binding.FirstOrDefault(x => x.Index == Stats[Stat.Guild2])?.GuildName : null,
             };
         }
 

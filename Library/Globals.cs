@@ -536,6 +536,9 @@ namespace Library
         public UserItemFlags Flags { get; set; }
         public TimeSpan ExpireTime { get; set; }
 
+        public string Guild1Name { get; set; }
+        public string Guild2Name { get; set; }
+
 
         [IgnorePropertyPacket]
         public int Weight
@@ -989,6 +992,8 @@ namespace Library
 
         public List<ClientUserItem> Storage { get; set; }
 
+        public List<ClientGuildAllianceInfo> Alliances { get; set; }
+
         [IgnorePropertyPacket]
         public GuildPermission Permission => Members.FirstOrDefault(x => x.Index == UserIndex)?.Permission ?? GuildPermission.None;
     }
@@ -1015,7 +1020,13 @@ namespace Library
             else
                 LastOnline = Time.Now - Online;
         }
+    }
 
+    public class ClientGuildAllianceInfo
+    {
+        public int Index { get; set; }
+        public string Name { get; set; }
+        public int OnlineCount { get; set; }
     }
 
     public class ClientUserQuest

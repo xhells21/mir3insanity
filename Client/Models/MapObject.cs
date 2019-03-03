@@ -154,6 +154,7 @@ namespace Client.Models
                     if (castle.Map != GameScene.Game.MapControl.MapInfo) continue;
 
                     if (User.Title == Title) return Color.DarkCyan;
+                    if (GameScene.Game.GuildAlliances.Contains(Title)) return Color.DarkCyan;
 
                     return Color.OrangeRed;
                 }
