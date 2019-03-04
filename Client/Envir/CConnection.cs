@@ -3335,8 +3335,12 @@ namespace Client.Envir
 
             GameScene.Game.GuildBox.GuildInfo = p.Guild;
 
-            foreach (ClientGuildAllianceInfo allianceInfo in p.Guild.Alliances)
-                GameScene.Game.GuildAlliances.Add(allianceInfo.Name);
+            GameScene.Game.GuildAlliances.Clear();
+            if (p.Guild?.Alliances != null)
+            {
+                foreach (ClientGuildAllianceInfo allianceInfo in p.Guild.Alliances)
+                    GameScene.Game.GuildAlliances.Add(allianceInfo.Name);
+            }
 
             if (GameScene.Game.GuildBox.GuildInfo != null)
             {
