@@ -3750,12 +3750,15 @@ namespace Client.Models
                                 Target = this,
                                 Direction = Direction,
                             });
-                            Effects.Add(new MirEffect(2160, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
+                            foreach (MapObject attacktarget in AttackTargets)
                             {
-                                Blend = true,
-                                Target = AttackTargets?[0] ?? null,
-                                Direction = Direction,
-                            });
+                                Effects.Add(new MirEffect(2160, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MonMagicEx13, 0, 0, Globals.NoneColour)
+                                {
+                                    Blend = true,
+                                    Target = attacktarget,
+                                    Direction = Direction,
+                                });
+                            }
                             break;
                     }
                     break;
@@ -3806,11 +3809,14 @@ namespace Client.Models
                             break;
                         case MirAction.RangeAttack:
                             DXSoundManager.Play(SoundIndex.GardenSoldierAttack2);
-                            Effects.Add(new MirEffect(270, 8, TimeSpan.FromMilliseconds(130), LibraryFile.MonMagicEx14, 10, 35, Globals.NoneColour)
+                            foreach (MapObject attacktarget in AttackTargets)
                             {
-                                Blend = true,
-                                Target = AttackTargets?[0] ?? null,
-                            });
+                                Effects.Add(new MirEffect(270, 8, TimeSpan.FromMilliseconds(130), LibraryFile.MonMagicEx14, 10, 35, Globals.NoneColour)
+                                {
+                                    Blend = true,
+                                    Target = attacktarget,
+                                });
+                            }
                             break;
                     }
                     break;
