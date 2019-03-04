@@ -530,6 +530,8 @@ namespace Client.Scenes.Views
 
                 Rank.Level -= Rank.Rebirth * 5000;
 
+                if (Rank.Level < 0) return;
+
                 if (Rank.Level < Globals.ExperienceList.Count)
                     percent = Math.Min(1, Math.Max(0, Globals.ExperienceList[Rank.Level] > 0 ? Rank.Experience/Globals.ExperienceList[Rank.Level] : 0));
 
