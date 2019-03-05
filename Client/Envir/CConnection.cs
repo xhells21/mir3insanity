@@ -3475,7 +3475,6 @@ namespace Client.Envir
             if (GameScene.Game.GuildBox.Visible)
                 GameScene.Game.GuildBox.RefreshGuildDisplay();
 
-
             ClientObjectData data;
             if (!GameScene.Game.DataDictionary.TryGetValue(info.ObjectID, out data)) return;
 

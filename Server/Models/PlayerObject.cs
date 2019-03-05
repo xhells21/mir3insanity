@@ -4735,6 +4735,19 @@ namespace Server.Models
                 member.Account.Connection.Player.ApplyGuildBuff();
             }
 
+            foreach (GuildAllianceInfo allianceInfo in guild.Alliances)
+            {
+                foreach (GuildMemberInfo member in allianceInfo.Guild1 == guild ? allianceInfo.Guild2.Members : allianceInfo.Guild1.Members)
+                {
+                    if (member.Account.Connection?.Player == null) continue;
+
+                    member.Account.Connection.Enqueue(new S.GuildAllyOffline
+                    {
+                        Index = allianceInfo.Index,
+                        ObserverPacket = false
+                    });
+                }
+            }
         }
         public void GuildTax(C.GuildTax p)
         {
@@ -5218,7 +5231,7 @@ namespace Server.Models
 
 
             SendGuildInfo();
-            Connection.ReceiveChat(string.Format(Connection.Language.GuildJoinWelcome, GuildInvitation.Name), MessageType.System);
+            Connection.ReceiveChat(string.Format(Connection.Language.GuildJoinWelcome, memberInfo.Guild.GuildName), MessageType.System);
 
             Broadcast(new S.GuildChanged { ObjectID = ObjectID, GuildName = memberInfo.Guild.GuildName, GuildRank = memberInfo.Rank });
             AddAllObjects();
@@ -5236,6 +5249,20 @@ namespace Server.Models
 
                 member.Account.Connection.Player.AddAllObjects();
                 member.Account.Connection.Player.ApplyGuildBuff();
+            }
+
+            foreach (GuildAllianceInfo allianceInfo in memberInfo.Guild.Alliances)
+            {
+                foreach (GuildMemberInfo member in allianceInfo.Guild1 == memberInfo.Guild ? allianceInfo.Guild2.Members : allianceInfo.Guild1.Members)
+                {
+                    if (member.Account.Connection?.Player == null) continue;
+
+                    member.Account.Connection.Enqueue(new S.GuildAllyOnline
+                    {
+                        Index = allianceInfo.Index,
+                        ObserverPacket = false
+                    });
+                }
             }
 
             ApplyCastleBuff();
@@ -5267,9 +5294,7 @@ namespace Server.Models
             Enqueue(new S.GuildInfo { ObserverPacket = false });
 
             Broadcast(new S.GuildChanged { ObjectID = ObjectID });
-            RemoveAllObjects();
-
-            
+            RemoveAllObjects();            
             
             foreach (GuildMemberInfo member in guild.Members)
             {
@@ -5279,6 +5304,20 @@ namespace Server.Models
                 member.Account.Connection.ReceiveChat(string.Format(member.Account.Connection.Language.GuildMemberLeave, Name), MessageType.System);
                 member.Account.Connection.Player.RemoveAllObjects();
                 member.Account.Connection.Player.ApplyGuildBuff();
+            }
+
+            foreach (GuildAllianceInfo allianceInfo in guild.Alliances)
+            {
+                foreach (GuildMemberInfo member in allianceInfo.Guild1 == guild ? allianceInfo.Guild2.Members : allianceInfo.Guild1.Members)
+                {
+                    if (member.Account.Connection?.Player == null) continue;
+
+                    member.Account.Connection.Enqueue(new S.GuildAllyOffline
+                    {
+                        Index = allianceInfo.Index,
+                        ObserverPacket = false
+                    });
+                }
             }
 
             ApplyCastleBuff();

@@ -504,6 +504,7 @@ namespace Client.Scenes.Views
             TreasuryPanel.Enabled = (GuildInfo.Permission & GuildPermission.Leader) == GuildPermission.Leader;
             UpgradePanel.Enabled = (GuildInfo.Permission & GuildPermission.Leader) == GuildPermission.Leader;
             GuildWarPanel.Enabled = (GuildInfo.Permission & GuildPermission.StartWar) == GuildPermission.StartWar;
+            GuildAllyPanel.Enabled = (GuildInfo.Permission & GuildPermission.Alliance) == GuildPermission.Alliance;
 
             foreach (KeyValuePair<CastleInfo, GuildCastlePanel> pair in CastlePanels)
                 pair.Value.RequestButton.Enabled = (GuildInfo.Permission & GuildPermission.Leader) == GuildPermission.Leader;
@@ -2630,7 +2631,7 @@ namespace Client.Scenes.Views
 
         public DXTextBox RankTextBox;
 
-        public DXCheckBox LeaderBox, EditNoticeBox, AddMemberBox, StorageBox, RepairBox, MerchantBox, MarketBox, StartWarBox;
+        public DXCheckBox LeaderBox, EditNoticeBox, AddMemberBox, StorageBox, RepairBox, MerchantBox, MarketBox, StartWarBox, AllianceBox;
         
         public DXButton ConfirmButton, KickButton;
 
@@ -2664,6 +2665,8 @@ namespace Client.Scenes.Views
             RepairBox.Enabled = MemberIndex != GameScene.Game.GuildBox.GuildInfo.UserIndex;
             MerchantBox.Enabled = MemberIndex != GameScene.Game.GuildBox.GuildInfo.UserIndex;
             MarketBox.Enabled = MemberIndex != GameScene.Game.GuildBox.GuildInfo.UserIndex;
+            StartWarBox.Enabled = MemberIndex != GameScene.Game.GuildBox.GuildInfo.UserIndex;
+            AllianceBox.Enabled = MemberIndex != GameScene.Game.GuildBox.GuildInfo.UserIndex;
 
 
             KickButton.Enabled = MemberIndex != GameScene.Game.GuildBox.GuildInfo.UserIndex;
@@ -2702,6 +2705,7 @@ namespace Client.Scenes.Views
             MerchantBox.Checked = (Permission & GuildPermission.FundsMerchant) == GuildPermission.FundsMerchant;
             MarketBox.Checked = (Permission & GuildPermission.FundsMarket) == GuildPermission.FundsMarket;
             StartWarBox.Checked = (Permission & GuildPermission.StartWar) == GuildPermission.StartWar;
+            AllianceBox.Checked = (Permission & GuildPermission.Alliance) == GuildPermission.Alliance;
 
             Updating = false;
             PermissionChanged?.Invoke(this, EventArgs.Empty);
@@ -2818,6 +2822,14 @@ namespace Client.Scenes.Views
             MarketBox.CheckedChanged += (o, e) => UpdatePermission();
             MarketBox.Location = new Point(ClientArea.X + 200 - MarketBox.Size.Width, MerchantBox.Location.Y + 20);
 
+            AllianceBox = new DXCheckBox
+            {
+                Parent = this,
+                Label = { Text = "Alliance:" },
+            };
+            AllianceBox.CheckedChanged += (o, e) => UpdatePermission();
+            AllianceBox.Location = new Point(ClientArea.X + 200 - AllianceBox.Size.Width, StorageBox.Location.Y + 20);
+
 
             ConfirmButton = new DXButton
             {
@@ -2886,6 +2898,9 @@ namespace Client.Scenes.Views
 
             if (StartWarBox.Checked)
                 permission |= GuildPermission.StartWar;
+
+            if (AllianceBox.Checked)
+                permission |= GuildPermission.Alliance;
 
 
             Permission = permission;
@@ -2993,6 +3008,22 @@ namespace Client.Scenes.Views
                         KickButton.Dispose();
 
                     KickButton = null;
+                }
+
+                if (StartWarBox != null)
+                {
+                    if (!StartWarBox.IsDisposed)
+                        StartWarBox.Dispose();
+
+                    StartWarBox = null;
+                }
+
+                if (AllianceBox != null)
+                {
+                    if (!AllianceBox.IsDisposed)
+                        AllianceBox.Dispose();
+
+                    AllianceBox = null;
                 }
             }
 
