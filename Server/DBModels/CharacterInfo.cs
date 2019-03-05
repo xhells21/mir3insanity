@@ -794,6 +794,66 @@ namespace Server.DBModels
         }
         private bool _CompanionForbidBook;
 
+        public bool CompanionForbidBookWarrior
+        {
+            get { return _CompanionForbidBookWarrior; }
+            set
+            {
+                if (_CompanionForbidBookWarrior == value) return;
+
+                var oldValue = _CompanionForbidBookWarrior;
+                _CompanionForbidBookWarrior = value;
+
+                OnChanged(oldValue, value, "CompanionForbidBookWarrior");
+            }
+        }
+        private bool _CompanionForbidBookWarrior;
+
+        public bool CompanionForbidBookWizard
+        {
+            get { return _CompanionForbidBookWizard; }
+            set
+            {
+                if (_CompanionForbidBookWizard == value) return;
+
+                var oldValue = _CompanionForbidBookWizard;
+                _CompanionForbidBookWizard = value;
+
+                OnChanged(oldValue, value, "CompanionForbidBookWizard");
+            }
+        }
+        private bool _CompanionForbidBookWizard;
+
+        public bool CompanionForbidBookTaoist
+        {
+            get { return _CompanionForbidBookTaoist; }
+            set
+            {
+                if (_CompanionForbidBookTaoist == value) return;
+
+                var oldValue = _CompanionForbidBookTaoist;
+                _CompanionForbidBookTaoist = value;
+
+                OnChanged(oldValue, value, "CompanionForbidBookTaoist");
+            }
+        }
+        private bool _CompanionForbidBookTaoist;
+
+        public bool CompanionForbidBookAssassin
+        {
+            get { return _CompanionForbidBookAssassin; }
+            set
+            {
+                if (_CompanionForbidBookAssassin == value) return;
+
+                var oldValue = _CompanionForbidBookAssassin;
+                _CompanionForbidBookAssassin = value;
+
+                OnChanged(oldValue, value, "CompanionForbidBookAssassin");
+            }
+        }
+        private bool _CompanionForbidBookAssassin;
+
         public bool CompanionForbidPotion
         {
             get { return _CompanionForbidPotion; }

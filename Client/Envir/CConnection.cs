@@ -4050,10 +4050,11 @@ namespace Client.Envir
 
         public void Process(S.CompanionPickupToggle p)
         {
-            if (GameScene.Game.CompanionForbiddenItems.Contains(p.Type))
-                GameScene.Game.CompanionForbiddenItems.Remove(p.Type);
+            Tuple<ItemType, RequiredClass> tupleToggle = Tuple.Create(p.Type, p.Class);
+            if (GameScene.Game.CompanionForbiddenItems.Contains(tupleToggle))
+                GameScene.Game.CompanionForbiddenItems.Remove(tupleToggle);
             else
-                GameScene.Game.CompanionForbiddenItems.Add(p.Type);
+                GameScene.Game.CompanionForbiddenItems.Add(tupleToggle);
 
             GameScene.Game.CompanionOptionsBox.Refresh();
         }
@@ -4075,29 +4076,37 @@ namespace Client.Envir
             GameScene.Game.ConfigBox.DropFilterWindow.EliteCheckBox.Checked = !p.Elite;
 
             if (!p.CompanionGold)
-                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Gold);
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Gold, RequiredClass.None));
             if (!p.CompanionWeapon)
-                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Weapon);
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Weapon, RequiredClass.None));
             if (!p.CompanionArmour)
-                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Armour);
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Armour, RequiredClass.None));
             if (!p.CompanionHelmet)
-                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Helmet);
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Helmet, RequiredClass.None));
             if (!p.CompanionShield)
-                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Shield);
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Shield, RequiredClass.None));
             if (!p.CompanionNecklace)
-                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Necklace);
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Necklace, RequiredClass.None));
             if (!p.CompanionBracelet)
-                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Bracelet);
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Bracelet, RequiredClass.None));
             if (!p.CompanionRing)
-                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Ring);
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Ring, RequiredClass.None));
             if (!p.CompanionShoes)
-                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Shoes);
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Shoes, RequiredClass.None));
             if (!p.CompanionBook)
-                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Book);
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Book, RequiredClass.None));
+            if (!p.CompanionBookWarrior)
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Book, RequiredClass.Warrior));
+            if (!p.CompanionBookWizard)
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Book, RequiredClass.Wizard));
+            if (!p.CompanionBookTaoist)
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Book, RequiredClass.Taoist));
+            if (!p.CompanionBookAssassin)
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Book, RequiredClass.Assassin));
             if (!p.CompanionPotion)
-                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Consumable);
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Consumable, RequiredClass.None));
             if (!p.CompanionMeat)
-                GameScene.Game.CompanionForbiddenItems.Add(ItemType.Meat);
+                GameScene.Game.CompanionForbiddenItems.Add(Tuple.Create(ItemType.Meat, RequiredClass.None));
             if (!p.CompanionCommon)
                 GameScene.Game.CompanionForbiddenGrades.Add(Rarity.Common);
             if (!p.CompanionElite)

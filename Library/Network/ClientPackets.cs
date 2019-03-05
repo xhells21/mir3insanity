@@ -551,6 +551,7 @@ namespace Library.Network.ClientPackets
     public sealed class CompanionPickupToggle : Packet
     {
         public ItemType Type { get; set; }
+        public RequiredClass Class { get; set; }
     }
     public sealed class CompanionPickupGradeToggle : Packet
     {

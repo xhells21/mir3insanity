@@ -305,7 +305,7 @@ namespace Client.Scenes
         }
         private ClientUserCompanion _Companion;
 
-        public List<ItemType> CompanionForbiddenItems = new List<ItemType>();
+        public List<Tuple<ItemType, RequiredClass>> CompanionForbiddenItems = new List<Tuple<ItemType, RequiredClass>>();
         public List<Rarity> CompanionForbiddenGrades = new List<Rarity>();
 
         #endregion

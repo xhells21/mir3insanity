@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Client.Controls;
 using Client.Envir;
 using Client.UserModels;
@@ -15,16 +16,16 @@ namespace Client.Scenes.Views
         public override bool CustomSize => false;
         public override bool AutomaticVisiblity => true;
 
-        public DXLabel TypeFilterLabel, GradeFilterLabel;
+        public DXLabel TypeFilterLabel, GradeFilterLabel, BookLabel;
         public Point CheckBoxRightPoint;
-        public DXCheckBox GoldCheckBox, WeaponCheckBox, ArmourCheckBox, HelmetCheckBox, ShieldCheckBox, NecklaceCheckBox, BraceletCheckBox, RingCheckBox, ShoesCheckBox, BookCheckBox, PotionCheckBox, MeatCheckBox, CommonCheckBox, EliteCheckBox, SuperiorCheckBox;
+        public DXCheckBox GoldCheckBox, WeaponCheckBox, ArmourCheckBox, HelmetCheckBox, ShieldCheckBox, NecklaceCheckBox, BraceletCheckBox, RingCheckBox, ShoesCheckBox, PotionCheckBox, MeatCheckBox, CommonCheckBox, EliteCheckBox, SuperiorCheckBox, BookWarriorCheckBox, BookWizardCheckBox, BookTaoistCheckBox, BookAssassinCheckBox;
 
         #endregion
 
         public CompanionOptionsDialog()
         {
             TitleLabel.Text = "Companion Options";
-            SetClientSize(new Size(172, 341));
+            SetClientSize(new Size(182, 341));
             Movable = false;
 
             TypeFilterLabel = new DXLabel
@@ -168,17 +169,69 @@ namespace Client.Scenes.Views
             };
             i += gap;
 
-            BookCheckBox = new DXCheckBox
+            BookLabel = new DXLabel
             {
                 Parent = this,
                 ForeColour = Color.White,
-                Label = { Text = "Book:" },
+                IsControl = false,
+                Text = "Book:",
+            };
+            BookLabel.Location = new Point(CheckBoxRightPoint.X - BookLabel.Size.Width - 16, ClientArea.Y + i);
+
+            BookWarriorCheckBox = new DXCheckBox
+            {
+                Parent = this,
+                ForeColour = Color.White,
+                Label = { Text = "" },
+                Hint = "Warrior",
                 Visible = true
             };
-            BookCheckBox.Location = new Point(CheckBoxRightPoint.X - BookCheckBox.Size.Width, ClientArea.Y + i);
-            BookCheckBox.MouseClick += (o, e) =>
+            BookWarriorCheckBox.Location = new Point(CheckBoxRightPoint.X - 16, ClientArea.Y + i);
+            BookWarriorCheckBox.MouseClick += (o, e) =>
             {
-                CEnvir.Enqueue(new C.CompanionPickupToggle { Type = ItemType.Book });
+                CEnvir.Enqueue(new C.CompanionPickupToggle { Type = ItemType.Book, Class = RequiredClass.Warrior });
+            };
+
+            BookWizardCheckBox = new DXCheckBox
+            {
+                Parent = this,
+                ForeColour = Color.White,
+                Label = { Text = "" },
+                Hint = "Wizard",
+                Visible = true
+            };
+            BookWizardCheckBox.Location = new Point(CheckBoxRightPoint.X + BookWarriorCheckBox.Size.Width - 16, ClientArea.Y + i);
+            BookWizardCheckBox.MouseClick += (o, e) =>
+            {
+                CEnvir.Enqueue(new C.CompanionPickupToggle { Type = ItemType.Book, Class = RequiredClass.Wizard });
+            };
+
+            BookTaoistCheckBox = new DXCheckBox
+            {
+                Parent = this,
+                ForeColour = Color.White,
+                Label = { Text = "" },
+                Hint = "Taoist",
+                Visible = true
+            };
+            BookTaoistCheckBox.Location = new Point(CheckBoxRightPoint.X + BookWarriorCheckBox.Size.Width + BookWizardCheckBox.Size.Width - 16, ClientArea.Y + i);
+            BookTaoistCheckBox.MouseClick += (o, e) =>
+            {
+                CEnvir.Enqueue(new C.CompanionPickupToggle { Type = ItemType.Book, Class = RequiredClass.Taoist });
+            };
+
+            BookAssassinCheckBox = new DXCheckBox
+            {
+                Parent = this,
+                ForeColour = Color.White,
+                Label = { Text = "" },
+                Hint = "Assassin",
+                Visible = true
+            };
+            BookAssassinCheckBox.Location = new Point(CheckBoxRightPoint.X + BookWarriorCheckBox.Size.Width + BookWizardCheckBox.Size.Width + BookTaoistCheckBox.Size.Width - 16, ClientArea.Y + i);
+            BookAssassinCheckBox.MouseClick += (o, e) =>
+            {
+                CEnvir.Enqueue(new C.CompanionPickupToggle { Type = ItemType.Book, Class = RequiredClass.Assassin });
             };
             i += gap;
 
@@ -290,18 +343,21 @@ namespace Client.Scenes.Views
 
         public void Refresh()
         {
-            GoldCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(ItemType.Gold);
-            WeaponCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(ItemType.Weapon);
-            ArmourCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(ItemType.Armour);
-            HelmetCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(ItemType.Helmet);
-            ShieldCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(ItemType.Shield);
-            NecklaceCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(ItemType.Necklace);
-            BraceletCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(ItemType.Bracelet);
-            RingCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(ItemType.Ring);
-            ShoesCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(ItemType.Shoes);
-            BookCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(ItemType.Book);
-            PotionCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(ItemType.Consumable);
-            MeatCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(ItemType.Meat);
+            GoldCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Gold, RequiredClass.None));
+            WeaponCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Weapon, RequiredClass.None));
+            ArmourCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Armour, RequiredClass.None));
+            HelmetCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Helmet, RequiredClass.None));
+            ShieldCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Shield, RequiredClass.None));
+            NecklaceCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Necklace, RequiredClass.None));
+            BraceletCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Bracelet, RequiredClass.None));
+            RingCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Ring, RequiredClass.None));
+            ShoesCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Shoes, RequiredClass.None));
+            BookWarriorCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Book, RequiredClass.Warrior));
+            BookWizardCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Book, RequiredClass.Wizard));
+            BookTaoistCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Book, RequiredClass.Taoist));
+            BookAssassinCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Book, RequiredClass.Assassin));
+            PotionCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Consumable, RequiredClass.None));
+            MeatCheckBox.Checked = !GameScene.Game.CompanionForbiddenItems.Contains(Tuple.Create(ItemType.Meat, RequiredClass.None));
 
             CommonCheckBox.Checked = !GameScene.Game.CompanionForbiddenGrades.Contains(Rarity.Common);
             EliteCheckBox.Checked = !GameScene.Game.CompanionForbiddenGrades.Contains(Rarity.Elite);
@@ -340,6 +396,14 @@ namespace Client.Scenes.Views
                         GradeFilterLabel.Dispose();
 
                     GradeFilterLabel = null;
+                }
+
+                if (BookLabel != null)
+                {
+                    if (!BookLabel.IsDisposed)
+                        BookLabel.Dispose();
+
+                    BookLabel = null;
                 }
 
                 if (WeaponCheckBox != null)
@@ -406,12 +470,36 @@ namespace Client.Scenes.Views
                     ShoesCheckBox = null;
                 }
 
-                if (BookCheckBox != null)
+                if (BookWarriorCheckBox != null)
                 {
-                    if (!BookCheckBox.IsDisposed)
-                        BookCheckBox.Dispose();
+                    if (!BookWarriorCheckBox.IsDisposed)
+                        BookWarriorCheckBox.Dispose();
 
-                    BookCheckBox = null;
+                    BookWarriorCheckBox = null;
+                }
+
+                if (BookWizardCheckBox != null)
+                {
+                    if (!BookWizardCheckBox.IsDisposed)
+                        BookWizardCheckBox.Dispose();
+
+                    BookWizardCheckBox = null;
+                }
+
+                if (BookTaoistCheckBox != null)
+                {
+                    if (!BookTaoistCheckBox.IsDisposed)
+                        BookTaoistCheckBox.Dispose();
+
+                    BookTaoistCheckBox = null;
+                }
+
+                if (BookAssassinCheckBox != null)
+                {
+                    if (!BookAssassinCheckBox.IsDisposed)
+                        BookAssassinCheckBox.Dispose();
+
+                    BookAssassinCheckBox = null;
                 }
 
                 if (PotionCheckBox != null)

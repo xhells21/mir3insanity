@@ -1119,6 +1119,7 @@ namespace Library.Network.ServerPackets
     public sealed class CompanionPickupToggle : Packet
     {
         public ItemType Type { get; set; }
+        public RequiredClass Class { get; set; }
     }
     public sealed class CompanionPickupGradeToggle : Packet
     {
@@ -1142,6 +1143,10 @@ namespace Library.Network.ServerPackets
         public bool CompanionRing { get; set; }
         public bool CompanionShoes { get; set; }
         public bool CompanionBook { get; set; }
+        public bool CompanionBookWarrior { get; set; }
+        public bool CompanionBookWizard { get; set; }
+        public bool CompanionBookTaoist { get; set; }
+        public bool CompanionBookAssassin { get; set; }
         public bool CompanionPotion { get; set; }
         public bool CompanionMeat { get; set; }
         public bool CompanionCommon { get; set; }

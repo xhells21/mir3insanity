@@ -175,11 +175,29 @@ namespace Server.Models.Monsters
 
         public bool MasterForbidsPickup(ItemCheck check)
         {
+            ItemType type = ItemType.Nothing;
             if (check.Info.Effect == ItemEffect.ItemPart && check.Item.Stats[Stat.ItemIndex] > 0)
-                return CompanionOwner.CompanionForbiddenItems.Contains(SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).ItemType)
-                    || (check.Info.Effect != ItemEffect.Gold && CompanionOwner.CompanionForbiddenGrades.Contains(SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).Rarity));
+            {
+                type = SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).ItemType;
 
-            return CompanionOwner.CompanionForbiddenItems.Contains(check.Info.ItemType) || (check.Info.Effect != ItemEffect.Gold && CompanionOwner.CompanionForbiddenGrades.Contains(check.Info.Rarity)); 
+                if (type == ItemType.Book)
+                {
+                    return CompanionOwner.CompanionForbiddenItems.Contains(Tuple.Create(type, SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).RequiredClass))
+                        || (CompanionOwner.CompanionForbiddenGrades.Contains(SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).Rarity));
+                }
+                else
+                {
+                    return CompanionOwner.CompanionForbiddenItems.Contains(Tuple.Create(type, RequiredClass.None))
+                        || (check.Info.Effect != ItemEffect.Gold && CompanionOwner.CompanionForbiddenGrades.Contains(SEnvir.ItemInfoList.Binding.First(x => x.Index == check.Item.Stats[Stat.ItemIndex]).Rarity));
+                }
+            }
+
+            type = check.Info.ItemType;
+
+            if (type == ItemType.Book)
+                return CompanionOwner.CompanionForbiddenItems.Contains(Tuple.Create(check.Info.ItemType, check.Info.RequiredClass)) || (check.Info.Effect != ItemEffect.Gold && CompanionOwner.CompanionForbiddenGrades.Contains(check.Info.Rarity));
+            else
+                return CompanionOwner.CompanionForbiddenItems.Contains(Tuple.Create(check.Info.ItemType, RequiredClass.None)) || (check.Info.Effect != ItemEffect.Gold && CompanionOwner.CompanionForbiddenGrades.Contains(check.Info.Rarity)); 
         }
 
         public override void ProcessSearch()

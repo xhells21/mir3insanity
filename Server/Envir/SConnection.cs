@@ -1093,7 +1093,7 @@ namespace Server.Envir
         {
             if (Stage != GameStage.Game) return;
 
-            Player.CompanionPickupToggle(p.Type);
+            Player.CompanionPickupToggle(p.Type, p.Class);
         }
         public void Process(C.CompanionPickupGradeToggle p)
         {
