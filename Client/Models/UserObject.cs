@@ -206,6 +206,8 @@ namespace Client.Models
         
 
         public int BagWeight, WearWeight, HandWeight;
+        public float ShakeScreenCount;
+        public Point ShakeScreenOffset;
 
         public bool InSafeZone
         {
@@ -636,7 +638,14 @@ namespace Client.Models
                 if (BagWeight > Stats[Stat.BagWeight] || WearWeight > Stats[Stat.WearWeight] || HandWeight > Stats[Stat.HandWeight])
                     DrawColour = Color.CornflowerBlue;
             }
-            
+
+            ShakeScreenOffset = new Point(0, (int)(Math.Sin(ShakeScreenCount) * 10));
+            if (ShakeScreenCount > 0)
+            {
+                ShakeScreenCount -= 0.1F;
+                GameScene.Game.MapControl.FLayer.TextureValid = false;
+            }
+
             TimeSpan ticks = CEnvir.Now - BuffTime;
             BuffTime = CEnvir.Now;
 
@@ -671,7 +680,17 @@ namespace Client.Models
                             DXSoundManager.Play((SoundIndex)((int)SoundIndex.Foot1 + CEnvir.Random.Next((int)SoundIndex.Foot4 - (int)SoundIndex.Foot1) + 1));
                             break;
                     }
-
+                    break;
+                case MirAction.Spell:
+                    switch (MagicType)
+                    {
+                        case MagicType.SeismicSlam:
+                            if (FrameIndex == 4)
+                            {
+                                ShakeScreenCount = 10F;
+                            }                            
+                            break;
+                    }
                     break;
             }
         }
@@ -700,7 +719,6 @@ namespace Client.Models
         public override void UpdateFrame()
         {
             if (Frames == null || CurrentFrame == null) return;
-
 
             switch (CurrentAction)
             {
@@ -795,7 +813,7 @@ namespace Client.Models
             if (GameScene.Game.MapControl.BackgroundImage != null)
                 GameScene.Game.MapControl.BackgroundMovingOffset = new Point((int)(x / GameScene.Game.MapControl.BackgroundScaleX), (int)(y / GameScene.Game.MapControl.BackgroundScaleY));
             ReverseMovingOffSet = new Point(reversex, reversey);
-            MovingOffSet = new Point(x, y);
+            MovingOffSet = new Point(x, y);            
 
             if (CurrentAction == MirAction.Pushed)
                 frame = 0;

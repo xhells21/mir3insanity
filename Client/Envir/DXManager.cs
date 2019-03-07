@@ -396,7 +396,6 @@ namespace Client.Envir
             {
                 Sprite.Begin(SpriteFlags.DoNotSaveState);
                 Device.SetRenderState(RenderState.AlphaBlendEnable, true);
-
                 Device.SetRenderState(RenderState.SourceBlend, Blend.BlendFactor);
                 Device.SetRenderState(RenderState.DestinationBlend, Blend.One);
                 Device.SetRenderState(RenderState.BlendFactor, Color.FromArgb((byte) (255*rate), (byte) (255*rate), (byte) (255*rate), (byte) (255*rate)).ToArgb());

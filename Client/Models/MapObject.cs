@@ -319,7 +319,8 @@ namespace Client.Models
             {
                 if (!DamageList[i].Visible)
                     DamageList.RemoveAt(i);
-            }
+            }            
+
             UpdateFrame();
 
             DrawX = CurrentLocation.X - User.CurrentLocation.X + MapControl.OffSetX;
@@ -331,8 +332,8 @@ namespace Client.Models
 
             if (this != User)
             {
-                DrawX += MovingOffSet.X - User.MovingOffSet.X;
-                DrawY += MovingOffSet.Y - User.MovingOffSet.Y;
+                DrawX += MovingOffSet.X - User.MovingOffSet.X - User.ShakeScreenOffset.X;
+                DrawY += MovingOffSet.Y - User.MovingOffSet.Y - User.ShakeScreenOffset.Y;
             }
 
             DrawColour = DefaultColour;
@@ -4002,6 +4003,21 @@ namespace Client.Models
                     if (FrameIndex != 4) return;
                     CreateProjectile();
                     PlayAttackSound();
+                    break;
+                case MirAction.Spell:
+                    switch (MagicType)
+                    {
+                        case MagicType.SeismicSlam:
+                            if (FrameIndex == 4)
+                            {
+                                Effects.Add(new MirEffect(700, 7, TimeSpan.FromMilliseconds(120), LibraryFile.MonMagicEx7, 10, 35, Globals.LightningColour)
+                                {
+                                    Blend = true,
+                                    MapTarget = Functions.Move(CurrentLocation, Direction, 2),
+                                });  
+                            }
+                            break;
+                    }
                     break;
                 /*  case MirAction.Struck:
                       if (FrameIndex == 0)
