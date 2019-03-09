@@ -2989,14 +2989,12 @@ namespace Server.Envir
             {
                 int maxLevel = refferal.HightestLevel();
 
-                if (maxLevel >= 50) account.HuntGold = 500;
-                else if (maxLevel >= 40) account.HuntGold = 300;
-                else if (maxLevel >= 30) account.HuntGold = 200;
-                else if (maxLevel >= 20) account.HuntGold = 100;
-                else if (maxLevel >= 10) account.HuntGold = 50;
+                if (maxLevel >= 50) account.HuntGold += 500;
+                else if (maxLevel >= 40) account.HuntGold += 300;
+                else if (maxLevel >= 30) account.HuntGold += 200;
+                else if (maxLevel >= 20) account.HuntGold += 100;
+                else if (maxLevel >= 10) account.HuntGold += 50;
             }
-
-
 
             SendActivationEmail(account);
 
