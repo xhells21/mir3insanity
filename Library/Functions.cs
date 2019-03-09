@@ -290,6 +290,7 @@ namespace Library
                 case MagicType.Might:
                 case MagicType.ReflectDamage:
                 case MagicType.Fetter:
+                case MagicType.Invincibility:
                     return MirAnimation.Combat15;
 
                 case MagicType.SwiftBlade:

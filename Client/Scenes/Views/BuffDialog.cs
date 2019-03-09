@@ -216,6 +216,9 @@ namespace Client.Scenes.Views
                     case BuffType.Guild:
                         icon.Index = 140;
                         break;
+                    case BuffType.Invincibility:
+                        icon.Index = 143;
+                        break;
                     default:
                         icon.Index = 73;
                         break;
@@ -377,6 +380,9 @@ namespace Client.Scenes.Views
                     break;
                 case BuffType.Companion:
                     text = $"Companion\n";
+                    break;
+                case BuffType.Invincibility:
+                    text = $"Invincibility\n";
                     break;
             }
             

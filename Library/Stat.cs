@@ -816,6 +816,9 @@ namespace Library
 
         [StatDescription(Title = "Recipient Guild: ", Mode = StatType.Text)]
         Guild2,
+        
+        [StatDescription(Title = "You are immune to all damage.", Mode = StatType.Text)]
+        Invincibility,
 
         [StatDescription(Title = "Duration", Mode = StatType.Time)]
         Duration = 10000,

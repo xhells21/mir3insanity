@@ -3014,6 +3014,7 @@ namespace Client.Scenes
                     break;
 
                 case MagicType.Defiance:
+                case MagicType.Invincibility:
                     direction = MirDirection.Down;
                     break;
                 case MagicType.Might:

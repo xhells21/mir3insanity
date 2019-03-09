@@ -2799,9 +2799,10 @@ namespace Client.Models
 
                         #endregion
 
-                        #region Defiance
+                        #region Defiance, Invincibility
 
                         case MagicType.Defiance:
+                        case MagicType.Invincibility:
                             Effects.Add(new MirEffect(40, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MagicEx2, 60, 60, Globals.NoneColour)
                             {
                                 Blend = true,

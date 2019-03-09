@@ -199,6 +199,7 @@ namespace Library
         Might = 101,
         Endurance = 102,
         ReflectDamage = 103,
+        Invincibility = 104,
 
         Renounce = 200,
         MagicShield = 201,
@@ -498,6 +499,7 @@ namespace Library
         AdvancedPotionMastery = 122,
         MassBeckon = 123,
         SeismicSlam = 124,
+        Invincibility = 125,
 
         FireBall = 201,
         LightningBall = 202,

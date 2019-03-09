@@ -13437,6 +13437,7 @@ namespace Server.Models
                 case MagicType.Endurance:
                 case MagicType.Assault:
                 case MagicType.SeismicSlam:
+                case MagicType.Invincibility:
 
 
                 case MagicType.FireBall:
@@ -13636,6 +13637,7 @@ namespace Server.Models
                 case MagicType.Might:
                 case MagicType.ReflectDamage:
                 case MagicType.Endurance:
+                case MagicType.Invincibility:
                     ob = null;
                     p.Direction = MirDirection.Down;
 
@@ -15251,6 +15253,7 @@ namespace Server.Models
                 case MagicType.Defiance:
                 case MagicType.Might:
                 case MagicType.ReflectDamage:
+                case MagicType.Invincibility:
 
                 case MagicType.Repulsion:
                 case MagicType.ElectricShock:
@@ -16579,7 +16582,7 @@ namespace Server.Models
 
         public override int Attacked(MapObject attacker, int power, Element element, bool canReflect = true, bool ignoreShield = false, bool canCrit = true, bool canStruck = true)
         {
-            if (attacker?.Node == null || power == 0 || Dead || attacker.CurrentMap != CurrentMap || !Functions.InRange(attacker.CurrentLocation, CurrentLocation, Config.MaxViewRange)) return 0;
+            if (attacker?.Node == null || power == 0 || Dead || attacker.CurrentMap != CurrentMap || !Functions.InRange(attacker.CurrentLocation, CurrentLocation, Config.MaxViewRange) || Stats[Stat.Invincibility] > 0) return 0;
 
             UserMagic magic;
             if (element != Element.None)
@@ -16774,6 +16777,9 @@ namespace Server.Models
             if (Magics.TryGetValue(MagicType.AdventOfDevil, out magic) && element != Element.None)
                 LevelMagic(magic);
 
+            if (Buffs.Any(x => x.Type == BuffType.Invincibility) && Magics.TryGetValue(MagicType.Invincibility, out magic))
+                LevelMagic(magic);
+
             return power;
         }
 
@@ -16960,6 +16966,9 @@ namespace Server.Models
                             Attack(cell.Objects[i], magics, true, 0);
                         }
 
+                        break;
+                    case MagicType.Invincibility:
+                        InvincibilityEnd(magic);
                         break;
 
                     #endregion
@@ -18182,6 +18191,18 @@ namespace Server.Models
             };
 
             BuffAdd(BuffType.Might, TimeSpan.FromSeconds(60 + magic.Level * 30), buffStats, false, false, TimeSpan.Zero);
+
+            LevelMagic(magic);
+        }
+
+        public void InvincibilityEnd(UserMagic magic)
+        {
+            Stats buffStats = new Stats
+            {
+                [Stat.Invincibility] = 1,
+            };
+
+            BuffAdd(BuffType.Invincibility, TimeSpan.FromSeconds(5 + magic.Level), buffStats, false, false, TimeSpan.Zero);
 
             LevelMagic(magic);
         }
