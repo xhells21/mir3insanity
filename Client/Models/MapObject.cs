@@ -2841,10 +2841,23 @@ namespace Client.Models
 
                         #endregion
 
-                        #region Lightning Beam
+                        #region Seismic Slam
 
                         case MagicType.SeismicSlam:
                             Effects.Add(spell = new MirEffect(4900, 6, TimeSpan.FromMilliseconds(100), LibraryFile.MagicEx5, 10, 35, Globals.LightningColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                                Direction = action.Direction,
+                            });
+                            break;
+
+                        #endregion
+
+                        #region Crushing Wave
+
+                        case MagicType.CrushingWave:
+                            Effects.Add(spell = new MirEffect(100, 6, TimeSpan.FromMilliseconds(100), LibraryFile.MagicEx6, 0, 0, Globals.LightningColour)
                             {
                                 Blend = true,
                                 Target = this,
@@ -4004,21 +4017,6 @@ namespace Client.Models
                     if (FrameIndex != 4) return;
                     CreateProjectile();
                     PlayAttackSound();
-                    break;
-                case MirAction.Spell:
-                    switch (MagicType)
-                    {
-                        case MagicType.SeismicSlam:
-                            if (FrameIndex == 4)
-                            {
-                                Effects.Add(new MirEffect(700, 7, TimeSpan.FromMilliseconds(120), LibraryFile.MonMagicEx7, 10, 35, Globals.LightningColour)
-                                {
-                                    Blend = true,
-                                    MapTarget = Functions.Move(CurrentLocation, Direction, 2),
-                                });  
-                            }
-                            break;
-                    }
                     break;
                 /*  case MirAction.Struck:
                       if (FrameIndex == 0)

@@ -13438,6 +13438,7 @@ namespace Server.Models
                 case MagicType.Assault:
                 case MagicType.SeismicSlam:
                 case MagicType.Invincibility:
+                case MagicType.CrushingWave:
 
 
                 case MagicType.FireBall:
@@ -13698,6 +13699,63 @@ namespace Server.Models
                             ActionType.DelayMagic,
                             new List<UserMagic> { magic },
                             cell));
+                    }
+                    break;
+                case MagicType.CrushingWave:
+                    ob = null;
+
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        location = Functions.Move(CurrentLocation, p.Direction, i);
+                        Cell cell = CurrentMap.GetCell(location);
+
+                        if (cell == null) continue;
+                        locations.Add(cell.Location);
+
+                        ActionList.Add(new DelayedAction(
+                            SEnvir.Now.AddMilliseconds(400 + i * 60),
+                            ActionType.DelayMagic,
+                            new List<UserMagic> { magic },
+                            cell,
+                            true));
+
+                        switch (p.Direction)
+                        {
+                            case MirDirection.Up:
+                            case MirDirection.Right:
+                            case MirDirection.Down:
+                            case MirDirection.Left:
+                                ActionList.Add(new DelayedAction(
+                                    SEnvir.Now.AddMilliseconds(200 + i * 60),
+                                    ActionType.DelayMagic,
+                                    new List<UserMagic> { magic },
+                                    CurrentMap.GetCell(Functions.Move(location, Functions.ShiftDirection(p.Direction, -2))),
+                                    false));
+                                ActionList.Add(new DelayedAction(
+                                    SEnvir.Now.AddMilliseconds(200 + i * 60),
+                                    ActionType.DelayMagic,
+                                    new List<UserMagic> { magic },
+                                    CurrentMap.GetCell(Functions.Move(location, Functions.ShiftDirection(p.Direction, 2))),
+                                    false));
+                                break;
+                            case MirDirection.UpRight:
+                            case MirDirection.DownRight:
+                            case MirDirection.DownLeft:
+                            case MirDirection.UpLeft:
+                                ActionList.Add(new DelayedAction(
+                                    SEnvir.Now.AddMilliseconds(200 + i * 60),
+                                    ActionType.DelayMagic,
+                                    new List<UserMagic> { magic },
+                                    CurrentMap.GetCell(Functions.Move(location, Functions.ShiftDirection(p.Direction, 1))),
+                                    false));
+                                ActionList.Add(new DelayedAction(
+                                    SEnvir.Now.AddMilliseconds(200 + i * 60),
+                                    ActionType.DelayMagic,
+                                    new List<UserMagic> { magic },
+                                    CurrentMap.GetCell(Functions.Move(location, Functions.ShiftDirection(p.Direction, -1))),
+                                    false));
+                                break;
+                        }
                     }
                     break;
                 case MagicType.MassBeckon:
@@ -15661,6 +15719,9 @@ namespace Server.Models
                     case MagicType.DestructiveSurge:
                         hasDestructiveSurge = !primary;
                         break;
+                    case MagicType.CrushingWave:
+                        hasSwiftBlade = !primary;
+                        break;
                 }
             }
 
@@ -15716,6 +15777,13 @@ namespace Server.Models
 
                         hasSeismicSlam = true;
 
+                        break;
+                    case MagicType.CrushingWave:
+                        if (!primary)
+                            power = power * magic.GetPower() / 100;
+
+                        if (ob.Race == ObjectType.Player)
+                            power /= 2;
                         break;
                     case MagicType.FullBloom:
                         bonus = GetLotusMana(ob.Race) * magic.GetPower() / 1000;
@@ -16969,6 +17037,16 @@ namespace Server.Models
                         break;
                     case MagicType.Invincibility:
                         InvincibilityEnd(magic);
+                        break;
+                    case MagicType.CrushingWave:
+                        cell = (Cell)data[1];
+                        if (cell == null || cell.Objects == null) continue;
+
+                        for (int i = cell.Objects.Count - 1; i >= 0; i--)
+                        {
+                            if (!CanAttackTarget(cell.Objects[i])) continue;
+                            Attack(cell.Objects[i], magics, (bool)data[2], 0);
+                        }
                         break;
 
                     #endregion

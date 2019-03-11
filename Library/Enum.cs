@@ -500,6 +500,7 @@ namespace Library
         MassBeckon = 123,
         SeismicSlam = 124,
         Invincibility = 125,
+        CrushingWave = 126,
 
         FireBall = 201,
         LightningBall = 202,

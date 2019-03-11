@@ -3039,9 +3039,8 @@ namespace Client.Scenes
                     break;
                 case MagicType.JudgementOfHeaven:
                     break;
-
-
                 case MagicType.SeismicSlam:
+                case MagicType.CrushingWave:
 
                 case MagicType.Repulsion:
                 case MagicType.ScortchedEarth:

@@ -295,6 +295,7 @@ namespace Library
 
                 case MagicType.SwiftBlade:
                 case MagicType.SeismicSlam:
+                case MagicType.CrushingWave:
                     return MirAnimation.Combat3;
 
                 default:
