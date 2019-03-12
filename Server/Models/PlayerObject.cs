@@ -669,6 +669,7 @@ namespace Server.Models
             BuffRemove(BuffType.Ranking);
             BuffRemove(BuffType.Castle);
             BuffRemove(BuffType.Veteran);
+            BuffRemove(BuffType.ElementalHurricane);
 
             if (GroupMembers != null) GroupLeave();
 
@@ -8896,6 +8897,7 @@ namespace Server.Models
                 case BuffType.Ranking:
                 case BuffType.Developer:
                 case BuffType.Castle:
+                case BuffType.ElementalHurricane:
                     info.IsTemporary = true;
                     break;
             }
@@ -13566,6 +13568,17 @@ namespace Server.Models
                         return;
                     }
                     break;
+                case MagicType.ElementalHurricane:
+                    int cost = magic.Cost;
+                    if (Buffs.Any(x => x.Type == BuffType.ElementalHurricane))
+                        cost = 0;
+
+                    if (cost > CurrentMP)
+                    {
+                        Enqueue(new S.UserLocation { Direction = Direction, Location = CurrentLocation });
+                        return;
+                    }
+                    break;
                 default:
                     Enqueue(new S.UserLocation { Direction = Direction, Location = CurrentLocation });
                     return;
@@ -14426,6 +14439,18 @@ namespace Server.Models
                         }
                     }
                     break;
+                case MagicType.ElementalHurricane:
+                    ob = null;
+                    if (Buffs.Any(x => x.Type == BuffType.ElementalHurricane))
+                    {
+                        BuffRemove(BuffType.ElementalHurricane);
+                    }
+                    else
+                    {
+                        buff = BuffAdd(BuffType.ElementalHurricane, TimeSpan.MaxValue, null, true, false, TimeSpan.FromSeconds(1));
+                        buff.TickTime = TimeSpan.FromMilliseconds(500);
+                    }
+                    break;
 
                 #endregion
 
@@ -15275,6 +15300,11 @@ namespace Server.Models
                     }
                     ChangeMP(-magic.Cost);
                     break;
+                case MagicType.ElementalHurricane:
+                    if (Buffs.Any(x => x.Type == BuffType.ElementalHurricane))
+                        break;
+                    ChangeMP(-(Stats[Stat.Mana] * magic.Cost / 1000));
+                    break;
                 default:
                     ChangeMP(-magic.Cost);
                     break;
@@ -15372,6 +15402,7 @@ namespace Server.Models
                 ActionTime += slow;
             }
 
+            bool hasStone = Equipment[(int)EquipmentSlot.Amulet]?.Info.ItemType == ItemType.DarkStone;
 
             Broadcast(new S.ObjectMagic
             {
@@ -15382,7 +15413,8 @@ namespace Server.Models
                 Targets = targets,
                 Locations = locations,
                 Cast = cast,
-                Slow = slow
+                Slow = slow,
+                AttackElement = hasStone ? Equipment[(int)EquipmentSlot.Amulet].Info.Stats.GetAffinityElement() : Element.None,
             });
         }
         public void MagicToggle(C.MagicToggle p)
@@ -16259,7 +16291,11 @@ namespace Server.Models
                         repel = 5;
                         canStuck = false;
                         break;
-
+                    case MagicType.ElementalHurricane:
+                        bool hasStone = Equipment[(int)EquipmentSlot.Amulet]?.Info.ItemType == ItemType.DarkStone;
+                        element = hasStone ? Equipment[(int)EquipmentSlot.Amulet].Info.Stats.GetAffinityElement() : Element.None;
+                        power += magic.GetPower() + GetMC();
+                        break;
                     case MagicType.ExplosiveTalisman:
                         element = Element.Dark;
                         power += magic.GetPower() + GetSC();
@@ -16383,6 +16419,7 @@ namespace Server.Models
                     case MagicType.BlowEarth:
                     case MagicType.FrozenEarth:
                     case MagicType.GreaterFrozenEarth:
+                    case MagicType.ElementalHurricane:
                         if (!primary)
                             power = (int) (power * 0.3F);
                         break;
@@ -17074,6 +17111,7 @@ namespace Server.Models
                     case MagicType.FrozenEarth:
                     case MagicType.BlowEarth:
                     case MagicType.GreaterFrozenEarth:
+                    case MagicType.ElementalHurricane:
                         AttackCell(magics, (Cell)data[1], (bool)data[2]);
                         break;
                     case MagicType.FireStorm:

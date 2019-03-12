@@ -243,6 +243,9 @@ namespace Library
                 case MagicType.MirrorImage:
                 case MagicType.Asteroid:
 
+                case MagicType.ElementalHurricane:
+                    return MirAnimation.ChannellingStart;
+
                 case MagicType.Heal:
                 case MagicType.PoisonDust:
                 case MagicType.Invisibility:

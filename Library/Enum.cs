@@ -230,6 +230,7 @@ namespace Library
         Evasion = 409,
         RagingWind = 410,
         FrostBite = 411,
+        ElementalHurricane = 412,
 
         MagicWeakness = 500,
     }
@@ -395,6 +396,9 @@ namespace Library
         DragonRepulseStart,
         DragonRepulseMiddle,
         DragonRepulseEnd,
+        ChannellingStart,
+        ChannellingMiddle,
+        ChannellingEnd,
 
     }
     
@@ -542,6 +546,7 @@ namespace Library
         AdvancedRenounce = 238,
         FrostBite = 239,
         Asteroid = 240,
+        ElementalHurricane = 241,
 
         Heal = 300,
         SpiritSword = 301,
@@ -1690,6 +1695,8 @@ namespace Library
         ChainLightningEnd,
 
         FrostBiteStart,
+
+        ElementalHurricane,
 
 
         HealStart,

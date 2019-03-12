@@ -565,6 +565,38 @@ namespace Client.Models
 
                     action.Extra[1] = attackMagic;
                     break;
+                case MirAction.Spell:
+                    if (GameScene.Game.Equipment[(int)EquipmentSlot.Amulet]?.Info.ItemType == ItemType.DarkStone)
+                    {
+                        foreach (KeyValuePair<Stat, int> stats in GameScene.Game.Equipment[(int)EquipmentSlot.Amulet].Info.Stats.Values)
+                        {
+                            switch (stats.Key)
+                            {
+                                case Stat.FireAffinity:
+                                    action.Extra[4] = Element.Fire;
+                                    break;
+                                case Stat.IceAffinity:
+                                    action.Extra[4] = Element.Ice;
+                                    break;
+                                case Stat.LightningAffinity:
+                                    action.Extra[4] = Element.Lightning;
+                                    break;
+                                case Stat.WindAffinity:
+                                    action.Extra[4] = Element.Wind;
+                                    break;
+                                case Stat.HolyAffinity:
+                                    action.Extra[4] = Element.Holy;
+                                    break;
+                                case Stat.DarkAffinity:
+                                    action.Extra[4] = Element.Dark;
+                                    break;
+                                case Stat.PhantomAffinity:
+                                    action.Extra[4] = Element.Phantom;
+                                    break;
+                            }
+                        }
+                    }
+                    break;
                 case MirAction.Mount:
                     return;
             }

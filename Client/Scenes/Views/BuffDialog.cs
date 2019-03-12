@@ -219,6 +219,9 @@ namespace Client.Scenes.Views
                     case BuffType.Invincibility:
                         icon.Index = 143;
                         break;
+                    case BuffType.ElementalHurricane:
+                        icon.Index = 98;
+                        break;
                     default:
                         icon.Index = 73;
                         break;
@@ -383,6 +386,9 @@ namespace Client.Scenes.Views
                     break;
                 case BuffType.Invincibility:
                     text = $"Invincibility\n";
+                    break;
+                case BuffType.ElementalHurricane:
+                    text = $"Elemental Hurricane\n";
                     break;
             }
             

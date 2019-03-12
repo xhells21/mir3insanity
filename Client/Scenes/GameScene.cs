@@ -2823,7 +2823,7 @@ namespace Client.Scenes
 
             if (CEnvir.Now < User.NextMagicTime || User.Dead || User.Buffs.Any(x => x.Type == BuffType.DragonRepulse || x.Type ==  BuffType.FrostBite) ||     
                 (User.Poison & PoisonType.Paralysis) == PoisonType.Paralysis || 
-                (User.Poison & PoisonType.Silenced) == PoisonType.Silenced) return;
+                (User.Poison & PoisonType.Silenced) == PoisonType.Silenced || (User.Buffs.Any(x => x.Type == BuffType.ElementalHurricane) && magic.Info.Magic != MagicType.ElementalHurricane)) return;
 
             if (CEnvir.Now < magic.NextCast)
             {
@@ -2892,8 +2892,22 @@ namespace Client.Scenes
                         return;
                     }
                     break;
-                default:
+                case MagicType.ElementalHurricane:
+                    int cost = magic.Cost;
+                    if (MapObject.User.VisibleBuffs.Contains(BuffType.ElementalHurricane))
+                        cost = 0;
 
+                    if (cost > User.CurrentMP)
+                    {
+                        if (CEnvir.Now >= OutputTime)
+                        {
+                            OutputTime = CEnvir.Now.AddSeconds(1);
+                            ReceiveChat($"Unable to cast {magic.Info.Name}, You do not have enough Mana.", MessageType.Hint);
+                        }
+                        return;
+                    }
+                    break;
+                default:                    
                     if (magic.Cost > User.CurrentMP)
                     {
                         if (CEnvir.Now >= OutputTime)
@@ -3051,6 +3065,7 @@ namespace Client.Scenes
                 case MagicType.GreaterFrozenEarth:
                 case MagicType.ThunderStrike:
                 case MagicType.MirrorImage:
+                case MagicType.ElementalHurricane:
 
                 // case MagicType.SummonSkeleton:
                 case MagicType.Invisibility:
@@ -3147,7 +3162,7 @@ namespace Client.Scenes
             if (MouseObject != null && MouseObject.Race == ObjectType.Monster)
                 FocusObject = (MonsterObject) MouseObject;
 
-            User.MagicAction = new ObjectAction(MirAction.Spell, direction, MapObject.User.CurrentLocation, magic.Info.Magic, new List<uint> { targetID }, new List<Point> { targetLocation }, false);
+            User.MagicAction = new ObjectAction(MirAction.Spell, direction, MapObject.User.CurrentLocation, magic.Info.Magic, new List<uint> { targetID }, new List<Point> { targetLocation }, false, Element.None);
 
 
         }

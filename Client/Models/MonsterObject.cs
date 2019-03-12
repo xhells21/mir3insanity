@@ -2243,12 +2243,12 @@ namespace Client.Models
                             animation = !Extra ? MirAnimation.StoneStanding : MirAnimation.Standing;
                             break;
                         default:
-                                animation = MirAnimation.Standing;
+                            animation = MirAnimation.Standing;
 
                             if (VisibleBuffs.Contains(BuffType.DragonRepulse))
                                 animation = MirAnimation.DragonRepulseMiddle;
                             else if (CurrentAnimation == MirAnimation.DragonRepulseMiddle)
-                                animation = MirAnimation.DragonRepulseEnd;
+                                animation = MirAnimation.DragonRepulseEnd;                            
                             break;
                     }
                     break;
