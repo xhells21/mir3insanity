@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Library;
 using Server.Envir;
 using S = Library.Network.ServerPackets;
@@ -17,6 +18,18 @@ namespace Server.Models.Monsters
             return Functions.InRange(CurrentLocation, Target.CurrentLocation, AttackRange);
         }
 
+        protected bool InMeleeAttackRange()
+        {
+            if (!InAttackRange()) return false;
+
+            int x = Math.Abs(Target.CurrentLocation.X - CurrentLocation.X);
+            int y = Math.Abs(Target.CurrentLocation.Y - CurrentLocation.Y);
+
+            if (x > 2 || y > 2) return false;
+
+            return x == 0 || x == y || y == 0;
+        }
+
         public override void ProcessTarget()
         {
             if (Target == null) return;
@@ -33,7 +46,7 @@ namespace Server.Models.Monsters
                     direction = Functions.ShiftDirection(direction, rotation);
                 }
             }
-            else if (!Functions.InRange(CurrentLocation, Target.CurrentLocation, 2))
+            else if (!InMeleeAttackRange())
                 MoveTo(Target.CurrentLocation);
 
             if (InAttackRange() && CanAttack)
@@ -45,7 +58,7 @@ namespace Server.Models.Monsters
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
             UpdateAttackTime();
 
-            if ( !Functions.InRange(Target.CurrentLocation, CurrentLocation, 2))
+            if (!InMeleeAttackRange())
                 RangeAttack();
             else
             {
