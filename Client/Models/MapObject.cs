@@ -269,6 +269,7 @@ namespace Client.Models
         public DateTime FrameStart;
         public Dictionary<MirAnimation, Frame> Frames;
         public Color DrawColour;
+        public int MaximumSuperiorMagicShield;
 
         public Color DefaultColour = Color.White;
 
@@ -400,7 +401,7 @@ namespace Client.Models
             else
                 Opacity = 1f;
 
-            if (VisibleBuffs.Contains(BuffType.MagicShield))
+            if (VisibleBuffs.Contains(BuffType.MagicShield) || VisibleBuffs.Contains(BuffType.SuperiorMagicShield))
             {
                 if (MagicShieldEffect == null)
                     MagicShieldCreate();
@@ -3317,6 +3318,19 @@ namespace Client.Models
 
                         #endregion
 
+                        #region Superior Magic Shield
+
+                        case MagicType.SuperiorMagicShield:
+                            Effects.Add(new MirEffect(1900, 17, TimeSpan.FromMilliseconds(60), LibraryFile.MagicEx2, 10, 35, Globals.FireColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                            });
+                            DXSoundManager.Play(SoundIndex.MagicShieldStart);
+                            break;
+
+                        #endregion
+
                         #endregion
 
                         #region Taoist
@@ -4064,7 +4078,7 @@ namespace Client.Models
 
             PlayStruckSound();
 
-            if (VisibleBuffs.Contains(BuffType.MagicShield))
+            if (VisibleBuffs.Contains(BuffType.MagicShield) || VisibleBuffs.Contains(BuffType.SuperiorMagicShield))
                 MagicShieldStruck();
 
             if (VisibleBuffs.Contains(BuffType.CelestialLight))
@@ -4291,6 +4305,9 @@ namespace Client.Models
             if (CEnvir.Now < DrawHealthTime)
                 y -= 20;
 
+            if (this == User && User.VisibleBuffs.Contains(BuffType.SuperiorMagicShield))
+                y -= 10;
+
             if (Dead)
                 y += 35;
 
@@ -4378,24 +4395,48 @@ namespace Client.Models
         }
         public void MagicShieldCreate()
         {
-            MagicShieldEffect = new MirEffect(850, 3, TimeSpan.FromMilliseconds(200), LibraryFile.Magic, 40, 40, Globals.WindColour)
+            if (VisibleBuffs.Contains(BuffType.MagicShield))
             {
-                Blend = true,
-                Target = this,
-                Loop = true,
-            };
+                MagicShieldEffect = new MirEffect(850, 3, TimeSpan.FromMilliseconds(200), LibraryFile.Magic, 40, 40, Globals.WindColour)
+                {
+                    Blend = true,
+                    Target = this,
+                    Loop = true,
+                };
+            }
+            else
+            {
+                MagicShieldEffect = new MirEffect(1920, 3, TimeSpan.FromMilliseconds(200), LibraryFile.MagicEx2, 40, 40, Globals.FireColour)
+                {
+                    Blend = true,
+                    Target = this,
+                    Loop = true,
+                };
+            }
             MagicShieldEffect.Process();
         }
         public void MagicShieldStruck()
         {
             MagicShieldEnd();
 
-            MagicShieldEffect = new MirEffect(853, 3, TimeSpan.FromMilliseconds(100), LibraryFile.Magic, 40, 40, Globals.WindColour)
+            if (VisibleBuffs.Contains(BuffType.MagicShield))
             {
-                Blend = true,
-                Target = this,
-                CompleteAction = MagicShieldCreate,
-            };
+                MagicShieldEffect = new MirEffect(853, 3, TimeSpan.FromMilliseconds(100), LibraryFile.Magic, 40, 40, Globals.WindColour)
+                {
+                    Blend = true,
+                    Target = this,
+                    CompleteAction = MagicShieldCreate,
+                };
+            }
+            else
+            {
+                MagicShieldEffect = new MirEffect(1923, 3, TimeSpan.FromMilliseconds(100), LibraryFile.MagicEx2, 40, 40, Globals.FireColour)
+                {
+                    Blend = true,
+                    Target = this,
+                    CompleteAction = MagicShieldCreate,
+                };
+            }
             MagicShieldEffect.Process();
 
         }

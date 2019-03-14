@@ -670,6 +670,7 @@ namespace Server.Models
             BuffRemove(BuffType.Castle);
             BuffRemove(BuffType.Veteran);
             BuffRemove(BuffType.ElementalHurricane);
+            BuffRemove(BuffType.SuperiorMagicShield);
 
             if (GroupMembers != null) GroupLeave();
 
@@ -8898,6 +8899,7 @@ namespace Server.Models
                 case BuffType.Developer:
                 case BuffType.Castle:
                 case BuffType.ElementalHurricane:
+                case BuffType.SuperiorMagicShield:
                     info.IsTemporary = true;
                     break;
             }
@@ -13477,6 +13479,7 @@ namespace Server.Models
                 case MagicType.MirrorImage:
                 case MagicType.Teleportation:
                 case MagicType.Asteroid:
+                case MagicType.SuperiorMagicShield:
 
                 case MagicType.Heal:
                 case MagicType.PoisonDust:
@@ -14222,6 +14225,7 @@ namespace Server.Models
                     }
                     break;
                 case MagicType.MagicShield:
+                case MagicType.SuperiorMagicShield:
                     ob = null;
 
                     ActionList.Add(new DelayedAction(
@@ -15352,6 +15356,7 @@ namespace Server.Models
                 case MagicType.Renounce:
                 case MagicType.JudgementOfHeaven:
                 case MagicType.MirrorImage:
+                case MagicType.SuperiorMagicShield:
 
                 case MagicType.Heal:
                 case MagicType.Invisibility:
@@ -16845,7 +16850,21 @@ namespace Server.Models
 
 
             LastHitter = attacker;
-            ChangeHP(-power);
+            if (!ignoreShield && Buffs.Any(x => x.Type == BuffType.SuperiorMagicShield))
+            {
+                buff = Buffs.FirstOrDefault(x => x.Type == BuffType.SuperiorMagicShield);
+
+                if (buff != null)
+                {
+                    buff.Stats[Stat.SuperiorMagicShield] -= power;
+                    if (buff.Stats[Stat.SuperiorMagicShield] <= 0)
+                        BuffRemove(buff);
+                    else
+                        Enqueue(new S.BuffChanged() { Index = buff.Index, Stats = new Stats(buff.Stats) });
+                }
+            }
+            else
+                ChangeHP(-power);
             LastHitter = null;
 
             if (canReflect && CanAttackTarget(attacker) && attacker.Race != ObjectType.Player)
@@ -17153,6 +17172,9 @@ namespace Server.Models
                         break;
                     case MagicType.JudgementOfHeaven:
                         JudgementOfHeavenEnd(magic);
+                        break;
+                    case MagicType.SuperiorMagicShield:
+                        SuperiorMagicShieldEnd(magic);
                         break;
 
 
@@ -18604,7 +18626,7 @@ namespace Server.Models
 
         public void MagicShieldEnd(UserMagic magic)
         {
-            if (Buffs.Any(x => x.Type == BuffType.MagicShield)) return;
+            if (Buffs.Any(x => x.Type == BuffType.MagicShield || x.Type == BuffType.SuperiorMagicShield)) return;
 
             Stats buffStats = new Stats
             {
@@ -18612,6 +18634,21 @@ namespace Server.Models
             };
 
             BuffAdd(BuffType.MagicShield, TimeSpan.FromSeconds(30 + magic.Level * 20 + GetMC() / 2 + Stats[Stat.PhantomAttack] * 2), buffStats, true, false, TimeSpan.Zero);
+
+            LevelMagic(magic);
+        }
+        public void SuperiorMagicShieldEnd(UserMagic magic)
+        {
+            if (Buffs.Any(x => x.Type == BuffType.SuperiorMagicShield)) return;
+
+            BuffRemove(BuffType.MagicShield);
+
+            Stats buffStats = new Stats
+            {
+                [Stat.SuperiorMagicShield] = (int)(Stats[Stat.Mana] * (0.25F + magic.Level * 0.05F))
+            };
+
+            BuffAdd(BuffType.SuperiorMagicShield, TimeSpan.MaxValue, buffStats, true, false, TimeSpan.Zero);
 
             LevelMagic(magic);
         }

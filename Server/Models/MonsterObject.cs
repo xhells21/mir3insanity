@@ -2354,7 +2354,7 @@ namespace Server.Models
             if (buff != null)
                 buff.RemainingTime -= TimeSpan.FromMilliseconds(power * 10);
 
-            power -= power * Stats[Stat.MagicShield] / 100;
+            power -= power * Stats[Stat.MagicShield] / 100;                       
 
             if (PetOwner == null && SEnvir.Random.Next(100) < attacker.Stats[Stat.CriticalChance] && canCrit && power > 0)
             {
@@ -2362,12 +2362,16 @@ namespace Server.Models
                 Critical();
             }
 
+            buff = Buffs.FirstOrDefault(x => x.Type == BuffType.SuperiorMagicShield);
 
-
-            ChangeHP(-power);
-            
-
-
+            if (buff != null)
+            {
+                Stats[Stat.SuperiorMagicShield] -= power;
+                if (Stats[Stat.SuperiorMagicShield] <= 0)
+                    BuffRemove(buff);
+            }
+            else
+                ChangeHP(-power);         
 
             if (Dead) return power;
             
