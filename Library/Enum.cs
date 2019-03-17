@@ -232,6 +232,7 @@ namespace Library
         RagingWind = 410,
         FrostBite = 411,
         ElementalHurricane = 412,
+        Concentration = 413,
 
         MagicWeakness = 500,
     }
@@ -634,6 +635,7 @@ namespace Library
         AdvancedBloodyFlower = 438,
         Massacre = 439,
         ArtOfShadows = 440,
+        Concentration = 441,
 
         MonsterScortchedEarth = 501,
         MonsterIceStorm = 502,
@@ -1792,6 +1794,7 @@ namespace Library
         FlashOfLightEnd,
         EvasionStart,
         RagingWindStart,
+        Concentration,
 
         #endregion
 

@@ -286,6 +286,7 @@ namespace Library
                 case MagicType.Abyss:
                 case MagicType.Evasion:
                 case MagicType.RagingWind:
+                case MagicType.Concentration:
                     return MirAnimation.Combat9;
 
                 case MagicType.Rake:

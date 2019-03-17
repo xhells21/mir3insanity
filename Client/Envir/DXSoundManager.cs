@@ -293,6 +293,7 @@ namespace Client.Envir
 
             [SoundIndex.RagingWindStart] = new DXSound(SoundPath + @"M26-1.wav", SoundType.Magic),
             [SoundIndex.EvasionStart] = new DXSound(SoundPath + @"243-5.wav", SoundType.Magic),
+            [SoundIndex.Concentration] = new DXSound(SoundPath + @"m139-1.wav", SoundType.Magic),
             #endregion
 
             #region Monsters

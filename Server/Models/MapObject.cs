@@ -1330,6 +1330,7 @@ namespace Server.Models
                         case BuffType.Evasion:
                         case BuffType.RagingWind:
                         case BuffType.Invincibility:
+                        case BuffType.Concentration:
                             buffs.Add(buff);
                             result++;
                             break;

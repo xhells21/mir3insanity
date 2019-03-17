@@ -13627,6 +13627,15 @@ namespace Server.Models
                         return;
                     }
                     break;
+                case MagicType.Concentration:
+                    if (Buffs.Any(x => x.Type == BuffType.Concentration)) break;
+
+                    if (magic.Cost > CurrentMP)
+                    {
+                        Enqueue(new S.UserLocation { Direction = Direction, Location = CurrentLocation });
+                        return;
+                    }
+                    break;
                 default:
                     Enqueue(new S.UserLocation { Direction = Direction, Location = CurrentLocation });
                     return;
@@ -15393,6 +15402,17 @@ namespace Server.Models
                             cell));
                     }
                     break;
+                case MagicType.Concentration:
+                    ob = null;
+
+                    if (Buffs.Any(x => x.Type == BuffType.Concentration)) break;
+
+                    ActionList.Add(new DelayedAction(
+                        SEnvir.Now.AddMilliseconds(500),
+                        ActionType.DelayMagic,
+                        new List<UserMagic> { magic }));
+
+                    break;
 
 
                 #endregion
@@ -15444,6 +15464,7 @@ namespace Server.Models
                 case MagicType.ChangeOfSeasons:
                 case MagicType.TheNewBeginning:
                 case MagicType.Transparency:
+                case MagicType.Concentration:
                     break;
                 default:
                     BuffRemove(BuffType.Cloak);
@@ -15497,6 +15518,7 @@ namespace Server.Models
 
                 case MagicType.PoisonousCloud:
                 case MagicType.DarkConversion:
+                case MagicType.Concentration:
                     break;
                 default:
                     CombatTime = SEnvir.Now;
@@ -17417,8 +17439,11 @@ namespace Server.Models
                     case MagicType.FlashOfLight:
                         AttackCell(magics, (Cell)data[1], true);
                         break;
+                    case MagicType.Concentration:
+                        ConcentrationEnd(magic, this);
+                        break;
 
-                    #endregion
+                        #endregion
                 }
             }
         }
@@ -19830,6 +19855,22 @@ namespace Server.Models
             if (ob?.Node == null || !CanHelpTarget(ob)) return;
 
             ob.BuffAdd(BuffType.RagingWind, TimeSpan.FromSeconds(magic.GetPower()), null, false, false, TimeSpan.Zero);
+        }
+
+        public void ConcentrationEnd(UserMagic magic, MapObject ob)
+        {
+            if (ob?.Node == null || !CanHelpTarget(ob) || ob.Buffs.Any(x => x.Type == BuffType.Concentration)) return;
+
+            int power = 5 + magic.Level;
+
+            Stats buffStats = new Stats
+            {
+                [Stat.CriticalChance] = power,
+            };
+
+            ob.BuffAdd(BuffType.Concentration, TimeSpan.FromSeconds(20), buffStats, false, false, TimeSpan.FromSeconds(1));
+
+            LevelMagic(magic);
         }
 
 

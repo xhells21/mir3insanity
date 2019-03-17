@@ -3922,8 +3922,21 @@ namespace Client.Models
 
                         #endregion
 
+                        #region Concentration
+
+                        case MagicType.Concentration:
+                            Effects.Add(new MirEffect(300, 15, TimeSpan.FromMilliseconds(100), LibraryFile.MagicEx5, 10, 35, Globals.DarkColour)
+                            {
+                                Blend = true,
+                                Target = this,
+                            });
+                            DXSoundManager.Play(SoundIndex.Concentration);
+                            break;
+
                         #endregion
-                            
+
+                        #endregion
+
 
                         #region Monster Scortched Earth
 

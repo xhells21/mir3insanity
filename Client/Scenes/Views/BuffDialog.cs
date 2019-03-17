@@ -225,6 +225,9 @@ namespace Client.Scenes.Views
                     case BuffType.SuperiorMagicShield:
                         icon.Index = 161;
                         break;
+                    case BuffType.Concentration:
+                        icon.Index = 201;
+                        break;
                     default:
                         icon.Index = 73;
                         break;
@@ -395,6 +398,9 @@ namespace Client.Scenes.Views
                     break;
                 case BuffType.ElementalHurricane:
                     text = $"Elemental Hurricane\n";
+                    break;
+                case BuffType.Concentration:
+                    text = $"Concentration\n";
                     break;
             }
             

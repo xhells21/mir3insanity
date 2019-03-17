@@ -2907,6 +2907,19 @@ namespace Client.Scenes
                         return;
                     }
                     break;
+                case MagicType.Concentration:
+                    if (User.VisibleBuffs.Contains(BuffType.Concentration)) return;
+
+                    if (magic.Cost > User.CurrentMP)
+                    {
+                        if (CEnvir.Now >= OutputTime)
+                        {
+                            OutputTime = CEnvir.Now.AddSeconds(1);
+                            ReceiveChat($"Unable to cast {magic.Info.Name}, You do not have enough Mana.", MessageType.Hint);
+                        }
+                        return;
+                    }
+                    break;
                 default:                    
                     if (magic.Cost > User.CurrentMP)
                     {
@@ -3092,6 +3105,7 @@ namespace Client.Scenes
                 case MagicType.FlashOfLight:
                 case MagicType.Evasion:
                 case MagicType.RagingWind:
+                case MagicType.Concentration:
                     break;
 
                 case MagicType.SwiftBlade:
