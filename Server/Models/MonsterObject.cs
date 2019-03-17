@@ -2184,31 +2184,32 @@ namespace Server.Models
                         Element.Wind));
                 }
             }
-        }
-/*
-        public void MonsterIceStorm()
-        {
-            Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
+        }        
 
-            List<uint> targetIDs = new List<uint>();
-            List<Point> locations = new List<Point> { Target.CurrentLocation };
+            /*
+                    public void MonsterIceStorm()
+                    {
+                        Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
 
-            Broadcast(new S.ObjectMagic { ObjectID = ObjectID, Direction = Direction, CurrentLocation = CurrentLocation, Cast = true, Type = MagicType.MonsterIceStorm, Targets = targetIDs, Locations = locations });
+                        List<uint> targetIDs = new List<uint>();
+                        List<Point> locations = new List<Point> { Target.CurrentLocation };
 
-            UpdateAttackTime();
+                        Broadcast(new S.ObjectMagic { ObjectID = ObjectID, Direction = Direction, CurrentLocation = CurrentLocation, Cast = true, Type = MagicType.MonsterIceStorm, Targets = targetIDs, Locations = locations });
 
-            List<MapObject> targets = GetTargets(CurrentMap, Target.CurrentLocation, 1);
+                        UpdateAttackTime();
 
-            foreach (MapObject target in targets)
-            {
-                ActionList.Add(new DelayedAction(
-                    SEnvir.Now.AddMilliseconds(500),
-                    ActionType.DelayAttack,
-                    target,
-                    GetDC(),
-                    Element.Ice));
-            }
-        }*/
+                        List<MapObject> targets = GetTargets(CurrentMap, Target.CurrentLocation, 1);
+
+                        foreach (MapObject target in targets)
+                        {
+                            ActionList.Add(new DelayedAction(
+                                SEnvir.Now.AddMilliseconds(500),
+                                ActionType.DelayAttack,
+                                target,
+                                GetDC(),
+                                Element.Ice));
+                        }
+                    }*/
 
 
         public void PoisonousCloud()
@@ -2288,6 +2289,12 @@ namespace Server.Models
                 AttackTime += TimeSpan.FromMilliseconds(poison.Value * 100);
                 ActionTime += TimeSpan.FromMilliseconds(poison.Value * 100);
             }
+
+            if (PoisonList.Any(x => x.Type == PoisonType.Neutralize))
+            {
+                AttackTime += TimeSpan.FromMilliseconds(AttackDelay);
+                ActionTime += TimeSpan.FromMilliseconds(Math.Min(MoveDelay, AttackDelay - 100));
+            }
         }
         public void UpdateMoveTime()
         {
@@ -2299,6 +2306,12 @@ namespace Server.Models
             {
                 AttackTime += TimeSpan.FromMilliseconds(poison.Value * 100);
                 ActionTime += TimeSpan.FromMilliseconds(poison.Value * 100);
+            }
+
+            if (PoisonList.Any(x => x.Type == PoisonType.Neutralize))
+            {
+                AttackTime += TimeSpan.FromMilliseconds(MoveDelay);
+                ActionTime += TimeSpan.FromMilliseconds(Math.Min(MoveDelay - 100, AttackDelay));
             }
         }
 

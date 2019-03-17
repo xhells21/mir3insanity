@@ -590,6 +590,9 @@ namespace Library
         DemonExplosion = 337,
         Infection = 338,
         DemonicRecovery = 339,
+        Neutralize = 340,
+        AugmentNeutralize = 341,
+        DarkSoulPrison = 342,
 
         WillowDance = 401,
         VineTreeDance = 402,
@@ -1028,6 +1031,7 @@ namespace Library
         Silenced = 64,
         Abyss = 128,
         Infection = 256,
+        Neutralize = 512,
     }
 
     public enum SpellEffect
@@ -1042,8 +1046,8 @@ namespace Library
         Tempest,
 
         TrapOctagon,
-
         PoisonousCloud,
+        DarkSoulPrison,
 
         Rubble,
 
@@ -1754,6 +1758,10 @@ namespace Library
 
         StrengthOfFaithStart,
         StrengthOfFaithEnd,
+
+        NeutralizeEnd,
+
+        DarkSoulPrison,
 
 
         PoisonousCloudStart,

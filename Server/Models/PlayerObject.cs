@@ -1649,6 +1649,41 @@ namespace Server.Models
                         player.Level = value;
                         player.LevelUp();
                         break;
+                    case "WEAPONLEVEL":
+                        if (!Character.Account.TempAdmin) return;
+
+                        if (parts.Length < 3)
+                        {
+                            if (parts.Length < 2) return;
+
+                            if (!int.TryParse(parts[1], out value) || value < 0) return;
+
+                            player = this;
+                        }
+                        else
+                        {
+                            if (!int.TryParse(parts[2], out value) || value < 0) return;
+
+                            player = SEnvir.GetPlayerByCharacter(parts[1]);
+                        }
+
+                        if (player == null) return;
+                        UserItem weapon = player.Equipment[(int)EquipmentSlot.Weapon];
+
+                        value = Math.Min(value, Globals.WeaponExperienceList.Count);
+
+                        if (weapon != null)
+                        {
+                            weapon.Experience = 0;
+                            weapon.Level = value;
+
+                            if (weapon.Level < Globals.WeaponExperienceList.Count)
+                                weapon.Flags |= UserItemFlags.Refinable;
+
+                            Connection.ReceiveChat($"Weapon level => {value}", MessageType.System);
+                            Enqueue(new S.ItemExperience { Target = new CellLinkInfo { GridType = GridType.Equipment, Slot = (int)EquipmentSlot.Weapon }, Experience = weapon.Experience, Level = weapon.Level, Flags = weapon.Flags });
+                        }
+                        break;
                     case "GOTO":
                         if (!Character.Account.TempAdmin) return;
                         if (parts.Length < 2) return;
@@ -12653,6 +12688,9 @@ namespace Server.Models
 
             ActionTime = SEnvir.Now + Globals.TurnTime;
 
+            if (PoisonList.Any(x => x.Type == PoisonType.Neutralize))
+                ActionTime += Globals.TurnTime;
+
             Poison poison = PoisonList.FirstOrDefault(x => x.Type == PoisonType.Slow);
             TimeSpan slow = TimeSpan.Zero;
             if (poison != null)
@@ -12686,6 +12724,9 @@ namespace Server.Models
 
             Direction = direction;
             ActionTime = SEnvir.Now + Globals.HarvestTime;
+
+            if (PoisonList.Any(x => x.Type == PoisonType.Neutralize))
+                ActionTime += Globals.HarvestTime;
 
             Poison poison = PoisonList.FirstOrDefault(x => x.Type == PoisonType.Slow);
             TimeSpan slow = TimeSpan.Zero;
@@ -12902,6 +12943,8 @@ namespace Server.Models
                 return;
             }
 
+            if (distance > 1 && PoisonList.Any(x => x.Type == PoisonType.Neutralize))
+                distance = 1;
 
             Cell cell = null;
 
@@ -12996,7 +13039,7 @@ namespace Server.Models
                 ActionTime += slow;
             }
 
-            if (BagWeight > Stats[Stat.BagWeight])
+            if (BagWeight > Stats[Stat.BagWeight] || PoisonList.Any(x => x.Type == PoisonType.Neutralize))
                 AttackTime += TimeSpan.FromMilliseconds(attackDelay);
 
 
@@ -13526,6 +13569,8 @@ namespace Server.Models
                 case MagicType.RagingWind:
                 case MagicType.MassBeckon:
                 case MagicType.Infection:
+                case MagicType.Neutralize:
+                case MagicType.DarkSoulPrison:
                     if (magic.Cost > CurrentMP)
                     {
                         Enqueue(new S.UserLocation { Direction = Direction, Location = CurrentLocation });
@@ -15086,6 +15131,82 @@ namespace Server.Models
                         new List<UserMagic> { magic },
                         ob));
                     break;
+                case MagicType.Neutralize:
+
+                    magics = new List<UserMagic> { magic };
+                    Magics.TryGetValue(MagicType.AugmentNeutralize, out augMagic);
+
+                    realTargets = new HashSet<MapObject>();
+
+                    if (CanAttackTarget(ob))
+                        realTargets.Add(ob);
+
+                    if (augMagic != null && SEnvir.Now > augMagic.Cooldown && Level >= augMagic.Info.NeedLevel1)
+                    {
+                        magics.Add(augMagic);
+                        power = augMagic.GetPower() + 1;
+                        possibleTargets = GetTargets(CurrentMap, p.Location, 2);
+
+                        while (power >= realTargets.Count)
+                        {
+                            if (possibleTargets.Count == 0) break;
+
+                            MapObject target = possibleTargets[SEnvir.Random.Next(possibleTargets.Count)];
+
+                            possibleTargets.Remove(target);
+
+                            if (!Functions.InRange(CurrentLocation, target.CurrentLocation, Globals.MagicRange)) continue;
+
+                            realTargets.Add(target);
+                        }
+                    }
+
+                    count = -1;
+                    foreach (MapObject target in realTargets)
+                    {
+                        if (!UseAmulet(1, 0, out stats))
+                            break;
+
+                        if (augMagic != null)
+                            count++;
+
+                        targets.Add(target.ObjectID);
+                        ActionList.Add(new DelayedAction(
+                            SEnvir.Now.AddMilliseconds(1400 + Functions.Distance(CurrentLocation, target.CurrentLocation) * 48),
+                            ActionType.DelayMagic,
+                            magics,
+                            target,
+                            target == ob,
+                            stats));
+                    }
+
+                    if (count > 0)
+                    {
+                        augMagic.Cooldown = SEnvir.Now.AddMilliseconds(augMagic.Info.Delay);
+                        Enqueue(new S.MagicCooldown { InfoIndex = augMagic.Info.Index, Delay = augMagic.Info.Delay });
+                    }
+
+                    if (ob == null)
+                        locations.Add(p.Location);
+
+                    break;
+                case MagicType.DarkSoulPrison:
+                    ob = null;
+
+                    if (!Functions.InRange(CurrentLocation, p.Location, Globals.MagicRange))
+                    {
+                        cast = false;
+                        break;
+                    }
+                    power = magic.Level + 5;
+
+                    ActionList.Add(new DelayedAction(
+                        SEnvir.Now.AddMilliseconds(500),
+                        ActionType.DelayMagic,
+                        new List<UserMagic> { magic },
+                        p.Location,
+                        power));
+                    break;
 
 
                 #endregion
@@ -15372,6 +15493,7 @@ namespace Server.Models
                 case MagicType.LifeSteal:
                 case MagicType.SummonShinsu:
                 case MagicType.StrengthOfFaith:
+                case MagicType.DarkSoulPrison:
 
                 case MagicType.PoisonousCloud:
                 case MagicType.DarkConversion:
@@ -15396,7 +15518,7 @@ namespace Server.Models
             ActionTime = SEnvir.Now + Globals.CastTime;
             MagicTime = SEnvir.Now + Globals.MagicDelay;
 
-            if (BagWeight > Stats[Stat.BagWeight])
+            if (BagWeight > Stats[Stat.BagWeight] || PoisonList.Any(x => x.Type == PoisonType.Neutralize))
                 MagicTime += Globals.MagicDelay;
 
             Poison poison = PoisonList.FirstOrDefault(x => x.Type == PoisonType.Slow);
@@ -15611,7 +15733,7 @@ namespace Server.Models
                 ActionTime += slow;
             }
 
-            if (BagWeight > Stats[Stat.BagWeight])
+            if (BagWeight > Stats[Stat.BagWeight] || PoisonList.Any(x => x.Type == PoisonType.Neutralize))
                 AttackTime += TimeSpan.FromMilliseconds(attackDelay);
 
             bool result = false;
@@ -16315,6 +16437,10 @@ namespace Server.Models
                         element = Element.Holy;
                         power += magic.GetPower() + GetSC();
                         break;
+                    case MagicType.DarkSoulPrison:
+                        element = Element.Dark;
+                        power += magic.GetPower() + GetSC();
+                        break;
                     case MagicType.SummonPuppet:
                         element = Element.Fire;
                         power += GetDC() * magic.GetPower() / 100;
@@ -16459,7 +16585,9 @@ namespace Server.Models
                         }
 
                         break;
-
+                    case MagicType.DarkSoulPrison:
+                        power = (int)(power * 0.40F);
+                        break;
                     case MagicType.EvilSlayer:
                         if (stats != null && stats[Stat.HolyAffinity] >= 1)
                             power += (int) (power * 0.3F);
@@ -17238,8 +17366,14 @@ namespace Server.Models
                     case MagicType.Resurrection:
                         ResurrectionEnd(magic, (PlayerObject)data[1]);
                         break;
-                        case MagicType.Infection:
-                            InfectionEnd(magics, (MapObject)data[1]);
+                    case MagicType.Infection:
+                        InfectionEnd(magics, (MapObject)data[1]);
+                        break;
+                    case MagicType.Neutralize:
+                        NeutralizeEnd(magics, (MapObject)data[1]);
+                        break;
+                    case MagicType.DarkSoulPrison:
+                        DarkSoulPrisonEnd(magic, (Point)data[1], (int)data[2]);
                         break;
 
                     #endregion
@@ -19134,6 +19268,28 @@ namespace Server.Models
             foreach (UserMagic mag in magics)
                 LevelMagic(mag);
         }
+        public void NeutralizeEnd(List<UserMagic> magics, MapObject ob)
+        {
+            if (ob?.Node == null || !CanAttackTarget(ob) || ob.Level >= Level || (ob.Poison & PoisonType.Neutralize) == PoisonType.Neutralize) return;
+
+            UserMagic magic = magics.FirstOrDefault(x => x.Info.Magic == MagicType.Neutralize);
+            if (magic == null) return;
+
+            int time = 5 + magic.Level;
+            if (ob.Race == ObjectType.Player)
+                time = (int)(time * 0.8);
+
+            ob.ApplyPoison(new Poison
+            {
+                Type = PoisonType.Neutralize,
+                Owner = this,
+                TickCount = time,
+                TickFrequency = TimeSpan.FromSeconds(1),
+            });
+
+            foreach (UserMagic mag in magics)
+                LevelMagic(mag);
+        }
         public void TrapOctagonEnd(UserMagic magic, Map map, Point location)
         {
             if (map != CurrentMap) return;
@@ -19254,6 +19410,43 @@ namespace Server.Models
 
             LevelMagic(magic);
         }
+
+        private void DarkSoulPrisonEnd(UserMagic magic, Point location, int power)
+        {
+            List<Cell> cells = CurrentMap.GetCells(location, 0, 3);
+
+            foreach (Cell cell in cells)
+            {
+                if (cell.Objects != null)
+                {
+                    for (int i = cell.Objects.Count - 1; i >= 0; i--)
+                    {
+                        if (cell.Objects[i].Race != ObjectType.Spell) continue;
+
+                        SpellObject spell = (SpellObject)cell.Objects[i];
+
+                        if (spell.Effect != SpellEffect.DarkSoulPrison) continue;
+
+                        spell.Despawn();
+                    }
+                }
+
+                SpellObject ob = new SpellObject
+                {
+                    Visible = cell.Location == location,
+                    DisplayLocation = cell.Location,
+                    TickCount = power,
+                    TickFrequency = TimeSpan.FromSeconds(2),
+                    Owner = this,
+                    Effect = SpellEffect.DarkSoulPrison,
+                    Magic = magic,
+                };
+
+                ob.Spawn(cell.Map.Info, cell.Location);
+            }            
+
+            LevelMagic(magic);
+        }
         #endregion
 
         #region Assassin Magic
@@ -19282,7 +19475,6 @@ namespace Server.Models
             }
 
             LevelMagic(magic);
-
         }
 
         public void CloakEnd(UserMagic magic, MapObject ob, bool forceGhost)

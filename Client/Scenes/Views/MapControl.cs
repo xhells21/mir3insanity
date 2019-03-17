@@ -915,7 +915,7 @@ namespace Client.Scenes.Views
         {
             int steps = 1;
 
-            if (GameScene.Game.CanRun && CEnvir.Now >= User.NextRunTime && User.BagWeight <= User.Stats[Stat.BagWeight] && User.WearWeight <= User.Stats[Stat.WearWeight])
+            if (GameScene.Game.CanRun && CEnvir.Now >= User.NextRunTime && User.BagWeight <= User.Stats[Stat.BagWeight] && User.WearWeight <= User.Stats[Stat.WearWeight] && !((User.Poison & PoisonType.Neutralize) == PoisonType.Neutralize))
             {
                 steps++;
                 if (User.Horse != HorseType.None)

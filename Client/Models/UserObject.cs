@@ -623,7 +623,7 @@ namespace Client.Models
                     attackDelay = Math.Max(800, attackDelay);
                     AttackTime = CEnvir.Now + TimeSpan.FromMilliseconds(attackDelay);
 
-                    if (BagWeight > Stats[Stat.BagWeight])
+                    if (BagWeight > Stats[Stat.BagWeight] || (Poison & PoisonType.Neutralize) == PoisonType.Neutralize)
                         AttackTime += TimeSpan.FromMilliseconds(attackDelay);
 
                     CEnvir.Enqueue(new C.Attack { Direction = action.Direction, Action = action.Action, AttackMagic = MagicType });
@@ -631,7 +631,7 @@ namespace Client.Models
                     break;
                 case MirAction.Spell:
                     NextMagicTime = CEnvir.Now + Globals.MagicDelay;
-                    if (BagWeight > Stats[Stat.BagWeight])
+                    if (BagWeight > Stats[Stat.BagWeight] || (Poison & PoisonType.Neutralize) == PoisonType.Neutralize)
                         NextMagicTime += Globals.MagicDelay;
 
                     CEnvir.Enqueue(new C.Magic { Direction = action.Direction, Action = action.Action, Type = MagicType, Target = AttackTargets?.Count > 0 ? AttackTargets[0].ObjectID : 0, Location = MagicLocations?.Count > 0 ? MagicLocations[0] : Point.Empty });
@@ -642,7 +642,7 @@ namespace Client.Models
                     attackDelay = Math.Max(800, attackDelay);
                     AttackTime = CEnvir.Now + TimeSpan.FromMilliseconds(attackDelay);
 
-                    if (BagWeight > Stats[Stat.BagWeight])
+                    if (BagWeight > Stats[Stat.BagWeight] || (Poison & PoisonType.Neutralize) == PoisonType.Neutralize)
                         AttackTime += TimeSpan.FromMilliseconds(attackDelay);
 
                     CEnvir.Enqueue(new C.Mining { Direction = action.Direction });
