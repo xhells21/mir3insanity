@@ -12944,9 +12944,6 @@ namespace Server.Models
                 return;
             }
 
-            if (distance > 1 && PoisonList.Any(x => x.Type == PoisonType.Neutralize))
-                distance = 1;
-
             Cell cell = null;
 
             for (int i = 1; i <= distance; i++)
@@ -19301,9 +19298,7 @@ namespace Server.Models
             UserMagic magic = magics.FirstOrDefault(x => x.Info.Magic == MagicType.Neutralize);
             if (magic == null) return;
 
-            int time = 5 + magic.Level;
-            if (ob.Race == ObjectType.Player)
-                time = (int)(time * 0.8);
+            int time = 5 + magic.Level * 2;
 
             ob.ApplyPoison(new Poison
             {
