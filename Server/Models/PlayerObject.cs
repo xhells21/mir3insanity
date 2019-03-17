@@ -2787,8 +2787,6 @@ namespace Server.Models
                 Stats[Stat.MaxMR] = 0;
             }
 
-
-
             Stats[Stat.MinAC] = Math.Max(0, Stats[Stat.MinAC]);
             Stats[Stat.MaxAC] = Math.Max(0, Stats[Stat.MaxAC]);
             Stats[Stat.MinMR] = Math.Max(0, Stats[Stat.MinMR]);
@@ -2812,6 +2810,9 @@ namespace Server.Models
 
             Stats[Stat.DropRate] += 20 * Stats[Stat.Rebirth];
             Stats[Stat.GoldRate] += 20 * Stats[Stat.Rebirth];
+
+            for (int i = 0; i < Stats[Stat.Rebirth]; i++)
+                Stats[Stat.Health] = (int)(Stats[Stat.Health] * 1.2F);
 
             Enqueue(new S.StatsUpdate { Stats = Stats, HermitStats = Character.HermitStats, HermitPoints = Math.Max(0, Level - 39 - Character.SpentPoints) });
 
@@ -16882,11 +16883,11 @@ namespace Server.Models
             if ((Poison & PoisonType.Red) == PoisonType.Red)
                 power = (int)(power * 1.2F);
 
-            float rebirthmultiplier = 1F;
+            /*float rebirthmultiplier = 1F;
             for (int i = 0; i < attacker.Stats[Stat.Rebirth]; i++)
                 rebirthmultiplier += 0.1F;
 
-            power = (int)(power * rebirthmultiplier);
+            power = (int)(power * rebirthmultiplier);*/
 
             if (SEnvir.Random.Next(100) < attacker.Stats[Stat.CriticalChance] && canCrit)
             {
