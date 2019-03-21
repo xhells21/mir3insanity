@@ -243,7 +243,7 @@ namespace Library
                 case MagicType.ThunderStrike:
                 case MagicType.MirrorImage:
                 case MagicType.Asteroid:
-                case MagicType.SuperiorMagicShield:
+                case MagicType.SuperiorMagicShield:                    
                     return MirAnimation.Combat2;
 
                 case MagicType.ElementalHurricane:
@@ -287,6 +287,7 @@ namespace Library
                 case MagicType.Evasion:
                 case MagicType.RagingWind:
                 case MagicType.Concentration:
+                case MagicType.SwordOfVengeance:
                     return MirAnimation.Combat9;
 
                 case MagicType.Rake:

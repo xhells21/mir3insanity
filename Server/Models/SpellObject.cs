@@ -49,6 +49,35 @@ namespace Server.Models
             {
                 switch (Effect)
                 {
+                    case SpellEffect.SwordOfVengeance:
+                        PlayerObject player = Owner as PlayerObject;
+                        if (player == null) break;
+
+                        List<Cell> cells = CurrentMap.GetCells(CurrentLocation, 0, 3);
+
+                        foreach (Cell cell in cells)
+                        {
+                            if (cell.Objects != null)
+                            {
+                                for (int i = cell.Objects.Count - 1; i >= 0; i--)
+                                {
+                                    if (i >= cell.Objects.Count) continue;
+                                    MapObject target = cell.Objects[i];
+
+                                    if (!player.CanAttackTarget(target)) continue;
+
+                                    int damage = player.MagicAttack(new List<UserMagic> { Magic }, target, true);
+
+                                    ActionList.Add(new DelayedAction(
+                                        SEnvir.Now.AddMilliseconds(500),
+                                        ActionType.DelayMagic,
+                                        new List<UserMagic> { Magic },
+                                        target));
+                                }
+                            }
+                        }
+
+                        break;
                     case SpellEffect.MonsterDeathCloud:
                         MonsterObject monster = Owner as MonsterObject;
                         if (monster == null) break;
@@ -65,7 +94,6 @@ namespace Server.Models
                             monster.Attack(ob, 4000, Element.None);
                             monster.Attack(ob, 4000, Element.None);
                         }
-
 
                         break;
                 }
@@ -182,6 +210,27 @@ namespace Server.Models
                             if (spell.Effect != Effect) continue;
 
                             spell.TickCount--;
+                        }
+                    }
+                    break;
+                case SpellEffect.SwordOfVengeance:
+                    player = Owner as PlayerObject;
+                    if (player == null) break;
+
+                    List<Cell> cells = CurrentMap.GetCells(CurrentLocation, 0, 3);
+
+                    foreach (Cell cell in cells)
+                    {
+                        if (cell.Objects != null)
+                        {
+                            foreach (MapObject target in cell.Objects)
+                            {
+                                if (player.CanAttackTarget(target))
+                                {
+                                    TickCount = 0; ;
+                                    break;
+                                }
+                            }
                         }
                     }
                     break;

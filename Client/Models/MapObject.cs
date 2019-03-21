@@ -2111,6 +2111,25 @@ namespace Client.Models
 
                         //Raging Wind
 
+                        #region Sword of Vengeance
+
+                        case MagicType.SwordOfVengeance:
+                            foreach (Point point in MagicLocations)
+                            {
+                                spell = new MirEffect(900, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MagicEx6, 50, 80, Globals.FireColour)
+                                {
+                                    Blend = true,
+                                    MapTarget = point,
+                                };
+
+                                //spell.Process();
+                            }
+
+                            DXSoundManager.Play(SoundIndex.IceStormStart);
+                            break;
+
+                        #endregion
+
                         #endregion
 
                         #region Fire Ball
@@ -4443,6 +4462,8 @@ namespace Client.Models
 
         public abstract bool MouseOver(Point p);
 
+        public abstract void OnRemoved();
+
         public virtual void UpdateQuests()
         {
             
@@ -4800,5 +4821,5 @@ namespace Client.Models
                 effect.Remove();
             }
         }
-    }
+    }    
 }

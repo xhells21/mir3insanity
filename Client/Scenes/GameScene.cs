@@ -3131,6 +3131,7 @@ namespace Client.Scenes
                 case MagicType.ElementalSuperiority:
                 case MagicType.BloodLust:
                 case MagicType.MassHeal:
+                case MagicType.SwordOfVengeance:
                     if (!Functions.InRange(MapControl.MapLocation, User.CurrentLocation, Globals.MagicRange))
                     {
                         if (CEnvir.Now < OutputTime) return;

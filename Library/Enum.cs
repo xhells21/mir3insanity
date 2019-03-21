@@ -636,6 +636,7 @@ namespace Library
         Massacre = 439,
         ArtOfShadows = 440,
         Concentration = 441,
+        SwordOfVengeance = 442,
 
         MonsterScortchedEarth = 501,
         MonsterIceStorm = 502,
@@ -1050,6 +1051,8 @@ namespace Library
         TrapOctagon,
         PoisonousCloud,
         DarkSoulPrison,
+
+        SwordOfVengeance,
 
         Rubble,
 

@@ -124,6 +124,9 @@ namespace Client.Models
             return BodyLibrary != null && BodyLibrary.VisiblePixel(BodyFrame, new Point(p.X - DrawX, p.Y - DrawY), false, true);
         }
 
+        public override void OnRemoved()
+        {
+        }
 
         public override void UpdateQuests()
         {

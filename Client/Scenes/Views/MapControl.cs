@@ -1081,6 +1081,7 @@ namespace Client.Scenes.Views
 
         public void RemoveObject(MapObject ob)
         {
+            ob.OnRemoved();
             Objects.Remove(ob);
 
             if (ob.CurrentLocation.X < Width && ob.CurrentLocation.Y < Height)

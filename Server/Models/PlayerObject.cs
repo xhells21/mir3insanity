@@ -13569,6 +13569,7 @@ namespace Server.Models
                 case MagicType.Infection:
                 case MagicType.Neutralize:
                 case MagicType.DarkSoulPrison:
+                case MagicType.SwordOfVengeance:
                     if (magic.Cost > CurrentMP)
                     {
                         Enqueue(new S.UserLocation { Direction = Direction, Location = CurrentLocation });
@@ -15411,6 +15412,24 @@ namespace Server.Models
                         new List<UserMagic> { magic }));
 
                     break;
+                case MagicType.SwordOfVengeance:
+                    ob = null;
+
+                    if (!Functions.InRange(CurrentLocation, p.Location, Globals.MagicRange))
+                    {
+                        cast = false;
+                        break;
+                    }
+
+                    locations.Add(p.Location);
+
+                    ActionList.Add(new DelayedAction(
+                        SEnvir.Now.AddMilliseconds(1800),
+                        ActionType.DelayMagic,
+                        new List<UserMagic> { magic },
+                        p.Location,
+                        10));
+                    break;
 
 
                 #endregion
@@ -16557,6 +16576,10 @@ namespace Server.Models
                         power = extra;
                         element = Element.Phantom;
                         break;
+                    case MagicType.SwordOfVengeance:
+                        element = Element.Lightning;
+                        power = GetDC() * magic.GetPower() / 100;
+                        break;
                 }
             }
 
@@ -17439,6 +17462,9 @@ namespace Server.Models
                         break;
                     case MagicType.Concentration:
                         ConcentrationEnd(magic, this);
+                        break;
+                    case MagicType.SwordOfVengeance:
+                        SwordOfVengeanceEnd(magic, (Point)data[1], (int)data[2]);
                         break;
 
                         #endregion
@@ -19468,6 +19494,43 @@ namespace Server.Models
 
             LevelMagic(magic);
         }
+
+        private void SwordOfVengeanceEnd(UserMagic magic, Point location, int power)
+        {
+            Cell cell = CurrentMap.GetCell(location);
+            if (cell == null) return;
+
+            if (cell.Objects != null)
+            {
+                for (int i = cell.Objects.Count - 1; i >= 0; i--)
+                {
+                    if (cell.Objects[i].Race != ObjectType.Spell) continue;
+
+                    SpellObject spell = (SpellObject)cell.Objects[i];
+
+                    if (spell.Effect != SpellEffect.SwordOfVengeance) continue;
+
+                    spell.Despawn();
+                }
+            }
+
+            SpellObject ob = new SpellObject
+            {
+                Visible = true,
+                DisplayLocation = cell.Location,
+                TickCount = power,
+                TickFrequency = TimeSpan.FromSeconds(1),
+                Owner = this,
+                Effect = SpellEffect.SwordOfVengeance,
+                Magic = magic,
+            };
+
+            ob.Spawn(cell.Map.Info, cell.Location);
+
+            LevelMagic(magic);
+        }
+
+            
         #endregion
 
         #region Assassin Magic

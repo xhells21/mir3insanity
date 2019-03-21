@@ -1326,7 +1326,11 @@ namespace Client.Models
 
             return false;
         }
-        
+
+        public override void OnRemoved()
+        {
+        }
+
         public override void PlayStruckSound()
         {
             DXSoundManager.Play(Gender == MirGender.Male ? SoundIndex.MaleStruck : SoundIndex.FemaleStruck);

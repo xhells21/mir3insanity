@@ -2886,6 +2886,10 @@ namespace Client.Models
             }
         }
 
+        public override void OnRemoved()
+        {
+        }
+
         public override void FrameIndexChanged()
         {
             switch (CurrentAction)

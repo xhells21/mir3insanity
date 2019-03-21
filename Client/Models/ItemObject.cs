@@ -157,6 +157,10 @@ namespace Client.Models
             return false;
         }
 
+        public override void OnRemoved()
+        {
+        }
+
         public override void NameChanged()
         {
             base.NameChanged();

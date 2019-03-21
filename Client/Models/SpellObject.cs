@@ -54,7 +54,6 @@ namespace Client.Models
 
             }
 
-
             GameScene.Game.MapControl.AddObject(this);
         }
 
@@ -107,6 +106,14 @@ namespace Client.Models
                     Light = 0;
                     DXSoundManager.Play(SoundIndex.DarkSoulPrison);
                     break;
+                case SpellEffect.SwordOfVengeance:
+                    CEnvir.LibraryList.TryGetValue(LibraryFile.MagicEx6, out BodyLibrary);
+                    Frames[MirAnimation.Standing] = new Frame(1000, 8, 0, TimeSpan.FromMilliseconds(100));
+                    Frames[MirAnimation.Die] = new Frame(1100, 10, 0, TimeSpan.FromMilliseconds(100));
+                    Blended = true;
+                    Light = 0;
+                    //DXSoundManager.Play(SoundIndex.DarkSoulPrison);
+                    break;
                 case SpellEffect.MonsterDeathCloud:
                     CEnvir.LibraryList.TryGetValue(LibraryFile.MonMagicEx2, out BodyLibrary);
                     Frames[MirAnimation.Standing] = new Frame(850, 10, 0, TimeSpan.FromMilliseconds(100));
@@ -155,6 +162,21 @@ namespace Client.Models
         public override bool MouseOver(Point p)
         {
             return false;
+        }
+
+        public override void OnRemoved()
+        {
+            switch (Effect)
+            {
+                case SpellEffect.SwordOfVengeance:
+                    new MirEffect(1100, 10, TimeSpan.FromMilliseconds(100), LibraryFile.MagicEx6, 10, 35, Globals.FireColour)
+                    {
+                        Blend = true,
+                        MapTarget = CurrentLocation,
+                    };
+                    DXSoundManager.Play(SoundIndex.FireStormEnd);
+                    break;                    
+            }
         }
     }
 }
