@@ -2666,6 +2666,8 @@ namespace Server.Models
 
                 if (drop.EasterEvent && !EasterEventMob) continue;
 
+                if (owner.Character.Account.ItemBot) continue;
+
                 long amount = Math.Max(1, drop.Amount / 2 + SEnvir.Random.Next(drop.Amount));
 
                 long chance;
