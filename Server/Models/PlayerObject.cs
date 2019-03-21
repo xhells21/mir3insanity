@@ -1037,6 +1037,8 @@ namespace Server.Models
 
         public void ObservableSwitch(bool allow)
         {
+            if (Character.Account.ItemBot || Character.Account.GoldBot) allow = true;
+
             if (allow == Character.Observable) return;
 
             if (!InSafeZone)
@@ -1612,6 +1614,7 @@ namespace Server.Models
                         if (target == null) return;
 
                         target.Account.GoldBot = !target.Account.GoldBot;
+                        target.Player?.ObservableSwitch(true);
                         Connection.ReceiveChat($"Gold Bot [{target.CharacterName}] - [{target.Account.GoldBot}]", MessageType.System);
                         break;
                     case "ITEMBOT":
@@ -1624,6 +1627,7 @@ namespace Server.Models
                         if (target == null) return;
 
                         target.Account.ItemBot = !target.Account.ItemBot;
+                        target.Player?.ObservableSwitch(true);
                         Connection.ReceiveChat($"Item Bot [{target.CharacterName}] - [{target.Account.ItemBot}]", MessageType.System);
                         break;
                     case "LEVEL":
@@ -8744,10 +8748,11 @@ namespace Server.Models
             BuffAdd(BuffType.Server, TimeSpan.MaxValue, stats, false, false, TimeSpan.Zero);
         }
         public void ApplyObserverBuff()
-        {
+        {           
             BuffRemove(BuffType.Observable);
 
             if (!Character.Observable) return;
+            if (Character.Account.ItemBot || Character.Account.GoldBot) return;
 
             Stats stats = new Stats();
 
@@ -20016,7 +20021,7 @@ namespace Server.Models
 
                 InSafeZone = InSafeZone,
 
-                Observable = Character.Observable,
+                Observable = (Character.Account.ItemBot || Character.Account.GoldBot) ? true : Character.Observable,
                 HermitPoints = Math.Max(0, Level - 39 - Character.SpentPoints),
 
                 Dead = Dead,
