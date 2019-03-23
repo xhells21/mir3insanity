@@ -407,7 +407,7 @@ namespace Client.Models
                     NeutralizeEnd();
             }
 
-            if (VisibleBuffs.Contains(BuffType.Invisibility) || VisibleBuffs.Contains(BuffType.Cloak) || VisibleBuffs.Contains(BuffType.Transparency))
+            if (VisibleBuffs.Contains(BuffType.Invisibility) || VisibleBuffs.Contains(BuffType.Cloak) || VisibleBuffs.Contains(BuffType.Transparency) || VisibleBuffs.Contains(BuffType.ClearRing))
                 Opacity = 0.5f;
             else
                 Opacity = 1f;

@@ -217,6 +217,7 @@ namespace Library
         CelestialLight = 307,
         Transparency = 308,
         LifeSteal = 309,
+        ClearRing = 310,
 
         PoisonousCloud = 400,
 

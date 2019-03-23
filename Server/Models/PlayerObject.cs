@@ -671,6 +671,7 @@ namespace Server.Models
             BuffRemove(BuffType.Veteran);
             BuffRemove(BuffType.ElementalHurricane);
             BuffRemove(BuffType.SuperiorMagicShield);
+            BuffRemove(BuffType.ClearRing);
 
             if (GroupMembers != null) GroupLeave();
 
@@ -2542,6 +2543,7 @@ namespace Server.Models
         public override void RefreshStats()
         {
             int tracking = Stats[Stat.BossTracker] + Stats[Stat.PlayerTracker];
+            int oldclearring = Stats[Stat.ClearRing];
 
             Stats.Clear();
 
@@ -2817,6 +2819,22 @@ namespace Server.Models
 
             for (int i = 0; i < Stats[Stat.Rebirth]; i++)
                 Stats[Stat.Health] = (int)(Stats[Stat.Health] * 1.05F);
+
+            int clearring = Stats[Stat.ClearRing];
+            if (clearring != oldclearring)
+            {
+                if (clearring > 0)
+                {
+                    Stats buffStats = new Stats
+                    {
+                        [Stat.Invisibility] = 1,
+                    };
+
+                    BuffAdd(BuffType.ClearRing, TimeSpan.MaxValue, buffStats, false, false, TimeSpan.Zero);
+                }
+                else
+                    BuffRemove(BuffType.ClearRing);
+            }
 
             Enqueue(new S.StatsUpdate { Stats = Stats, HermitStats = Character.HermitStats, HermitPoints = Math.Max(0, Level - 39 - Character.SpentPoints) });
 
@@ -18991,7 +19009,7 @@ namespace Server.Models
         }
         public void InvisibilityEnd(UserMagic magic, MapObject ob)
         {
-            if (ob?.Node == null || !CanHelpTarget(ob) || ob.Buffs.Any(x => x.Type == BuffType.Invisibility)) return;
+            if (ob?.Node == null || !CanHelpTarget(ob) || ob.Buffs.Any(x => x.Type == BuffType.Invisibility || x.Type == BuffType.ClearRing)) return;
 
             Stats buffStats = new Stats
             {

@@ -228,6 +228,10 @@ namespace Client.Scenes.Views
                     case BuffType.Concentration:
                         icon.Index = 201;
                         break;
+
+                    case BuffType.ClearRing:
+                        icon.Index = 74;
+                        break;
                     default:
                         icon.Index = 73;
                         break;
@@ -324,6 +328,11 @@ namespace Client.Scenes.Views
                     text = $"Heal\n";
                     break;
                 case BuffType.Invisibility:
+                    text = $"Invisibility\n";
+
+                    text += $"Hide in plain sight.\n";
+                    break;
+                case BuffType.ClearRing:
                     text = $"Invisibility\n";
 
                     text += $"Hide in plain sight.\n";

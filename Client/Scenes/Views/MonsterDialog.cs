@@ -462,8 +462,6 @@ namespace Client.Scenes.Views
                 PopulateLabel(Stat.PhantomResistance, PhantomResistLabel, Monster.MonsterInfo.Stats);
                 PopulateLabel(Stat.PhysicalResistance, PhysicalResistLabel, Monster.MonsterInfo.Stats);
 
-
-
                 switch (Monster.Stats.GetAffinityElement())
                 {
                     case Element.None:

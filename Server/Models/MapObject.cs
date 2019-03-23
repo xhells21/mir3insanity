@@ -1396,6 +1396,22 @@ namespace Server.Models
                         }
                     }
                     break;
+                case BuffType.ClearRing:
+                    //Much faster than checking nearby cells?
+                    foreach (MapObject mapOb in CurrentMap.Objects)
+                    {
+                        if (mapOb.Race != ObjectType.Monster) continue;
+
+                        MonsterObject mob = (MonsterObject)mapOb;
+
+                        if (mob.Target == this && !mob.CoolEye)
+                        {
+                            mob.Target = null;
+                            mob.SearchTime = SEnvir.Now;
+                        }
+                    }
+                    info.IsTemporary = true;
+                    break;
                 case BuffType.Cloak:
                 case BuffType.Transparency:
                     //Much faster than checking nearby cells?
@@ -1467,6 +1483,7 @@ namespace Server.Models
                 case BuffType.Cloak:
                 case BuffType.Transparency:
                 case BuffType.Invisibility:
+                case BuffType.ClearRing:
                     //Much faster than checking nearby cells?
                     foreach (MapObject mapOb in CurrentMap.Objects)
                     {

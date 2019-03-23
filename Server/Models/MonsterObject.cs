@@ -1420,7 +1420,7 @@ namespace Server.Models
                     return false;
             }
             
-            if (ob.Buffs.Any(x => x.Type == BuffType.Invisibility) && !CoolEye) return false;
+            if (ob.Buffs.Any(x => x.Type == BuffType.Invisibility || x.Type == BuffType.ClearRing) && !CoolEye) return false;
 
             if (ob.Buffs.Any(x => x.Type == BuffType.Cloak) && Stats[Stat.IgnoreStealth] == 0)
             {

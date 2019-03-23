@@ -81,7 +81,7 @@ namespace Server.Models.Monsters
                     return false;
             }
 
-            if (ob.Buffs.Any(x => x.Type == BuffType.Invisibility) && !CoolEye) return false;
+            if (ob.Buffs.Any(x => x.Type == BuffType.Invisibility || x.Type == BuffType.ClearRing) && !CoolEye) return false;
             if (ob.Buffs.Any(x => x.Type == BuffType.Cloak))
             {
                 if (!CoolEye) return false;
