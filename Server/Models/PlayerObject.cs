@@ -2816,7 +2816,7 @@ namespace Server.Models
             Stats[Stat.GoldRate] += 20 * Stats[Stat.Rebirth];
 
             for (int i = 0; i < Stats[Stat.Rebirth]; i++)
-                Stats[Stat.Health] = (int)(Stats[Stat.Health] * 1.2F);
+                Stats[Stat.Health] = (int)(Stats[Stat.Health] * 1.05F);
 
             Enqueue(new S.StatsUpdate { Stats = Stats, HermitStats = Character.HermitStats, HermitPoints = Math.Max(0, Level - 39 - Character.SpentPoints) });
 
