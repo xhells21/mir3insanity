@@ -16334,8 +16334,7 @@ namespace Server.Models
 
                 if (magic != null)
                 {
-                    power = Math.Abs(ob.CurrentHP) * magic.GetPower() / 100;
-
+                    power = (int)(power * 0.9);
 
                     foreach (MapObject target in GetTargets(CurrentMap, ob.CurrentLocation, 2))
                     {
