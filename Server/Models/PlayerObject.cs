@@ -16367,7 +16367,7 @@ namespace Server.Models
                             target,
                             magics,
                             false,
-                            power));
+                            power * 2));
                     }
                 }
             }
