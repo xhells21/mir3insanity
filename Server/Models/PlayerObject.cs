@@ -16230,8 +16230,8 @@ namespace Server.Models
             if (karmaDamage > 0)
                 damage += ob.Attacked(this, karmaDamage, Element.None, false, true, false);
 
-            damage += ob.Attacked(this, hasMassacre ? power : power * 2, element, true, false, !hasMassacre);
-            
+            damage += ob.Attacked(this, hasMassacre ? power * 2 : power, element, true, false, !hasMassacre);
+
 
             if (damage <= 0) return;
 
@@ -16346,7 +16346,7 @@ namespace Server.Models
             foreach (UserMagic mag in magics)
                 LevelMagic(mag);
 
-            magics.Clear();
+            //magics.Clear();
             if (ob.Dead && ob.Race == ObjectType.Monster && ob.CurrentHP < 0)
             {
                 if (Magics.TryGetValue(MagicType.Massacre, out magic) && Level >= magic.Info.NeedLevel1)
