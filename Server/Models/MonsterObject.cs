@@ -2315,7 +2315,7 @@ namespace Server.Models
             }
         }
 
-        public override int Attacked(MapObject attacker, int power, Element element, bool canReflect = true, bool ignoreShield = false, bool canCrit = true, bool canStruck = true)
+        public override int Attacked(MapObject attacker, int power, Element element, bool canReflect = true, bool ignoreShield = false, bool canCrit = true, bool canStruck = true, bool forceCrit = false)
         {
             if (attacker?.Node == null || power == 0 || Dead || attacker.CurrentMap != CurrentMap || !Functions.InRange(attacker.CurrentLocation, CurrentLocation, Config.MaxViewRange) || Stats[Stat.Invincibility] > 0) return 0;
 
@@ -2365,7 +2365,7 @@ namespace Server.Models
 
             power -= power * Stats[Stat.MagicShield] / 100;                       
 
-            if (PetOwner == null && SEnvir.Random.Next(100) < attacker.Stats[Stat.CriticalChance] && canCrit && power > 0)
+            if (((PetOwner == null && SEnvir.Random.Next(100) < attacker.Stats[Stat.CriticalChance] && canCrit) || forceCrit) && power > 0)
             {
                 power += power + (power * attacker.Stats[Stat.CriticalDamage] / 100);
                 Critical();

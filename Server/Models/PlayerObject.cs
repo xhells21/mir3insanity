@@ -16230,7 +16230,7 @@ namespace Server.Models
             if (karmaDamage > 0)
                 damage += ob.Attacked(this, karmaDamage, Element.None, false, true, false);
 
-            damage += ob.Attacked(this, hasMassacre ? power : power * 2, element, true, false, !hasMassacre);
+            damage += ob.Attacked(this, power, element, true, false, !hasMassacre, true, hasMassacre);
             
 
             if (damage <= 0) return;
@@ -16354,7 +16354,12 @@ namespace Server.Models
 
                 if (magic != null)
                 {
-                    power = (int)(power * 0.9);
+                    int massacrepower;
+
+                    if (hasMassacre)
+                        massacrepower = (int)(power * 0.9);
+                    else
+                        massacrepower = (int)(damage * 0.9);
 
                     foreach (MapObject target in GetTargets(CurrentMap, ob.CurrentLocation, 2))
                     {
@@ -16369,7 +16374,7 @@ namespace Server.Models
                             target,
                             magics,
                             false,
-                            power));
+                            massacrepower));
                     }
                 }
             }
@@ -16885,7 +16890,7 @@ namespace Server.Models
             return damage;
         }
 
-        public override int Attacked(MapObject attacker, int power, Element element, bool canReflect = true, bool ignoreShield = false, bool canCrit = true, bool canStruck = true)
+        public override int Attacked(MapObject attacker, int power, Element element, bool canReflect = true, bool ignoreShield = false, bool canCrit = true, bool canStruck = true, bool forceCrit = false)
         {
             if (attacker?.Node == null || power == 0 || Dead || attacker.CurrentMap != CurrentMap || !Functions.InRange(attacker.CurrentLocation, CurrentLocation, Config.MaxViewRange) || Stats[Stat.Invincibility] > 0) return 0;
 

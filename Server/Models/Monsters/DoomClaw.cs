@@ -28,7 +28,7 @@ namespace Server.Models.Monsters
         }
 
         public override int Attacked(MapObject attacker, int power, Element element, bool canReflect = true, bool ignoreShield = false,
-            bool canCrit = true, bool canStruck = true)
+            bool canCrit = true, bool canStruck = true, bool forceCrit = false)
         {
 
             if (!Functions.InRange(CurrentLocation, attacker.CurrentLocation, 10)) return 0;
