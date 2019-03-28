@@ -16353,12 +16353,9 @@ namespace Server.Models
 
                 if (magic != null)
                 {
-                    int massacrepower;
-
+                    int massacrepower = (int)(power * 0.9);
                     if (hasMassacre)
-                        massacrepower = (int)(power * 0.9);
-                    else
-                        massacrepower = (int)(damage * 0.9);
+                        massacrepower = (int)(power * 0.6);
 
                     foreach (MapObject target in GetTargets(CurrentMap, ob.CurrentLocation, 2))
                     {
