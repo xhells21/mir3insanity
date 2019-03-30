@@ -1080,7 +1080,7 @@ namespace Server.Models
                     UserItem item = SEnvir.CreateFreshItem(check);
 
                     if (info.ItemType == ItemType.Armour)
-                        item.Colour = Character.ArmourColour;
+                        item.Colour = Character.ArmourColour;                    
 
                     GainItem(item);
                 }
@@ -12308,6 +12308,142 @@ namespace Server.Models
 
             Gold -= Globals.MasterRefineEvaluateCost;
             GoldChanged();
+        }
+        public void NPCItemRename(C.NPCItemRename p)
+        {
+            S.NPCItemRename result = new S.NPCItemRename
+            {
+                Item = p.Item,
+                Scroll = p.Scroll,                
+            };
+            Enqueue(result);
+
+            if (p.Rename.Length > Globals.MaxItemNameLength)
+            {
+                SEnvir.Log($"Item rename over-length, Name: {Character.CharacterName}, Rename: {p.Rename}");
+                return;
+            }
+            if (!Globals.ItemRegex.IsMatch(p.Rename))
+                return;            
+
+            if (Dead || NPC == null || NPCPage == null || NPCPage.DialogType != NPCDialogType.RenameItem) return;
+
+            if (!ParseLinks(p.Item, 1, 1)) return;
+            if (!ParseLinks(p.Scroll, 1, 1)) return;
+            if (p.Rename == string.Empty) return;
+
+            UserItem changeitem = null;
+
+            foreach (CellLinkInfo link in p.Item)
+            {
+                if (link.Count > 1) return;
+
+                UserItem[] array;
+                switch (link.GridType)
+                {
+                    case GridType.Inventory:
+                        array = Inventory;
+                        break;
+                    case GridType.Storage:
+                        array = Storage;
+                        break;
+                    case GridType.CompanionInventory:
+                        if (Companion == null) return;
+
+                        array = Companion.Inventory;
+                        break;
+                    default:
+                        return;
+                }
+
+                if (link.Slot < 0 || link.Slot >= array.Length) return;
+                UserItem item = array[link.Slot];
+
+                if (item == null || item.Count > 1) return;
+                switch (item.Info.ItemType)
+                {
+                    case ItemType.Armour:
+                    case ItemType.Bracelet:
+                    case ItemType.Helmet:
+                    case ItemType.Necklace:
+                    case ItemType.Ring:
+                    case ItemType.Shield:
+                    case ItemType.Shoes:
+                    case ItemType.Weapon:
+                        break;
+                    default:
+                        return;
+                }
+
+                result.Success = true;
+                result.Rename = p.Rename;
+                changeitem = item;
+            }
+
+            foreach (CellLinkInfo link in p.Scroll)
+            {
+                UserItem[] array;
+                switch (link.GridType)
+                {
+                    case GridType.Inventory:
+                        array = Inventory;
+                        break;
+                    case GridType.Storage:
+                        array = Storage;
+                        break;
+                    case GridType.CompanionInventory:
+                        if (Companion == null) return;
+
+                        array = Companion.Inventory;
+                        break;
+                    default:
+                        return;
+                }
+
+                if (link.Slot < 0 || link.Slot >= array.Length) return;
+                UserItem item = array[link.Slot];
+
+                if (item == null || item.Info.Effect != ItemEffect.ItemRenameScroll) return;
+            }
+
+            changeitem.CustomName = p.Rename;
+
+            foreach (CellLinkInfo link in p.Scroll)
+            {
+                UserItem[] array;
+                switch (link.GridType)
+                {
+                    case GridType.Inventory:
+                        array = Inventory;
+                        break;
+                    case GridType.Storage:
+                        array = Storage;
+                        break;
+                    case GridType.CompanionInventory:
+                        array = Companion.Inventory;
+                        break;
+                    default:
+                        return;
+                }
+
+                UserItem item = array[link.Slot];
+
+                if (item.Count == link.Count)
+                {
+                    RemoveItem(item);
+                    array[link.Slot] = null;
+                    item.Delete();
+                }
+                else
+                    item.Count -= link.Count;
+            }
+
+            result.Success = true;
+
+            Connection.ReceiveChat(Connection.Language.NPCItemRenameSuccess, MessageType.System);
+
+            foreach (SConnection con in Connection.Observers)
+                con.ReceiveChat(con.Language.NPCItemRenameSuccess, MessageType.System);
         }
         public void NPCWeaponCraft(C.NPCWeaponCraft p)
         {

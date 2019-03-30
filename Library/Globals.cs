@@ -37,6 +37,7 @@ namespace Library
         public static readonly Regex PasswordRegex = new Regex(@"^[\S]{" + MinPasswordLength + "," + MaxPasswordLength + "}$", RegexOptions.Compiled);
         public static readonly Regex CharacterReg = new Regex(@"^[A-Za-z0-9]{" + MinCharacterNameLength + "," + MaxCharacterNameLength + @"}$", RegexOptions.Compiled);
         public static readonly Regex GuildNameRegex = new Regex(@"^[A-Za-z0-9]{" + MinGuildNameLength + "," + MaxGuildNameLength + "}$", RegexOptions.Compiled);
+        public static readonly Regex ItemRegex = new Regex(@"^[a-zA-Z ]*${" + MinItemNameLength + "," + MaxItemNameLength + @"}$", RegexOptions.Compiled);
 
         public static Color NoneColour = Color.White,
                             FireColour = Color.OrangeRed,
@@ -65,6 +66,9 @@ namespace Library
 
             MinGuildNameLength = 2,
             MaxGuildNameLength = 15,
+
+            MinItemNameLength = 2,
+            MaxItemNameLength = 20,
 
             MaxChatLength = 120,
             MaxGuildNoticeLength = 4000,
@@ -524,6 +528,7 @@ namespace Library
         public decimal Experience { get; set; }
 
         public Color Colour { get; set; }
+        public string CustomName { get; set; }
 
         public TimeSpan SpecialRepairCoolDown { get; set; }
         public TimeSpan ResetCoolDown { get; set; }
@@ -594,6 +599,7 @@ namespace Library
             Experience = item.Experience;
 
             Colour = item.Colour;
+            CustomName = item.CustomName;
 
             SpecialRepairCoolDown = item.SpecialRepairCoolDown;
 
@@ -604,6 +610,15 @@ namespace Library
             NextSpecialRepair = item.NextSpecialRepair;
             
             AddedStats = new Stats(item.AddedStats);
+        }
+
+        public string GetItemName()
+        {
+            string result = Info.ItemName;
+            if (CustomName != string.Empty)
+                result = CustomName;
+
+            return result;
         }
 
 

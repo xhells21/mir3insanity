@@ -163,6 +163,8 @@ namespace Library
         WeaponCraftPurple,
         WeaponCraftGreen,
         WeaponCraftGrey,
+        ItemRenameItem,
+        ItemRenameScroll
     }
 
     public enum BuffType
@@ -446,6 +448,7 @@ namespace Library
         AccessoryRefineLevel,
         AccessoryReset,
         WeaponCraft,
+        RenameItem,
     }
 
     public enum MagicSchool
@@ -1182,6 +1185,7 @@ namespace Library
         Level75ArmourUpgrade = 95,
         Level75ArmourBase = 96,
         GuildAllianceTreaty = 97,
+        ItemRenameScroll = 98,
     }
 
     [Flags]

@@ -1111,6 +1111,12 @@ namespace Client.Controls
                             case GridType.WeaponCraftGrey:
                                 cell.LinkedCount = 1;
                                 break;
+                            case GridType.ItemRenameItem:
+                                cell.LinkedCount = 1;
+                                break;
+                            case GridType.ItemRenameScroll:
+                                cell.LinkedCount = 1;
+                                break;
                         }
 
                         cell.Link = this;
@@ -1393,6 +1399,27 @@ namespace Client.Controls
                     break;
                 case GridType.WeaponCraftYellow:
                     if (Item.Info.Effect != ItemEffect.YellowSlot) return false;
+                    break;
+                case GridType.ItemRenameScroll:
+                    if (Item.Info.Effect != ItemEffect.ItemRenameScroll) return false;
+                    break;
+                case GridType.ItemRenameItem:
+                    if (Item.CustomName != string.Empty || Item.Count > 1) return false;
+
+                    switch (Item.Info.ItemType)
+                    {
+                        case ItemType.Armour:
+                        case ItemType.Bracelet:
+                        case ItemType.Helmet:
+                        case ItemType.Necklace:
+                        case ItemType.Ring:
+                        case ItemType.Shield:
+                        case ItemType.Shoes:
+                        case ItemType.Weapon:
+                            break;
+                        default:
+                            return false;
+                    }
                     break;
             }
 
@@ -1784,6 +1811,22 @@ namespace Client.Controls
                                 GameScene.Game.ReceiveChat($"Unable to use {Item.Info.ItemName} to refine.", MessageType.System);
                                 return;
                             }
+                            if (GameScene.Game.NPCItemRenameBox.IsVisible)
+                            {
+                                switch (Item.Info.Effect)
+                                {
+                                    case ItemEffect.ItemRenameScroll:
+                                        if (MoveItem(GameScene.Game.NPCItemRenameBox.ScrollGrid))
+                                            return;
+                                        break;
+                                    default:
+                                        if (MoveItem(GameScene.Game.NPCItemRenameBox.ItemGrid))
+                                            return;
+                                        break;
+                                }
+                                GameScene.Game.ReceiveChat($"Unable to use {Item.Info.ItemName} to rename.", MessageType.System);
+                                return;
+                            }
                             if (GameScene.Game.NPCWeaponCraftBox.IsVisible)
                             {
                                 switch (Item.Info.Effect)
@@ -1817,6 +1860,38 @@ namespace Client.Controls
                                         return;
                                 }
                                 GameScene.Game.ReceiveChat($"Unable to use {Item.Info.ItemName} to Craft.", MessageType.System);
+                                return;
+                            }
+                            if (GameScene.Game.NPCMasterRefineBox.IsVisible)
+                            {
+                                switch (Item.Info.Effect)
+                                {
+                                    case ItemEffect.Fragment1:
+                                        if (MoveItem(GameScene.Game.NPCMasterRefineBox.Fragment1Grid))
+                                            return;
+                                        break;
+                                    case ItemEffect.Fragment2:
+                                        if (MoveItem(GameScene.Game.NPCMasterRefineBox.Fragment2Grid))
+                                            return;
+                                        break;
+                                    case ItemEffect.Fragment3:
+                                        if (MoveItem(GameScene.Game.NPCMasterRefineBox.Fragment3Grid))
+                                            return;
+                                        break;
+                                    case ItemEffect.RefinementStone:
+                                        if (MoveItem(GameScene.Game.NPCMasterRefineBox.RefinementStoneGrid))
+                                            return;
+                                        break;
+                                }
+
+                                switch (Item.Info.ItemType)
+                                {
+                                    case ItemType.RefineSpecial:
+                                        if (MoveItem(GameScene.Game.NPCMasterRefineBox.SpecialGrid))
+                                            return;
+                                        break;
+                                }
+                                GameScene.Game.ReceiveChat($"Unable to use {Item.Info.ItemName} to refine.", MessageType.System);
                                 return;
                             }
 
@@ -2008,6 +2083,23 @@ namespace Client.Controls
                                 return;
                             }
 
+                            if (GameScene.Game.NPCItemRenameBox.IsVisible)
+                            {
+                                switch (Item.Info.Effect)
+                                {
+                                    case ItemEffect.ItemRenameScroll:
+                                        if (MoveItem(GameScene.Game.NPCItemRenameBox.ScrollGrid))
+                                            return;
+                                        break;
+                                    default:
+                                        if (MoveItem(GameScene.Game.NPCItemRenameBox.ItemGrid))
+                                            return;
+                                        break;
+                                }
+                                GameScene.Game.ReceiveChat($"Unable to use {Item.Info.ItemName} to rename.", MessageType.System);
+                                return;
+                            }
+
                             if (GameScene.Game.NPCAccessoryLevelBox.IsVisible)
                             {
                                 if (GameScene.Game.NPCAccessoryLevelBox.TargetCell.Grid[0].Link == null)
@@ -2139,6 +2231,22 @@ namespace Client.Controls
                                         return;
                                 }
                                 GameScene.Game.ReceiveChat($"Unable to use {Item.Info.ItemName} to refine.", MessageType.System);
+                                return;
+                            }
+                            if (GameScene.Game.NPCItemRenameBox.IsVisible)
+                            {
+                                switch (Item.Info.Effect)
+                                {
+                                    case ItemEffect.ItemRenameScroll:
+                                        if (MoveItem(GameScene.Game.NPCItemRenameBox.ScrollGrid))
+                                            return;
+                                        break;
+                                    default:
+                                        if (MoveItem(GameScene.Game.NPCItemRenameBox.ItemGrid))
+                                            return;
+                                        break;
+                                }
+                                GameScene.Game.ReceiveChat($"Unable to use {Item.Info.ItemName} to rename.", MessageType.System);
                                 return;
                             }
                             if (GameScene.Game.MarketPlaceBox.ConsignTab.IsVisible)
